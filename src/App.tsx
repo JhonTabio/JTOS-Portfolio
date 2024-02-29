@@ -1,18 +1,13 @@
-import { useState } from 'react'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
-
+function App()
+{
   return (
     <>
-      <div>
-        <h1>Hello World!</h1>
-      </div>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+      <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet"/>
+
+      <div id="terminal">
+        <p>[client@portfolio ~]$ <input className="commandInput" name="cmd"/></p>
       </div>
     </>
   )
