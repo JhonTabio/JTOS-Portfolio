@@ -1,3 +1,5 @@
+import React, { useEffect, useRef } from 'react';
+
 interface CommandInput
 {
   value: string;
@@ -21,6 +23,20 @@ const processCommand = (cmd: string): string => {
 }
 
 const CommandInput: React.FC<CommandInput> = ({value, onChange, onKeyDown}) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const focusInput = () => {
+      inputRef.current?.focus();
+    };
+
+    document.body.addEventListener('click', focusInput);
+
+    return () => {
+      document.body.removeEventListener('click', focusInput);
+    };
+  }, []);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value);
   };
@@ -30,7 +46,25 @@ const CommandInput: React.FC<CommandInput> = ({value, onChange, onKeyDown}) => {
   };
 
   return(
-      <div id="cl">[client@portfolio ~]$ <input className="commandInput" name="cmd" type="text" value={value} onChange={handleChange} onKeyDown={handleKeyDown} autoFocus/></div>
+      <div id="cl">
+        <span className="commandInputInfo">
+          [<span className="client">
+              client
+          </span>
+          <span className="@">
+            @
+          </span>
+          <span className="server">
+            portfolio
+          </span>
+          <span className="directory">
+            &nbsp;~
+          </span>]$
+        </span>
+        <span className="command">
+          &nbsp;<input ref={inputRef} className="commandInput" name="cmd" type="text" value={value} onChange={handleChange} onKeyDown={handleKeyDown} autoFocus/>
+        </span>
+      </div>
   );
 }
 

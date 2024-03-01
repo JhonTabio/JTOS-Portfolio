@@ -25,7 +25,19 @@ function App()
         <ul id="history">
           {cmdHistory.map((item, index) => (
             <li key={index}>
-              <span>[client@portfolio ~]$ {item}</span>
+              [<span className="client">
+                  client
+              </span>
+              <span className="@">
+                @
+              </span>
+              <span className="server">
+                portfolio
+              </span>
+              <span className="directory">
+                &nbsp;~
+              </span>]$
+              <span className="command">&nbsp;{item}</span>
               <br/>
               {processCommand(item)}
               </li>

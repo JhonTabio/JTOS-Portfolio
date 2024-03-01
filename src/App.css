@@ -10,6 +10,7 @@
   font-family: "VT323", monospace;
   font-weight: 400;
   font-style: normal;
+  color: inherit;
 }
 
 #history
@@ -27,4 +28,30 @@
   font-family: inherit;
   font-size: inherit;
   width: 80%;
+  color: inherit;
+}
+
+.client
+{
+  color: green;
+}
+
+.\@
+{
+  color: blue;
+}
+
+.server
+{
+  color: lightblue
+}
+
+.directory
+{
+  color: lightskyblue;
+}
+
+.command
+{
+  color: gray;
 }
