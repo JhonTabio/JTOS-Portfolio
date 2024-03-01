@@ -27,7 +27,7 @@ function App()
             <li key={index}>
               <span>[client@portfolio ~]$ {item}</span>
               <br/>
-              <span>{processCommand(item)}</span>
+              {processCommand(item)}
               </li>
           ))}
         </ul>
