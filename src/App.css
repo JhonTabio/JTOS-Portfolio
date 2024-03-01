@@ -2,6 +2,7 @@
 {
   max-width: 1280px;
   padding: 2rem;
+  flex: 1;
 }
 
 #terminal
@@ -11,6 +12,13 @@
   font-style: normal;
 }
 
+#history
+{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 .commandInput
 {
   border: none;
@@ -18,4 +26,5 @@
   background-color: transparent;
   font-family: inherit;
   font-size: inherit;
+  width: 80%;
 }

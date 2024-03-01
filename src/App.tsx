@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
-import CommandInput from './components/CommandInput'
-import './App.css'
+import React, { useState } from "react";
+import { processCommand } from "./utils/utils";
+import CommandInput from "./components/CommandInput"
+import "./App.css"
 
 function App()
 {
-  const [cmdValue, setCmdValue] = useState('');
-  const [cmdData, setCmdData] = useState('');
+  const [cmdValue, setCmdValue] = useState("");
+  const [cmdHistory, setList] = useState<string[]>([]);
 
   const handleOnChange = (newValue: string) => {
     setCmdValue(newValue);
   };
 
   const handleKeyDown = () => {
-    setCmdData(`You entered: ${cmdValue}`);
+    setList(currentList => [...currentList, cmdValue]);
+    setCmdValue("");
   };
 
   return (
@@ -20,7 +22,15 @@ function App()
       <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet"/>
 
       <div id="terminal">
-        {cmdData && <div>{cmdData}</div>}
+        <ul id="history">
+          {cmdHistory.map((item, index) => (
+            <li key={index}>
+              <span>[client@portfolio ~]$ {item}</span>
+              <br/>
+              <span>{processCommand(item)}</span>
+              </li>
+          ))}
+        </ul>
         <CommandInput value={cmdValue} onChange={handleOnChange} onKeyDown={handleKeyDown}/>
       </div>
     </>
