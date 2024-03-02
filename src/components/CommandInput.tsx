@@ -7,21 +7,6 @@ interface CommandInput
   onKeyDown: () => void;
 }
 
-const processCommand = (cmd: string): string => {
-  let ret = "Error";
-
-  switch(cmd.toUpperCase())
-  {
-    case "LS":
-      ret = "LS!";
-      break;
-    default:
-      ret = "Error occured";
-      break;
-  }
-  return ret;
-}
-
 const CommandInput: React.FC<CommandInput> = ({value, onChange, onKeyDown}) => {
   const inputRef = useRef<HTMLInputElement>(null);
 

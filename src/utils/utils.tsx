@@ -7,7 +7,12 @@ export const processCommand = (cmd: string): JSX.Element => {
       ret = <span><b>LS</b> command was exectued!</span>
       break;
     case "HELP":
-      ret = <span>Help is here!</span>
+      ret = 
+        <span className="command">
+          help - If unsure, try help<br/>
+          ls - Lists all file and directories<br/>
+          clear - Clears the terminal<br/>
+        </span>
       break;
     case "":
       ret = <span/>

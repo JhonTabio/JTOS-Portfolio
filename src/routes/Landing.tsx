@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import './App.css'
+import './Landing.css'
 
-function App() {
+function Landing() {
   const [count, setCount] = useState(0)
 
   return (
@@ -18,4 +18,4 @@ function App() {
   )
 }
 
-export default App
+export default Landing
