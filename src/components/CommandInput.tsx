@@ -1,13 +1,15 @@
 import React, { useEffect, useRef } from 'react';
+import CommandDir from './CommandDir';
 
 interface CommandInput
 {
+  dir: string;
   value: string;
   onChange: (value: string) => void;
   onKeyDown: () => void;
 }
 
-const CommandInput: React.FC<CommandInput> = ({value, onChange, onKeyDown}) => {
+const CommandInput: React.FC<CommandInput> = ({ dir, value, onChange, onKeyDown }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -33,18 +35,7 @@ const CommandInput: React.FC<CommandInput> = ({value, onChange, onKeyDown}) => {
   return(
       <div id="cl">
         <span className="commandInputInfo">
-          [<span className="client">
-              client
-          </span>
-          <span className="@">
-            @
-          </span>
-          <span className="server">
-            portfolio
-          </span>
-          <span className="directory">
-            &nbsp;~
-          </span>]$
+          <CommandDir dir={dir}/>
         </span>
         <span className="command">
           &nbsp;<input ref={inputRef} className="commandInput" name="cmd" type="text" value={value} onChange={handleChange} onKeyDown={handleKeyDown} autoFocus/>

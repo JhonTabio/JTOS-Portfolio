@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { processCommand } from "../utils/utils";
 import CommandInput from "../components/CommandInput"
+import CommandHistory from "../components/CommandHistory";
 import "./CLI.css"
 
 function CLI()
@@ -9,6 +9,7 @@ function CLI()
   const [cmdHistory, setList] = useState<string[]>([""]);
   const [cmdHistoryFull, setListFull] = useState<string[]>([""]);
   const [historyIndex, setHistoryIndex] = useState(0);
+  const [currentDir, setCurrentDir] = useState("~");
 
   const handleOnChange = (newValue: string) => {
     setCmdValue(newValue);
@@ -48,28 +49,8 @@ function CLI()
       <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet"/>
 
       <div id="terminal">
-        <ul id="history">
-          {cmdHistory.slice(1).map((item, index) => (
-            <li key={index}>
-              [<span className="client">
-                  client
-              </span>
-              <span className="@">
-                @
-              </span>
-              <span className="server">
-                portfolio
-              </span>
-              <span className="directory">
-                &nbsp;~
-              </span>]$
-              <span className="command">&nbsp;{item}</span>
-              <br/>
-              {processCommand(item)}
-              </li>
-          ))}
-        </ul>
-        <CommandInput value={cmdHistoryFull[historyIndex]} onChange={handleOnChange} onKeyDown={handleKeyDown}/>
+        <CommandHistory dir={currentDir} history={cmdHistory.slice(1)}/>
+        <CommandInput dir={currentDir} value={cmdHistoryFull[historyIndex]} onChange={handleOnChange} onKeyDown={handleKeyDown}/>
       </div>
     </>
   )
