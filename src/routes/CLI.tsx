@@ -9,7 +9,7 @@ function CLI()
   const [cmdHistory, setList] = useState<string[]>([""]);
   const [cmdHistoryFull, setListFull] = useState<string[]>([""]);
   const [historyIndex, setHistoryIndex] = useState(0);
-  const [currentDir, setCurrentDir] = useState("~");
+  const [currentDir] = useState("~");
 
   const handleOnChange = (newValue: string) => {
     setCmdValue(newValue);

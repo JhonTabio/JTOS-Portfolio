@@ -8,6 +8,7 @@ function Landing() {
     <>
       <div>
         <h1>Hello World!</h1>
+        <p>This is a test to see if redeployment works</p>
       </div>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
