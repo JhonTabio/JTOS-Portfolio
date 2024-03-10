@@ -163,7 +163,7 @@ export const processCommand = (cmd: string): JSX.Element => {
       break;
     case "BANNER":
       ret =
-        <pre className="command">
+        <pre className="command" style={{whiteSpace: "pre-wrap", wordWrap: "break-word"}}>
             _____  _________    ___     ______   
            |_   _||  _   _  | .'   `. .' ____ \  
              | |  |_/ | | \_|/  .-.  \| (___ \_| 
