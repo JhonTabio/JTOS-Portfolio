@@ -163,16 +163,15 @@ export const processCommand = (cmd: string): JSX.Element => {
       break;
     case "BANNER":
       ret =
-        <span className="command"> 
-              _____  _________    ___     ______   <br/>
-            |_   _||  _   _  | .'   `. .' ____ \ <br/> 
-              | |  |_/ | | \_|/  .-.  \| (___ \_|<br/> 
-          _   | |      | |    | |   | | _.____`. <br/> 
-          | |__' |     _| |_   \  `-'  /| \____) |<br/> 
-          `.____.'    |_____|   `.___.'  \______.'<br/> 
+        <pre className="command"> 
+              _____  _________    ___     ______   
+            |_   _||  _   _  | .'   `. .' ____ \ 
+              | |  |_/ | | \_|/  .-.  \| (___ \_|
+          _   | |      | |    | |   | | _.____`. 
+          | |__' |     _| |_   \  `-'  /| \____) |
+          `.____.'    |_____|   `.___.'  \______.'
                                          
-          <br/>
-        </span>
+        </pre>
       break;
     default:
       ret = <span><em style={{color: "red"}}>bash: {process[0]}: command not found. Try help</em></span>
