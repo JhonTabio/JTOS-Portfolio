@@ -33,25 +33,25 @@
 
 .client
 {
-  color: green;
+  color: var(--client);
 }
 
 .\@
 {
-  color: blue;
+  color: var(--\@);
 }
 
 .server
 {
-  color: lightblue
+  color: var(--server);
 }
 
 .directory
 {
-  color: lightskyblue;
+  color: var(--directory);
 }
 
 .command
 {
-  color: gray;
+  color: var(--command);
 }

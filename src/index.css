@@ -12,6 +12,12 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --client: gray;
+  --\@: gray;
+  --server: gray;
+  --directory: gray;
+  --command: gray;
 }
 
 a
