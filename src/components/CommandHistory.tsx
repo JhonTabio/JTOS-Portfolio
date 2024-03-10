@@ -21,7 +21,6 @@ const CommandHistory: React.FC<CommandHistory> = ({ dir, history }) => {
             </li>
           ))}
         </ul>
-        {document.}
     </>
   )
 }
