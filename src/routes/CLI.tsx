@@ -28,12 +28,12 @@ function CLI()
     setHistoryIndex(0);
     cmdHistoryFull[0] = "";
 
-    if(window.innerHeight > 768) window.scrollTo(0, document.body.scrollHeight);
+    if(window.innerWidth > 768) window.scrollTo(0, document.body.scrollHeight);
   };
   
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if(window.innerHeight > 768) window.scrollTo(0, document.body.scrollHeight);
+      if(window.innerWidth > 768) window.scrollTo(0, document.body.scrollHeight);
       if (event.key === 'ArrowUp')
       {
         event.preventDefault();
