@@ -27,6 +27,8 @@ function CLI()
     setCmdValue("");
     setHistoryIndex(0);
     cmdHistoryFull[0] = "";
+
+    if(document.body.scrollHeight > window.innerHeight && window.innerHeight > 768) window.scrollTo(0, document.body.scrollHeight);
   };
   
   useEffect(() => {
