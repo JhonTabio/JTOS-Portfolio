@@ -3,6 +3,20 @@ const changeColor = (cmd: string[]): JSX.Element =>{
   let part: string;
   let color: string;
 
+  if(cmd.length === 1)
+  {
+    const element = document.createElement("div");
+    element.style.color = cmd[0];
+    if(element.style.color === "") throw Error;
+    element.remove();
+
+    document.documentElement.style.setProperty("--client", cmd[0]);
+    document.documentElement.style.setProperty("--\@", cmd[0]);
+    document.documentElement.style.setProperty("--server", cmd[0]);
+    document.documentElement.style.setProperty("--directory", cmd[0]);
+    document.documentElement.style.setProperty("--command", cmd[0]);
+  }
+  else
   try
   {
     const root = getComputedStyle(document.documentElement);
