@@ -17,34 +17,34 @@ const changeColor = (cmd: string[]): JSX.Element =>{
     document.documentElement.style.setProperty("--command", cmd[0]);
   }
   else
-  try
-  {
-    const root = getComputedStyle(document.documentElement);
-
-    for(let i = 0; i < cmd.length; i += 2)
+    try
     {
-      part = "--" + cmd[i].toLowerCase();
-      color = cmd[i + 1].toLowerCase();
+      const root = getComputedStyle(document.documentElement);
 
-      const prop = root.getPropertyValue(part);
+      for(let i = 0; i < cmd.length; i += 2)
+      {
+        part = "--" + cmd[i].toLowerCase();
+        color = cmd[i + 1].toLowerCase();
 
-      if(prop === "") throw Error;
+        const prop = root.getPropertyValue(part);
 
-      const element = document.createElement("div");
-      element.style.color = color;
-      if(element.style.color === "") throw Error;
-      element.remove();
+        if(prop === "") throw Error;
 
-      document.documentElement.style.setProperty(part, color);
+        const element = document.createElement("div");
+        element.style.color = color;
+        if(element.style.color === "") throw Error;
+        element.remove();
+
+        document.documentElement.style.setProperty(part, color);
+      }
     }
-  }
-  catch(e)
-  {
-    ret =
-      <span>
-        error
-      </span>
-  }
+    catch(e)
+    {
+      ret =
+        <span>
+          error
+        </span>
+    }
 
   return ret;
 }
@@ -69,10 +69,16 @@ export const processCommand = (cmd: string): JSX.Element => {
         <span className="command">
           help - If unsure, try help help<br/>
           ls - Lists all files and directories within the given directory [Default is root directory]<br/>
+          cat - Prints the contents of a given file<br/>
           whoami - Provides a brief description of the creator of JTOS<br/>
+          whatami - Provides a brief description of JTOS<br/>
+          whenami - Provides a brief description of where you are connected<br/>
           whereami - Provides a brief description of where you are<br/>
-          color - Change the color of the terminal text
+          whyami - Provides a brief description of why JTOS was created<br/>
+          howami - Provides a brief description of how JTOS was created<br/>
+          color - Change the color of the terminal text<br/>
           clear - Clears the terminal<br/>
+          exit - Exits the terminal<br/>
         </span>
       else
         switch(process[1].toUpperCase())
@@ -153,7 +159,7 @@ export const processCommand = (cmd: string): JSX.Element => {
           <br/>
         </span>
       else
-        ret = changeColor(process.splice(1))
+        ret = changeColor(process.splice(1));
       break;
     default:
       ret = <span><em style={{color: "red"}}>bash: {process[0]}: command not found. Try help</em></span>
