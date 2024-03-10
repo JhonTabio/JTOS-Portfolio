@@ -28,12 +28,12 @@ function CLI()
     setHistoryIndex(0);
     cmdHistoryFull[0] = "";
 
-    if(document.body.scrollHeight > window.innerHeight && window.innerWidth > 768) window.scrollTo(0, document.body.scrollHeight);
+    if(document.body.scrollHeight > window.innerHeight) window.scrollTo(0, document.body.scrollHeight);
   };
   
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if(document.body.scrollHeight > window.innerHeight && window.innerWidth > 768) window.scrollTo(0, document.body.scrollHeight);
+      if(document.body.scrollHeight > window.innerHeight) window.scrollTo(0, document.body.scrollHeight);
       if (event.key === 'ArrowUp')
       {
         event.preventDefault();
@@ -62,7 +62,6 @@ function CLI()
       <div id="terminal">
         <CommandHistory dir={currentDir} history={cmdHistory.slice(1)}/>
         <CommandInput dir={currentDir} value={cmdHistoryFull[historyIndex]} onChange={handleOnChange} onKeyDown={handleKeyDown}/>
-        {cmdValue}
       </div>
     </>
   )
