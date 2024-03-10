@@ -29,7 +29,17 @@ const CommandInput: React.FC<CommandInput> = ({ dir, value, onChange, onKeyDown 
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if(e.key === "Enter") onKeyDown();
+    if(e.key === "Enter")
+    {
+      onKeyDown();
+
+      if(!inputRef.current) return;
+
+      const rect = inputRef.current.getBoundingClientRect();
+      const isVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
+
+      if (!isVisible) inputRef.current.scrollIntoView({ block: 'nearest', inline: 'start' });
+    }
   };
 
   return(
