@@ -27,12 +27,13 @@ function CLI()
     setCmdValue("");
     setHistoryIndex(0);
     cmdHistoryFull[0] = "";
-    window.scrollTo(0, document.body.scrollHeight);
+
+    if(document.body.scrollHeight > window.innerHeight) window.scrollTo(0, document.body.scrollHeight);
   };
   
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      window.scrollTo(0, document.body.scrollHeight);
+      if(document.body.scrollHeight > window.innerHeight) window.scrollTo(0, document.body.scrollHeight);
       if (event.key === 'ArrowUp')
       {
         event.preventDefault();
