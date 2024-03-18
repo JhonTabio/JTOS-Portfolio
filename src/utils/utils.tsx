@@ -1,5 +1,5 @@
 const changeColor = (cmd: string[]): JSX.Element =>{
-  let ret: JSX.Element = <span/>;
+  let ret: JSX.Element = <div/>;
   let part: string;
   let color: string;
 
@@ -41,16 +41,16 @@ const changeColor = (cmd: string[]): JSX.Element =>{
     catch(e)
     {
       ret =
-        <span>
+        <div>
           error
-        </span>
+        </div>
     }
 
   return ret;
 }
 
 export const processCommand = (cmd: string): JSX.Element => {
-  let ret: JSX.Element = <span/>;
+  let ret: JSX.Element = <div/>;
 
   if(cmd.trim() === "") return ret;
 
@@ -61,12 +61,12 @@ export const processCommand = (cmd: string): JSX.Element => {
   switch (process[0].toUpperCase())
   {
     case "LS":
-      ret = <span><b>LS</b> command was exectued!</span>
+      ret = <div><b>LS</b> command was exectued!</div>
       break;
     case "HELP":
       if(process.length == 1)
         ret = 
-        <span className="command">
+        <div className="command">
           help - If unsure, try help help<br/>
           ls - Lists all files and directories within the given directory [Default is root directory]<br/>
           cat - Prints the contents of a given file<br/>
@@ -79,33 +79,33 @@ export const processCommand = (cmd: string): JSX.Element => {
           color - Change the color of the terminal text<br/>
           clear - Clears the terminal<br/>
           exit - Exits the terminal<br/>
-        </span>
+        </div>
       else
         switch(process[1].toUpperCase())
         {
           case "HELP":
             ret =
-              <span className="command">
+              <div className="command">
                 help: help [command]<br/>
                 Displays brief summaries of built-in commands
-              </span>
+              </div>
             break;
           default:
-            ret = <span><em style={{color: "red"}}>bash: help: no help topics match `{process[1]}`</em></span>
+            ret = <div><em style={{color: "red"}}>bash: help: no help topics match `{process[1]}`</em></div>
             break;
         }
       break;
     case "WHOAMI"://TODO: Use API to fetch from github instead 
       ret =
-      <span className="command"> 
+      <div className="command"> 
         Hey! I am Jhon Tabio. I am the creator of JTOS, the operating system the server you are currently connected to is using.<br/>
         Currently an undergraduate student that is pursuing a Bachelors in Computer Science at the University of Central Florida. Throughout my educational and professional career, I have adopted various industry and social skills that allows me to easily integrate myself in any sort of team environment. Every day I work towards refining my skills in C / C++ / C#, Java, Javascript, Typescript, Python, and HTML / CSS using tools such as Visual Studio / Visual Studio Code, VIM / NeoVim, Git, and GitHub. One of my greatest achievements is having the chance to work alongside Microsoft and their TEALS division to bring more accessibility of computer science to High schools that did not have a strong CS program. I was able to gather the communication skills and patience to teach a group of high schoolers about the fundamentals of programming.
         <br/>
-      </span>
+      </div>
       break;
     case "WHATAMI":
       ret =
-      <span className="command"> 
+      <div className="command"> 
         JTOS is a full fledge operating system with all kinds of capabilities!<br/><br/>
         Not. The reality is that the OS as a whole is more of an artistic simulation rather
         than an emulation. The idea is I wanted to challenge myself with my weaker side of
@@ -114,50 +114,50 @@ export const processCommand = (cmd: string): JSX.Element => {
         Taking the approach I did forced me to not only use React, but strategize how I wanted
         core parts of this simulation to work.
         <br/>
-      </span>
+      </div>
       break;
     case "WHEREAMI":
       ret =
-      <span className="command"> 
+      <div className="command"> 
         Currently, you are connected to a remote server via an ssh terminal. This server
         houses various information, documents, and overall a good example of the Full Stack
         Development capabilities of the creator of JTOS (Jhon Tabio).
         <br/>
-      </span>
+      </div>
       break;
     case "WHENAMI":
       ret =
-      <span className="command"> 
+      <div className="command"> 
         Not sure what to do tbh... time spent on this? My local time? Most recent commit time?
         <br/>
-      </span>
+      </div>
       break;
     case "WHYAMI":
       ret =
-      <span className="command"> 
+      <div className="command"> 
         Why this? Why go through the effort of simulating a terminal? Well... because out of
         all my options / ideas for my portfolio, I thought this to be the best one that fits me.<br/>
         It was not too long ago where I had switched my working station from a Windows machine to a Linux machine.
         Since then, I have been enjoying the use of a terminal more than a GUI interface for the purposes
         of work. I emphasize work, because I most certainly still use Windows for leisure and entertainment :)
         <br/>
-      </span>
+      </div>
       break;
     case "HOWAMI":
       ret =
-      <span className="command"> 
+      <div className="command"> 
         Doing very good! :)<br/><br/>
         Talk about tech stack maybe?
         <br/>
-      </span>
+      </div>
       break;
     case "COLOR":
       if(process.length == 1)
         ret =
-        <span className="command"> 
+        <div className="command"> 
           Wrong usage, do `help color` for more information
           <br/>
-        </span>
+        </div>
       else
         ret = changeColor(process.splice(1));
       break;
@@ -175,25 +175,24 @@ export const processCommand = (cmd: string): JSX.Element => {
           |-------------------------------------------------|<br/>
         </pre>
       break;
-    case "WELCOME":
+    case "WELCOME"://[SPECS?]<br/>
       const currentDate = new Date();
       const formattedDate = `${currentDate.getMonth() + 1}`.padStart(2, '0') +
                         `.${currentDate.getDate()}`.padStart(2, '0') +
                         `.${currentDate.getFullYear()}`;
 
       ret = 
-        <span className="command"> 
+        <div className="command"> 
           JTOS Terminal (Version {formattedDate})<br/>
           © {currentDate.getFullYear()} Jhon Tabio All rights reserved.<br/>
           {processCommand("BANNER")} 
-          //[SPECS?]<br/>
           Welcome to my portfolio!<br/>
           Feel free to stick and look around. Not sure where to start? Try help!
           <br/>
-        </span>
+        </div>
       break;
     default:
-      ret = <span><em style={{color: "red"}}>bash: {process[0]}: command not found. Try help</em></span>
+      ret = <div className="command"><em style={{color: "red"}}>bash: {process[0]}: command not found. Try help</em></div>
       break;
   }
 

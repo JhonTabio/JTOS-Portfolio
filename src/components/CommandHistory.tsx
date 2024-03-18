@@ -15,7 +15,7 @@ const CommandHistory: React.FC<CommandHistory> = ({ dir, history }) => {
           {history.map((item, index) => (
             <li key={index}>
               <CommandDir dir={dir}/>
-              <span className="command">&nbsp;{item}</span>
+              <span className="command" style={{paddingLeft: 0}}>&nbsp;{item}</span>
               <br/>
               {processCommand(item)}
             </li>
