@@ -6,8 +6,8 @@ import "./CLI.css"
 function CLI()
 {
   const [cmdValue, setCmdValue] = useState("");
-  const [cmdHistory, setList] = useState<string[]>([""]);
-  const [cmdHistoryFull, setListFull] = useState<string[]>([""]);
+  const [cmdHistory, setList] = useState<string[]>(["", "WELCOME"]);
+  const [cmdHistoryFull, setListFull] = useState<string[]>(["", "WELCOME"]);
   const [historyIndex, setHistoryIndex] = useState(0);
   const [currentDir] = useState("~");
 

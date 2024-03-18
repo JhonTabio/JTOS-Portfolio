@@ -164,15 +164,32 @@ export const processCommand = (cmd: string): JSX.Element => {
     case "BANNER":
       ret =
         <pre className="command" style={{whiteSpace: "pre-wrap", wordWrap: "break-word"}}>
-  |------------------------------------------------|<br/>
-  |       _____  _________    ___     ______       |<br/>
-  |      |_   _||  _   _  | .'   `. .' ____ \      |<br/>
-  |        | |  |_/ | | \_|/  .-.  \| (___ \_|     |<br/>
-  |    _   | |      | |    | |   | | _.____`.      |<br/>
-  |   | |__' |     _| |_   \  `-'  /| \____) |     |<br/>
-  |   `.____.'    |_____|   `.___.'  \______.'     |<br/>
-  |------------------------------------------------|<br/>
+          |-------------------------------------------------|<br/>
+          |        _____  _________    ___     ______       |<br/>
+          |       |_   _||  _   _  | .'   `. .' ____ \      |<br/>
+          |         | |  |_/ | | \_|/  .-.  \| (___ \_|     |<br/>
+          |     _   | |      | |    | |   | | _.____`.      |<br/>
+          |    | |__' |     _| |_   \  `-'  /| \____) |     |<br/>
+          |    `.____.'    |_____|   `.___.'  \______.'     |<br/>
+          |                                                 |<br/>
+          |-------------------------------------------------|<br/>
         </pre>
+      break;
+    case "WECLOME":
+      const currentDate = new Date();
+      const formattedDate = `${currentDate.getMonth() + 1}`.padStart(2, '0') +
+                        `.${currentDate.getDate()}`.padStart(2, '0') +
+                        `.${currentDate.getFullYear()}`;
+
+      <span className="command"> 
+        JTOS Terminal (Version {formattedDate})<br/>
+        © {currentDate.getFullYear()} Jhon Tabio All rights reserved.<br/>
+        {processCommand("BANNER")} 
+        //[SPECS?]<br/>
+        Welcome to my portfolio!<br/>
+        Feel free to stick and look around. Not sure where to start? Try help!
+        <br/>
+      </span>
       break;
     default:
       ret = <span><em style={{color: "red"}}>bash: {process[0]}: command not found. Try help</em></span>
