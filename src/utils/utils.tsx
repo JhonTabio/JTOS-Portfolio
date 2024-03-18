@@ -181,15 +181,16 @@ export const processCommand = (cmd: string): JSX.Element => {
                         `.${currentDate.getDate()}`.padStart(2, '0') +
                         `.${currentDate.getFullYear()}`;
 
-      <span className="command"> 
-        JTOS Terminal (Version {formattedDate})<br/>
-        © {currentDate.getFullYear()} Jhon Tabio All rights reserved.<br/>
-        {processCommand("BANNER")} 
-        //[SPECS?]<br/>
-        Welcome to my portfolio!<br/>
-        Feel free to stick and look around. Not sure where to start? Try help!
-        <br/>
-      </span>
+      ret = 
+        <span className="command"> 
+          JTOS Terminal (Version {formattedDate})<br/>
+          © {currentDate.getFullYear()} Jhon Tabio All rights reserved.<br/>
+          {processCommand("BANNER")} 
+          //[SPECS?]<br/>
+          Welcome to my portfolio!<br/>
+          Feel free to stick and look around. Not sure where to start? Try help!
+          <br/>
+        </span>
       break;
     default:
       ret = <span><em style={{color: "red"}}>bash: {process[0]}: command not found. Try help</em></span>
