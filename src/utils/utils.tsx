@@ -175,7 +175,7 @@ export const processCommand = (cmd: string): JSX.Element => {
           |-------------------------------------------------|<br/>
         </pre>
       break;
-    case "WECLOME":
+    case "WELCOME":
       const currentDate = new Date();
       const formattedDate = `${currentDate.getMonth() + 1}`.padStart(2, '0') +
                         `.${currentDate.getDate()}`.padStart(2, '0') +
