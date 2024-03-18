@@ -61,7 +61,10 @@ export const processCommand = (cmd: string): JSX.Element => {
   switch (process[0].toUpperCase())
   {
     case "LS":
-      ret = <div><b>LS</b> command was exectued!</div>
+      ret = 
+        <div className="command">
+          LS being implemented... or maybe not. Be back soon!
+        </div>
       break;
     case "HELP":
       if(process.length == 1)
@@ -190,6 +193,13 @@ export const processCommand = (cmd: string): JSX.Element => {
           Feel free to stick and look around. Not sure where to start? Try help!
           <br/>
         </div>
+      break;
+    case "EXIT":
+      ret =
+      <div className="command"> 
+        Exit command still being implemented... Close the tab :)
+        <br/>
+      </div>
       break;
     default:
       ret = <div className="command"><em style={{color: "red"}}>bash: {process[0]}: command not found. Try help</em></div>
