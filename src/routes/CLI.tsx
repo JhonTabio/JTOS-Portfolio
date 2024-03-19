@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import CommandInput from "../components/CommandInput"
 import CommandHistory from "../components/CommandHistory";
 import "./CLI.css"
+import { processCommand } from "../utils/utils";
 
 function CLI()
 {
   const [cmdValue, setCmdValue] = useState("");
-  const [cmdHistory, setList] = useState<string[]>(["", "WELCOME"]);
-  const [cmdHistoryFull, setListFull] = useState<string[]>(["", "WELCOME"]);
+  const [cmdHistory, setList] = useState<string[]>([""]);
+  const [cmdHistoryFull, setListFull] = useState<string[]>([""]);
   const [historyIndex, setHistoryIndex] = useState(0);
   const [currentDir] = useState("~");
 
@@ -22,7 +23,14 @@ function CLI()
     setList(currentList => [...currentList, cmdValue]);
     if(cmdValue != "") setListFull(currentList => [...currentList, cmdValue]);
 
-    if(cmdValue.toUpperCase() == "CLEAR") setList([]);
+    if(cmdValue.toUpperCase() == "CLEAR")
+    {
+      setList([]);
+      
+      const welcome = document.getElementById("welcome")
+
+      if(welcome) welcome.remove();
+    }
 
     setCmdValue("");
     setHistoryIndex(0);
@@ -60,6 +68,9 @@ function CLI()
       <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet"/>
 
       <div id="terminal">
+        <div id="welcome" className="command">
+          {processCommand("welcome")}
+        </div>
         <CommandHistory dir={currentDir} history={cmdHistory.slice(1)}/>
         <CommandInput dir={currentDir} value={cmdHistoryFull[historyIndex]} onChange={handleOnChange} onKeyDown={handleKeyDown}/>
         {cmdValue}
