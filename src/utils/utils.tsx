@@ -1,3 +1,4 @@
+/*
 interface FileSystemItem
 {
   id: string;
@@ -21,6 +22,7 @@ const fileSystem: FileSystemItem =
     },
   ],
 };
+*/
 
 const changeColor = (cmd: string[]): JSX.Element =>{
   let ret: JSX.Element = <div/>;
