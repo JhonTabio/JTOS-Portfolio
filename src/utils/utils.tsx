@@ -1,3 +1,27 @@
+interface FileSystemItem
+{
+  id: string;
+  name: string;
+  type: 'file' | 'directory';
+  children?: FileSystemItem[];
+}
+
+const fileSystem: FileSystemItem = 
+{
+  id: '~',
+  name: 'Root',
+  type: 'directory',
+  children: [
+    { id: '1', name: 'File 1.txt', type: 'file' },
+    {
+      id: '2',
+      name: 'Subdirectory',
+      type: 'directory',
+      children: [{ id: '3', name: 'File 2.txt', type: 'file' }],
+    },
+  ],
+};
+
 const changeColor = (cmd: string[]): JSX.Element =>{
   let ret: JSX.Element = <div/>;
   let part: string;
@@ -64,6 +88,12 @@ export const processCommand = (cmd: string): JSX.Element => {
       ret = 
         <div className="command">
           LS being implemented... or maybe not. Be back soon!
+        </div>
+      break;
+    case "CD":
+      ret = 
+        <div className="command">
+          CD being implemented... or maybe not. Be back soon!
         </div>
       break;
     case "HELP":
