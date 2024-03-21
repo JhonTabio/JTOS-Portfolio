@@ -1,6 +1,6 @@
 import React from "react";
 import CommandDir from "./CommandDir";
-import { processCommand } from "../utils/utils";
+import CommandProcess from "./CommandProcess";
 
 interface CommandHistory
 {
@@ -16,7 +16,7 @@ const CommandHistory: React.FC<CommandHistory> = ({ history }) => {
               <CommandDir/>
               <span className="command" style={{paddingLeft: 0}}>&nbsp;{item}</span>
               <br/>
-              {processCommand(item)}
+              <CommandProcess cmd={item}/>
             </li>
           ))}
         </ul>

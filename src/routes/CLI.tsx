@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import CommandInput from "../components/CommandInput"
 import CommandHistory from "../components/CommandHistory";
 import "./CLI.css"
-import { processCommand } from "../utils/utils";
+import CommandProcess from "../components/CommandProcess";
 
 function CLI()
 {
@@ -68,7 +68,7 @@ function CLI()
 
       <div id="terminal">
         <div id="welcome" className="command">
-          {processCommand("welcome")}
+          <CommandProcess cmd="WELCOME"/>
         </div>
         <CommandHistory history={cmdHistory.slice(1)}/>
         <CommandInput value={cmdHistoryFull[historyIndex]} onChange={handleOnChange} onKeyDown={handleKeyDown}/>
