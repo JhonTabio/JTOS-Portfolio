@@ -10,7 +10,6 @@ function CLI()
   const [cmdHistory, setList] = useState<string[]>([""]);
   const [cmdHistoryFull, setListFull] = useState<string[]>([""]);
   const [historyIndex, setHistoryIndex] = useState(0);
-  const [currentDir] = useState("~");
 
   const handleOnChange = (newValue: string) => {
     setCmdValue(newValue);
@@ -71,8 +70,8 @@ function CLI()
         <div id="welcome" className="command">
           {processCommand("welcome")}
         </div>
-        <CommandHistory dir={currentDir} history={cmdHistory.slice(1)}/>
-        <CommandInput dir={currentDir} value={cmdHistoryFull[historyIndex]} onChange={handleOnChange} onKeyDown={handleKeyDown}/>
+        <CommandHistory history={cmdHistory.slice(1)}/>
+        <CommandInput value={cmdHistoryFull[historyIndex]} onChange={handleOnChange} onKeyDown={handleKeyDown}/>
         {cmdValue}
       </div>
     </>
