@@ -29,10 +29,11 @@ const CommandProcess: React.FC<CommandProcess> = ({ cmd }) => {
           </div>
         break;
       case "CD":
-        ret = 
-          <div className="command">
-            CD being implemented... or maybe not. Be back soon!
-          </div>
+        ret = <div/>
+
+        if(process.length == 2) setDir(process[1]);
+        else if(process.length > 2)
+          ret = <div><em style={{color: "red"}}>bash: cd: too many arguments</em></div>
         break;
       case "HELP":
         if(process.length == 1)
@@ -126,7 +127,7 @@ const CommandProcess: React.FC<CommandProcess> = ({ cmd }) => {
         if(process.length == 1)
           ret =
           <div className="command" style={{ color: "red" }}> 
-            Wrong usage, do `help color` for more information
+            bash: color: Wrong usage, do `help color` for more information
             <br/>
           </div>
         else
@@ -138,7 +139,7 @@ const CommandProcess: React.FC<CommandProcess> = ({ cmd }) => {
           else
             ret = 
               <div className="command" style={{ color: "red" }}> 
-                Wrong usage, do `help color` for more information
+                bash: color: Wrong usage, do `help color` for more information
                 <br/>
               </div>
         }
