@@ -1,4 +1,3 @@
-import React, { useEffect, useRef } from "react";
 import { useDir } from "./CommandDir";
 import { changeColor } from "../utils/utils";
 
@@ -9,7 +8,7 @@ interface CommandProcess
 
 const CommandProcess: React.FC<CommandProcess> = ({ cmd }) => {
 
-  const { dir, setDir } = useDir();
+  const { setDir } = useDir();
 
   const processCommand = (cmd: string): JSX.Element => {
     let ret: JSX.Element = <div/>;
@@ -30,10 +29,18 @@ const CommandProcess: React.FC<CommandProcess> = ({ cmd }) => {
         break;
       case "CD":
         ret = <div/>
+        
+        let path: string[];
 
-        if(process.length == 2) setDir(process[1]);
+        if(process[1].trim() === "/") path = ["/"]
+        else path =  process[1].trim().split("/");
+
+        if(path[path.length - 1] === "") path.pop();
+
+        if(process.length == 2) setDir(path[path.length - 1]);
         else if(process.length > 2)
           ret = <div><em style={{color: "red"}}>bash: cd: too many arguments</em></div>
+
         break;
       case "HELP":
         if(process.length == 1)
@@ -124,6 +131,8 @@ const CommandProcess: React.FC<CommandProcess> = ({ cmd }) => {
         </div>
         break;
       case "COLOR":
+        ret = <div/>
+
         if(process.length == 1)
           ret =
           <div className="command" style={{ color: "red" }}> 
@@ -135,7 +144,7 @@ const CommandProcess: React.FC<CommandProcess> = ({ cmd }) => {
           let res: boolean = changeColor(process.splice(1));
 
           if(res)
-            ret = <br/>
+            ret = <div/>
           else
             ret = 
               <div className="command" style={{ color: "red" }}> 
