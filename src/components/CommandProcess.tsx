@@ -15,7 +15,7 @@ const CommandProcess: React.FC<CommandProcess> = ({ cmd }) => {
 
     if(cmd.trim() === "") return ret;
 
-    let process = cmd.split(" ");
+    let process = cmd.trim().split(" ");
 
     if(process.length <= 0) return ret;
 
@@ -32,6 +32,7 @@ const CommandProcess: React.FC<CommandProcess> = ({ cmd }) => {
         
         let path: string[];
 
+        if(process.length == 1) break;
         if(process[1].trim() === "/") path = ["/"]
         else path =  process[1].trim().split("/");
 
