@@ -1,3 +1,4 @@
+import React, { ReactElement, ReactNode } from 'react';
 import { useDir } from "./CommandDir";
 import { changeColor } from "../utils/utils";
 
@@ -10,8 +11,8 @@ const CommandProcess: React.FC<CommandProcess> = ({ cmd }) => {
 
   const { setDir } = useDir();
 
-  const processCommand = (cmd: string): JSX.Element => {
-    let ret: JSX.Element = <div/>;
+  const processCommand = (cmd: string): ReactElement => {
+    let ret: ReactElement = <div/>;
 
     if(cmd.trim() === "") return ret;
 
@@ -48,17 +49,17 @@ const CommandProcess: React.FC<CommandProcess> = ({ cmd }) => {
           ret = 
           <div className="command">
             help - If unsure, try help help<br/>
-            ls - Lists all files and directories within the given directory [Default is root directory]<br/>
-            cat - Prints the contents of a given file<br/>
-            whoami - Provides a brief description of the creator of JTOS<br/>
-            whatami - Provides a brief description of JTOS<br/>
-            whenami - Provides a brief description of where you are connected<br/>
-            whereami - Provides a brief description of where you are<br/>
-            whyami - Provides a brief description of why JTOS was created<br/>
-            howami - Provides a brief description of how JTOS was created<br/>
-            color - Change the color of the terminal text<br/>
-            clear - Clears the terminal<br/>
-            exit - Exits the terminal<br/>
+            *ls - Lists all files and directories within the given directory [Default is root directory]<br/>
+            *cat - Prints the contents of a given file<br/>
+            *whoami - Provides a brief description of the creator of JTOS<br/>
+            *whatami - Provides a brief description of JTOS<br/>
+            *whenami - Provides a brief description of where you are connected<br/>
+            *whereami - Provides a brief description of where you are<br/>
+            *whyami - Provides a brief description of why JTOS was created<br/>
+            *howami - Provides a brief description of how JTOS was created<br/>
+            *color - Change the color of the terminal text<br/>
+            *clear - Clears the terminal<br/>
+            *exit - Exits the terminal<br/>
           </div>
         else
           switch(process[1].toUpperCase())
@@ -190,6 +191,27 @@ const CommandProcess: React.FC<CommandProcess> = ({ cmd }) => {
           Exit command still being implemented... Close the tab :)
           <br/>
         </div>
+        break;
+      case "ECHO":
+        ret =
+        <div className="command"> 
+          <br/>
+          <br/>
+        </div>
+
+        if(process.length >= 1)
+          ret =
+          <div className="command"> 
+              {process.splice(1).map((cmd) => {
+                if (/^`.*`$/.test(cmd))
+                {
+                  let ret: ReactElement = processCommand(cmd.replace(/^`|`$/g, ''));
+                  return <span>{ret}&nbsp;</span>;
+                }
+                return <span>{cmd}&nbsp;</span>;
+              })}
+            <br/>
+          </div>
         break;
       default:
         ret = <div className="command"><em style={{color: "red"}}>bash: {process[0]}: command not found. Try help</em></div>
