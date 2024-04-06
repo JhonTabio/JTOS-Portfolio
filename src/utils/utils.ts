@@ -1,3 +1,5 @@
+import React, { ReactNode } from "react";
+
 const isColor = (color: string) =>
 {
   const element = document.createElement("div");
@@ -51,3 +53,24 @@ export const changeColor = (cmd: string[]): boolean =>{
 
   return ret;
 }
+
+export const processElements = (element: ReactNode): ReactNode => {
+  if (!React.isValidElement(element)) return element;
+
+  const children = React.Children.map(element.props.children, processElements) || [];
+
+  if (element.type === "div" || element.type === "span" || element.type === "em") return children;
+
+  if (element.type === "br") return null;
+
+  const newProps = {
+    ...element.props,
+    style: {
+      ...element.props.style,
+      padding: 0,
+    },
+    children,
+  };
+
+  return React.cloneElement(element, newProps);
+};

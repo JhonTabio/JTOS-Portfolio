@@ -1,6 +1,6 @@
 import React, { ReactElement, ReactNode } from 'react';
 import { useDir } from "./CommandDir";
-import { changeColor } from "../utils/utils";
+import { changeColor, processElements } from "../utils/utils";
 
 interface CommandProcess
 {
@@ -202,13 +202,15 @@ const CommandProcess: React.FC<CommandProcess> = ({ cmd }) => {
         if(process.length >= 1)
           ret =
           <div className="command"> 
-              {process.splice(1).map((cmd) => {
+              {process.splice(1).map((cmd, i) => {
                 if (/^`.*`$/.test(cmd))
                 {
-                  let ret: ReactElement = processCommand(cmd.replace(/^`|`$/g, ''));
-                  return <span>{ret}&nbsp;</span>;
+                  let command: ReactElement = processCommand(cmd.replace(/^`|`$/g, ''));
+                  let ret: ReactNode = processElements(command);
+
+                  return <span key={i}>{ret}&nbsp;</span>;
                 }
-                return <span>{cmd}&nbsp;</span>;
+                return <span key={i}>{cmd}&nbsp;</span>;
               })}
             <br/>
           </div>
