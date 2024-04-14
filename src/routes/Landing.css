@@ -1,0 +1,27 @@
+#root
+{
+  width: 90wh;
+  height: 90vh;
+}
+
+#container
+{
+  width: inherit;
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+#banner
+{
+  transition: transform 0.8s ease-in-out;
+  transform: translateY(0);
+}
+
+#container.init #banner
+{
+  transform: translateY(35vh);
+}

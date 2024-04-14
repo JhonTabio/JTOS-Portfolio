@@ -1,19 +1,49 @@
-import { useState } from 'react'
-import './Landing.css'
+import { useState, useEffect } from "react"
+import "./Landing.css"
 
 function Landing() {
-  const [count, setCount] = useState(0)
+
+  const [animate, setAnimation] = useState("intro");
+
+  const [arrow, setArrow] = useState<string>('-');
+    
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setArrow(currentChar => currentChar === '>' ? '—' : '>');
+        }, 500);
+
+        return () => clearInterval(interval);
+    }, []);
 
   return (
     <>
-      <div>
-        <h1>Hello World!</h1>
-        <p>This is a test to see if redeployment works</p>
-      </div>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+      <div id="container" class={`${animate}`}>
+        <pre id="banner" style={{"color": "purple"}}>
+          ███╗     ██╗████████╗   ███████╗██╗  ██╗██████╗ ███████╗██████╗ ██╗███████╗███╗   ██╗ ██████╗███████╗███╗<br/>
+          ██╔╝     ██║╚══██╔══╝   ██╔════╝╚██╗██╔╝██╔══██╗██╔════╝██╔══██╗██║██╔════╝████╗  ██║██╔════╝██╔════╝╚██║<br/>
+          ██║      ██║   ██║█████╗█████╗   ╚███╔╝ ██████╔╝█████╗  ██████╔╝██║█████╗  ██╔██╗ ██║██║     █████╗   ██║<br/>
+          ██║ ██   ██║   ██║╚════╝██╔══╝   ██╔██╗ ██╔═══╝ ██╔══╝  ██╔══██╗██║██╔══╝  ██║╚██╗██║██║     ██╔══╝   ██║<br/>
+          ███╗╚█████╔╝   ██║      ███████╗██╔╝ ██╗██║     ███████╗██║  ██║██║███████╗██║ ╚████║╚██████╗███████╗███║<br/>
+          ╚══╝ ╚════╝    ╚═╝      ╚══════╝╚═╝  ╚═╝╚═╝     ╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚═╝  ╚═══╝ ╚═════╝╚══════╝╚══╝<br/>
+        </pre>
+
+        <p id="contact">
+          <strong id="contact-arrow" style={arrow === '—' ? 
+            { color: "gray", position: "relative", top: "-0.1em", transform: "scaleX(0.5)", transformOrigin: "left", display: "inline-block" }
+            : {color: "gray"}}>{arrow} </strong>
+          <strong>Reach me at 
+            <a href="mailto:JhonTabioCS@gmail.com" style={{color: "inherit", fontWeight: "bold"}}> JhonTabioCS@gmail.com</a>
+          </strong>
+        </p>
+
+        <p id="info" style={{width: "50%"}}>
+          <span style={{color: "lightblue"}}>?</span> Admin Dashboard | Welcome Page<br/>
+          <ul>
+            Command Line Interface experience<br/>
+            Graphical User Interface experience
+          </ul>
+        </p>
+
       </div>
     </>
   )
