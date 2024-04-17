@@ -17,6 +17,8 @@ function Landing() {
 
   return (
     <>
+      <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet"/>
+
       <div id="container" class={`${animate}`}>
         <pre id="banner" style={{"color": "purple"}}>
           ███╗     ██╗████████╗   ███████╗██╗  ██╗██████╗ ███████╗██████╗ ██╗███████╗███╗   ██╗ ██████╗███████╗███╗<br/>
@@ -29,7 +31,7 @@ function Landing() {
 
         <p id="contact">
           <strong id="contact-arrow" style={arrow === '—' ? 
-            { color: "gray", position: "relative", top: "-0.1em", transform: "scaleX(0.5)", transformOrigin: "left", display: "inline-block" }
+            { color: "gray", position: "relative", left: "-0.3em", transform: "scaleX(1.5)", transformOrigin: "left", display: "inline-block" }
             : {color: "gray"}}>{arrow} </strong>
           <strong>Reach me at 
             <a href="mailto:JhonTabioCS@gmail.com" style={{color: "inherit", fontWeight: "bold"}}> JhonTabioCS@gmail.com</a>
