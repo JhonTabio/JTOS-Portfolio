@@ -31,7 +31,7 @@ function Landing() {
 
         <p id="contact">
           <strong id="contact-arrow" style={arrow === '—' ? 
-            { color: "gray", position: "relative", left: "-0.3em", transform: "scaleX(1.5)", transformOrigin: "left", display: "inline-block" }
+            { color: "gray", marginRight: "0.3em", position: "relative", left: "-0.3em", transform: "scaleX(1.5)", transformOrigin: "left", display: "inline-block" }
             : {color: "gray"}}>{arrow} </strong>
           <strong>Reach me at 
             <a href="mailto:JhonTabioCS@gmail.com" style={{color: "inherit", fontWeight: "bold"}}> JhonTabioCS@gmail.com</a>
