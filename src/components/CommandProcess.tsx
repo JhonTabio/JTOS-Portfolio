@@ -1,6 +1,6 @@
 import React, { ReactElement, ReactNode } from "react";
 import { useDir } from "./CommandDir";
-import { changeColor, processElements } from "../utils/utils";
+import { changeColor, processElements, commandSplit } from "../utils/utils";
 
 interface CommandProcess
 {
@@ -16,7 +16,7 @@ const CommandProcess: React.FC<CommandProcess> = ({ cmd }) => {
 
     if(cmd.trim() === "") return ret;
 
-    let process = cmd.trim().split(" ");
+    let process = commandSplit(cmd.trim());
 
     if(process.length <= 0) return ret;
 
@@ -205,6 +205,8 @@ const CommandProcess: React.FC<CommandProcess> = ({ cmd }) => {
               {process.splice(1).map((cmd, i) => {
                 if (/^`.*`$/.test(cmd))
                 {
+                  console.log(cmd.replace(/^`|`$/g, ''));
+                  console.log("thing");
                   let command: ReactElement = processCommand(cmd.replace(/^`|`$/g, ''));
                   let ret: ReactNode = processElements(command);
 

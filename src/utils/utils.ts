@@ -74,3 +74,15 @@ export const processElements = (element: ReactNode): ReactNode => {
 
   return React.cloneElement(element, newProps);
 };
+
+export const commandSplit = (input: string): string[] => {
+  const regex = /`[^`]*`|\S+/g;
+
+  const results = [];
+
+  let match;
+
+  while ((match = regex.exec(input))) results.push(match[0]);
+
+  return results;
+}
