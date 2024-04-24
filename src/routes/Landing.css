@@ -16,13 +16,51 @@
   gap: 4px;
 }
 
+#slider
+{
+  position: absolute;
+  display: flex;
+  flex-direction: column-reverse;
+  background-color: #131516;
+  visibility: hidden;
+  top: 0%;
+  right: 0%;
+  width: 102%;
+  height: 90.5%
+}
+
+#container.init #slider
+{
+  visibility: visible;
+}
+
 #banner
 {
-  transition: transform 0.8s ease-in-out;
+  transition: transform 1.5s ease-in-out;
   transform: translateY(0);
 }
 
 #container.init #banner
 {
-  transform: translateY(35vh);
+  transform: translateY(100%);
+}
+
+#contact
+{
+  visibility: visible;
+}
+
+#container.init #contact
+{
+  visibility: hidden;
+}
+
+#info
+{
+  visibility: visible;
+}
+
+#container.init #info
+{
+  visibility: hidden;
 }

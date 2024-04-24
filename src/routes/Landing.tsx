@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react"
 import { useLocation } from "wouter";
 import "./Landing.css"
+import { banner, sliderChar } from "../utils/utils";
 
 function Landing() {
 
   const [location, setLocation] = useLocation();
-  const [animate, setAnimation] = useState("intro");
   const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const [animate, setAnimation] = useState("init");
+  const [slider, setSlider] = useState(true);
+  const [sliderWidth, setSliderWidth] = useState(102);
 
   const options = [
     { name: "Command Line Interface experience", link: "/CLI" },
@@ -43,6 +47,7 @@ function Landing() {
     useEffect(() => {
         const interval = setInterval(() => {
             setArrow(currentChar => currentChar === '>' ? '—' : '>');
+            setSlider(currentSlider => !currentSlider);
         }, 500);
 
         return () => clearInterval(interval);
@@ -53,13 +58,11 @@ function Landing() {
       <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet"/>
 
       <div id="container" className={`${animate}`}>
-        <pre id="banner" style={{"color": "purple"}}>
-          ███╗     ██╗████████╗   ███████╗██╗  ██╗██████╗ ███████╗██████╗ ██╗███████╗███╗   ██╗ ██████╗███████╗███╗<br/>
-          ██╔╝     ██║╚══██╔══╝   ██╔════╝╚██╗██╔╝██╔══██╗██╔════╝██╔══██╗██║██╔════╝████╗  ██║██╔════╝██╔════╝╚██║<br/>
-          ██║      ██║   ██║█████╗█████╗   ╚███╔╝ ██████╔╝█████╗  ██████╔╝██║█████╗  ██╔██╗ ██║██║     █████╗   ██║<br/>
-          ██║ ██   ██║   ██║╚════╝██╔══╝   ██╔██╗ ██╔═══╝ ██╔══╝  ██╔══██╗██║██╔══╝  ██║╚██╗██║██║     ██╔══╝   ██║<br/>
-          ███╗╚█████╔╝   ██║      ███████╗██╔╝ ██╗██║     ███████╗██║  ██║██║███████╗██║ ╚████║╚██████╗███████╗███║<br/>
-          ╚══╝ ╚════╝    ╚═╝      ╚══════╝╚═╝  ╚═╝╚═╝     ╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚═╝  ╚═══╝ ╚═════╝╚══════╝╚══╝<br/>
+        <pre id="banner" style={{color: "purple"}}>
+          {banner}
+          <pre id="slider" style={{color: "purple", width: `${sliderWidth}%`}}>
+            {slider && sliderChar}
+          </pre>
         </pre>
 
         <p id="contact">
