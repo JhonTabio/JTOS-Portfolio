@@ -1,20 +1,23 @@
 import { useState, useEffect } from "react"
 import { useLocation } from "wouter";
-import "./Landing.css"
 import { banner, sliderChar } from "../utils/utils";
+import "./Landing.css"
 
 function Landing() {
 
-  const [location, setLocation] = useLocation();
+  const [_, setLocation] = useLocation();
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const [animate, setAnimation] = useState("init");
   const [slider, setSlider] = useState(true);
-  const [sliderWidth, setSliderWidth] = useState(102);
+  const sliderKeyFrames = [102, 96.3, 88.6, 77.2,
+        69.6, 62, 54.4, 46.8, 39.1, 36.2, 28.7, 19,
+        11.5, 3.8, 0]
+  const [sliderIndex, setSliderIndex] = useState(0);
 
   const options = [
-    { name: "Command Line Interface experience", link: "/CLI" },
     { name: "Graphical User Interface experience", link: "/GUI" },
+    { name: "Command Line Interface experience", link: "/CLI" },
     { name: "Help", action: () => console.log("Information!") }
   ];
 
@@ -23,6 +26,12 @@ function Landing() {
   // Keyboard input
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if(animate === "init")
+      {
+        setAnimation("post");
+        return;
+      }
+
       if(e.key === "ArrowDown")
         setSelectedIndex((selectedIndex + 1) % options.length);
       else if(e.key === "ArrowUp")
@@ -47,10 +56,43 @@ function Landing() {
     useEffect(() => {
         const interval = setInterval(() => {
             setArrow(currentChar => currentChar === '>' ? '—' : '>');
-            setSlider(currentSlider => !currentSlider);
         }, 500);
 
         return () => clearInterval(interval);
+    }, []);
+
+    // Blinking animation
+    useEffect(() => {
+        let i = 0;
+        const interval = setInterval(() => {
+            setSlider(currentSlider => (i == 0 || i == sliderKeyFrames.length - 1)
+                                        ? !currentSlider : true);
+        }, 500);
+
+        // Initial delay before starting the typing effect
+        const delay = 2000;
+
+        const typingTimeout = setTimeout(() => {
+            const typingInterval = setInterval(() => {
+              setSliderIndex((prev) => prev + 1);
+              i++;
+              
+              if(i === sliderKeyFrames.length - 1)
+              {
+                clearInterval(typingInterval);
+                
+                setTimeout(() => {
+                  setAnimation("transition");
+                  console.log("Changed");
+                }, 2000);
+              }
+            }, 250);
+        }, delay);
+
+        return () => {
+          clearInterval(interval);
+          clearTimeout(typingTimeout);
+        }
     }, []);
 
   return (
@@ -60,7 +102,7 @@ function Landing() {
       <div id="container" className={`${animate}`}>
         <pre id="banner" style={{color: "purple"}}>
           {banner}
-          <pre id="slider" style={{color: "purple", width: `${sliderWidth}%`}}>
+          <pre id="slider" style={{color: "purple", width: `${sliderKeyFrames[sliderIndex]}%`}}>
             {slider && sliderChar}
           </pre>
         </pre>
