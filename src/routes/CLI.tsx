@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "wouter";
 import CommandInput from "../components/CommandInput"
 import CommandHistory from "../components/CommandHistory";
-import "./CLI.css"
 import CommandProcess from "../components/CommandProcess";
+import "./CLI.css"
 
 function CLI()
 {
@@ -10,6 +11,7 @@ function CLI()
   const [cmdHistory, setList] = useState<string[]>([""]);
   const [cmdHistoryFull, setListFull] = useState<string[]>([""]);
   const [historyIndex, setHistoryIndex] = useState(0);
+  const [_, setLocation] = useLocation();
 
   const handleOnChange = (newValue: string) => {
     setCmdValue(newValue);
@@ -30,6 +32,7 @@ function CLI()
 
       if(welcome) welcome.remove();
     }
+    else if(cmdValue.toUpperCase() == "EXIT") setLocation("/");
 
     setCmdValue("");
     setHistoryIndex(0);

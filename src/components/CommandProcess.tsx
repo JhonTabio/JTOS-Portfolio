@@ -186,11 +186,7 @@ const CommandProcess: React.FC<CommandProcess> = ({ cmd }) => {
           </div>
         break;
       case "EXIT":
-        ret =
-        <div className="command"> 
-          Exit command still being implemented... Close the tab :)
-          <br/>
-        </div>
+        ret = <br/>
         break;
       case "ECHO":
         ret =
