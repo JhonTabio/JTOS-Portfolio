@@ -70,6 +70,8 @@ function CLI()
       <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet"/>
 
       <div id="terminal">
+        <div id="intro">
+        </div>
         <div id="welcome" className="command">
           <CommandProcess cmd="WELCOME"/>
         </div>

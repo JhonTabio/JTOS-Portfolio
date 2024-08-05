@@ -13,6 +13,20 @@
   color: inherit;
 }
 
+#intro
+{
+  width: 92vw;
+  height: 92vh;
+  position: absolute;
+  visibility: visible;
+}
+
+#intro ~ *
+{
+  visibility: hidden;
+  display: none;
+}
+
 #history
 {
   list-style: none;
