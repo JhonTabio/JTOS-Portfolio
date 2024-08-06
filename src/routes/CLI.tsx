@@ -47,12 +47,12 @@ useEffect(() => {
     {
       const removeIntro = setTimeout(() => {
         document.getElementById("boot")!.remove();
-      }, animate ? 1000 : 100);
+      }, animate ? 2000 : 200);
 
       const showTerminal = setTimeout(() => {
         document.getElementById("intro")!.remove();
         document.getElementById("cmd")!.focus();
-      }, animate ? 2000 : 300);
+      }, animate ? 3000 : 500);
 
       return () => {clearTimeout(removeIntro), clearTimeout(showTerminal)};
     }
@@ -115,14 +115,44 @@ useEffect(() => {
     <>
       <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet"/>
 
-      <div id="terminal">
-        <div id="intro" style={{textAlign: "center", overflow: "auto", display: "flex", flexDirection: "column-reverse"}} onKeyDown={() => setAnimation(false)} onMouseDown={() => setAnimation(false)}>
-          <div id="boot" style={{}}>
-            {lines.slice(0, currentLineIndex).map((line, index) => (
-              <div key={index} style={{whiteSpace: "pre-wrap"}}>{line}</div>
-            ))}
-          </div>
+      <div id="intro" style={{textAlign: "center", fontSize: "2.5vw", overflow: "hidden", display: "flex", flexDirection: "column-reverse"}} onKeyDown={() => setAnimation(false)} onMouseDown={() => setAnimation(false)}>
+        <div id="boot" style={{}}>
+          {lines.slice(0, currentLineIndex).map((line, index) => {
+            const currentDate = new Date();
+
+            const formattedDate = `${currentDate.toLocaleDateString('en-US', {weekday: 'short'})} ${currentDate.toLocaleDateString('en-US', {month: 'short', day: '2-digit'})} ${currentDate.toLocaleTimeString('en-US', {hour12: false})} ${currentDate.getFullYear()}`;
+
+            if(line.includes("%date%")) line = line.replace(/%date%/g, formattedDate);
+
+            if (line.includes("[  OK  ]"))
+            {
+              return (
+                <div key={index} style={{whiteSpace: "pre-wrap"}}>
+                  {line.substring(0, line.indexOf("[  OK  ]"))} <span style={{color: "green"}}>{line.substring(line.indexOf("[  OK  ]"), line.length)}</span>
+                </div>
+              );
+            }
+            else if (line.includes("[FAILED]"))
+            {
+              return (
+                <div key={index} style={{whiteSpace: "pre-wrap"}}>
+                  {line.substring(0, line.indexOf("[FAILED]"))} <span style={{color: "red"}}>{line.substring(line.indexOf("[FAILED]"), line.length)}</span>
+                </div>
+              );
+            }
+            else 
+            {
+              return (
+                <div key={index} style={{whiteSpace: "pre-wrap"}}>
+                  {line}
+                </div>
+              );
+            }
+          })}
         </div>
+      </div>
+
+      <div id="terminal">
         <div id="welcome" className="command">
           <CommandProcess cmd="WELCOME"/>
         </div>
@@ -133,5 +163,5 @@ useEffect(() => {
     </>
   )
 }
-
+            //<div key={index} style={{whiteSpace: "pre-wrap"}}>{}</div>
 export default CLI
