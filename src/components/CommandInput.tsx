@@ -37,7 +37,7 @@ const CommandInput: React.FC<CommandInput> = ({ value, onChange, onKeyDown }) =>
           <CommandDir/>
         </span>
         <span className="command" style={{paddingLeft: 0}}>
-          &nbsp;<input ref={inputRef} className="commandInput" name="cmd" type="text" value={value} onChange={handleChange} onKeyDown={handleKeyDown} autoFocus/>
+          &nbsp;<input ref={inputRef} id="cmd" className="commandInput" name="cmd" type="text" value={value} onChange={handleChange} onKeyDown={handleKeyDown} autoFocus/>
         </span>
       </div>
   );
