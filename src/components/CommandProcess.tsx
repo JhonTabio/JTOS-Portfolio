@@ -1,6 +1,6 @@
 import React, { ReactElement, ReactNode } from "react";
 import { useDir } from "./CommandDir";
-import { changeColor, processElements, commandSplit } from "../utils/utils";
+import { changeColor, processElements, commandSplit, fileSystem } from "../utils/utils";
 
 interface CommandProcess
 {
@@ -25,7 +25,11 @@ const CommandProcess: React.FC<CommandProcess> = ({ cmd }) => {
       case "LS":
         ret = 
           <div className="command">
-            LS being implemented... or maybe not. Be back soon!
+            {
+              fileSystem.children!.sort().map((e, index) => {
+                return(<span key={index} style={{color: e.type === "directory" ? "blueviolet" : "inherit"}}>{e.name}&nbsp;</span>)
+              })
+            }
           </div>
         break;
       case "CD":
