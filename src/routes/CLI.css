@@ -1,3 +1,14 @@
+#cli_intro
+{
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  font-size: 2.5vw;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
 #cli_container
 {
   font-family: "VT323", monospace;
