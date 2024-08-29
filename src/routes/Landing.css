@@ -1,14 +1,8 @@
-#root
+#landing_container
 {
-  width: 90wh;
-  height: 90vh;
+  width: 100vw;
+  height: 100vh;
   font-family: "VT323", monospace;
-}
-
-#container
-{
-  width: inherit;
-  height: inherit;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -16,7 +10,7 @@
   gap: 4px;
 }
 
-#slider
+#landing_slider
 {
   position: absolute;
   display: flex;
@@ -29,38 +23,38 @@
   height: 90.5%
 }
 
-#container.init #slider
+#landing_container.init #landing_slider
 {
   visibility: visible;
 }
 
-#banner
+#landing_banner
 {
   transition: transform 1.5s ease-in-out;
   transform: translateY(0);
 }
 
-#container.init #banner
+#landing_container.init #landing_banner
 {
   transform: translateY(100%);
 }
 
-#contact
+#landing_contact
 {
   visibility: visible;
 }
 
-#container.init #contact
+#landing_container.init #landing_contact
 {
   visibility: hidden;
 }
 
-#info
+#landing_info
 {
   visibility: visible;
 }
 
-#container.init #info
+#landing_container.init #landing_info
 {
   visibility: hidden;
 }

@@ -99,16 +99,16 @@ function Landing() {
     <>
       <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet"/>
 
-      <div id="container" className={`${animate}`}>
-        <pre id="banner" style={{color: "purple"}}>
+      <div id="landing_container" className={`${animate}`}>
+        <pre id="landing_banner" style={{color: "purple"}}>
           {banner}
-          <pre id="slider" style={{color: "purple", width: `${sliderKeyFrames[sliderIndex]}%`}}>
+          <pre id="landing_slider" style={{color: "purple", width: `${sliderKeyFrames[sliderIndex]}%`}}>
             {slider && sliderChar}
           </pre>
         </pre>
 
-        <p id="contact">
-          <strong id="contact-arrow" style={arrow === '—' ? 
+        <p id="landing_contact">
+          <strong id="landing_contact-arrow" style={arrow === '—' ? 
             { color: "gray", marginRight: "0.3em", position: "relative", left: "-0.3em", transform: "scaleX(1.5)", transformOrigin: "left", display: "inline-block" }
             : {color: "gray"}}>{arrow} </strong>
           <strong>Reach me at 
@@ -116,7 +116,7 @@ function Landing() {
           </strong>
         </p>
 
-        <div id="info" style={{width: "50%"}}>
+        <div id="landing_info" style={{width: "50%"}}>
           <span style={{color: "lightblue"}}>?</span> Admin Dashboard | Welcome Page<br/>
           <ul style={{listStyleType: "None", margin: 0, padding: "0em 1em"}}>
             {options.map((e, i) => (
