@@ -1,0 +1,10 @@
+#cli_container
+{
+  font-family: "VT323", monospace;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+

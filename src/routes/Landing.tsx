@@ -99,7 +99,7 @@ function Landing() {
     <>
       <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet"/>
 
-      <div id="landing_container" className={`${animate}`}>
+      <div id="landing_container" className={`${animate}`} onClick={() => {setAnimation("post")}}>
         <pre id="landing_banner" style={{color: "purple"}}>
           {banner}
           <pre id="landing_slider" style={{color: "purple", width: `${sliderKeyFrames[sliderIndex]}%`}}>
