@@ -58,3 +58,13 @@
 {
   visibility: hidden;
 }
+
+#landing_email
+{
+  color: inherit;
+}
+
+#landing_email:hover
+{
+  color: magenta;
+}

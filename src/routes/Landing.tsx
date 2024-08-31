@@ -83,7 +83,6 @@ function Landing() {
                 
                 setTimeout(() => {
                   setAnimation("transition");
-                  console.log("Changed");
                 }, 2000);
               }
             }, 250);
@@ -112,7 +111,7 @@ function Landing() {
             { color: "gray", marginRight: "0.3em", position: "relative", left: "-0.3em", transform: "scaleX(1.5)", transformOrigin: "left", display: "inline-block" }
             : {color: "gray"}}>{arrow} </strong>
           <strong>Reach me at 
-            <a href="mailto:JhonTabioCS@gmail.com" style={{color: "inherit", fontWeight: "bold"}}> JhonTabioCS@gmail.com</a>
+            <a id="landing_email" href="mailto:JhonTabioCS@gmail.com"> JhonTabioCS@gmail.com</a>
           </strong>
         </p>
 
