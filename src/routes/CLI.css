@@ -12,10 +12,25 @@
 #cli_container
 {
   font-family: "VT323", monospace;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 4px;
 }
 
+#cli_terminal
+{
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.5vw;
+  color: inherit;
+}
+
+#cli_commandInput
+{
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  width: 86vw;
+  color: inherit;
+}
