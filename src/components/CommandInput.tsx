@@ -1,6 +1,6 @@
 import { currentDirectory } from "../utils/utils";
 
-function CommandInput({value, onKeyDown, onChange}: {value: string, onKeyDown: () => void, onChange: (value: string) => void})
+function CommandInput({cmdRef, onSubmit}: {cmdRef: React.RefObject<HTMLInputElement>, onSubmit: () => void})
 {
 
   return(
@@ -20,10 +20,11 @@ function CommandInput({value, onKeyDown, onChange}: {value: string, onKeyDown: (
           </span>]$
         </span>
         <span id="cli_command">
-          &nbsp;<input id="cli_commandInput" name="cmd" type="text" 
-          value={value} onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {if(e.key === "Enter")onKeyDown()}}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value)} 
-          autoFocus/>
+          &nbsp;
+
+          <form style={{display: "inline"}} onSubmit={(e: React.FormEvent<HTMLFormElement>) => {e.preventDefault(); onSubmit(); cmdRef.current!.value = ""}}>
+            <input id="cli_commandInput" name="cmd" type="text" ref={cmdRef} autoFocus/>
+          </form>
         </span>
       </div>
   );
