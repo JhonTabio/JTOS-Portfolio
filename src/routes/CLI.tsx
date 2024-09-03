@@ -6,24 +6,12 @@ import "./CLI.css"
 function CLI()
 {
   const cmdRef = useRef<HTMLInputElement>(null);
-  const [cmd, setCMD] = useState("");
 
-  // Handle actual keystroke change on input field
-  function handleOnChange(value: string)
-  {
-    setCMD(value);
-  }
-
-  // Handle functional actions when submitting
-  function handleKeyDown()
-  {
-    console.log("Test");
-  }
   return(
     <>
       <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet"/>
 
-      <div id="cli_container">
+      <div id="cli_container" onClick={() => cmdRef.current!.focus()}>
         <BootSequence/>
         <div id="cli_terminal" style={{display: "none"}}>
           <CommandInput cmdRef={cmdRef} onSubmit={() => console.log(cmdRef.current!.value!)}/>
