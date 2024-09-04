@@ -1,24 +1,11 @@
-import { currentDirectory } from "../utils/utils";
+import CommandCWD from "./CommandCWD";
 
 function CommandInput({cmdRef, onSubmit}: {cmdRef: React.RefObject<HTMLInputElement>, onSubmit: () => void})
 {
 
   return(
       <div id="cli_cl">
-        <span id="cli_commandInputInfo">
-          [<span id="cli_client">
-            client
-          </span>
-          <span id="cli_@">
-            @
-          </span>
-          <span id="cli_server">
-            portfolio
-          </span>
-          <span id="cli_directory">
-            &nbsp;{currentDirectory.name}
-          </span>]$
-        </span>
+        <CommandCWD/>
         <span id="cli_command">
           &nbsp;
 
