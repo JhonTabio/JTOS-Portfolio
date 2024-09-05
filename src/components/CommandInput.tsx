@@ -10,7 +10,7 @@ function CommandInput({cmdRef, onSubmit}: {cmdRef: React.RefObject<HTMLInputElem
           &nbsp;
 
           <form style={{display: "inline"}} onSubmit={(e: React.FormEvent<HTMLFormElement>) => {e.preventDefault(); onSubmit(); cmdRef.current!.value = ""}}>
-            <input id="cli_commandInput" name="cmd" type="text" ref={cmdRef} autoFocus/>
+            <input id="cli_commandInput" name="cmd" type="text" ref={cmdRef}/>
           </form>
         </span>
       </div>

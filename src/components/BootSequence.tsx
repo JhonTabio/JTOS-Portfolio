@@ -38,6 +38,8 @@ function BootSequence()
 
       const showTerminal = setTimeout(() => {
         document.getElementById("cli_terminal")!.style.display = "inherit";
+        document.getElementById("cli_commandInput")?.focus();
+
       }, boot_animate ? 3000 : 500);
 
       return () => {clearTimeout(removeIntro), clearTimeout(showTerminal)};
