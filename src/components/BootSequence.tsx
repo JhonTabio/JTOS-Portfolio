@@ -16,6 +16,8 @@ function BootSequence()
         setLines(logLines);
         setCurrentLineIndex(1);
       });
+
+    document.getElementById("cli_intro")?.focus();
   }, []);
 
   // Append the lines as long as there are lines left to display
@@ -44,7 +46,7 @@ function BootSequence()
 
   return(
     <>
-      <div id="cli_intro" onKeyDown={() => setBootAnimation(false)} onMouseDown={() => setBootAnimation(false)}>
+      <div id="cli_intro" tabIndex={1} onKeyDown={() => setBootAnimation(false)} onMouseDown={() => setBootAnimation(false)}>
         <div id="cli_boot">
           {lines.slice(0, currentLineIndex).map((line, index) => {
             const currentDate = new Date();
