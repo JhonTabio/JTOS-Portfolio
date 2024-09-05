@@ -22,6 +22,7 @@
   font-style: normal;
   font-size: 1.5vw;
   color: inherit;
+  display: none;
 }
 
 #cli_commandInput
@@ -33,4 +34,11 @@
   font-size: inherit;
   width: 86vw;
   color: inherit;
+}
+
+#cli_history
+{
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }

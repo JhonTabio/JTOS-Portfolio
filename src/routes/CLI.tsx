@@ -1,5 +1,6 @@
-import { useEffect, useState, useRef, JSX } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import BootSequence from "../components/BootSequence.tsx";
+import CommandCWD from "../components/CommandCWD.tsx";
 import CommandInput from "../components/CommandInput.tsx";
 import "./CLI.css"
 
@@ -7,12 +8,21 @@ function CLI()
 {
   const cmdRef = useRef<HTMLInputElement>(null);
 
-  const cmdHistory = useRef<JSX.ElementType[]>([]);
+  const [cmdHistory, setHistory] = useState<JSX.Element[]>([]);
 
-  function onSubmit(value: string): void
-  {
-    
-  }
+  const onSubmit = useCallback(():void => {
+    if(!cmdRef.current) return;
+
+    const cmd = cmdRef.current.value;
+
+    setHistory((oldHistory) => [...oldHistory,
+      <li key={oldHistory.length} className="cli_commandItem">
+        <CommandCWD/>
+        &nbsp;{cmd}<br/>
+      </li>]
+    );
+
+  }, [setHistory]);
 
   return(
     <>
@@ -21,7 +31,10 @@ function CLI()
       <div id="cli_container" onClick={() => cmdRef.current!.focus()}>
         <BootSequence/>
         <div id="cli_terminal">
-          <CommandInput cmdRef={cmdRef} onSubmit={() => console.log(cmdRef.current!.value!)}/>
+          <ul id="cli_history">
+            {cmdHistory.map((cmd) => cmd)}
+          </ul>
+          <CommandInput cmdRef={cmdRef} onSubmit={onSubmit}/>
         </div>
       </div>
     </>
