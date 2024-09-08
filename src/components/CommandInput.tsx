@@ -1,7 +1,7 @@
 import CommandCWD from "./CommandCWD";
 import { currentDirectory } from "../utils/utils";
 
-function CommandInput({cmdRef, setHistory}: {cmdRef: React.RefObject<HTMLInputElement>, setHistory: React.Dispatch<React.SetStateAction<React.ReactNode[]>>})
+function CommandInput({cmdRef, setHistory, cmdHistory}: {cmdRef: React.RefObject<HTMLInputElement>, setHistory: React.Dispatch<React.SetStateAction<React.ReactNode[]>>, cmdHistory: React.ReactNode[]})
 {
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>):void

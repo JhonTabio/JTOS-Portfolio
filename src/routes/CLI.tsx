@@ -19,7 +19,7 @@ function CLI()
           <ul id="cli_history">
             {cmdHistory.map((cmd) => cmd)}
           </ul>
-          <CommandInput cmdRef={cmdRef} setHistory={setHistory}/>
+          <CommandInput cmdRef={cmdRef} setHistory={setHistory} cmdHistory={cmdHistory}/>
         </div>
       </div>
     </>
