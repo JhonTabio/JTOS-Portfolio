@@ -25,6 +25,11 @@
   display: none;
 }
 
+#cli_cl
+{
+  display: flex;
+}
+
 #cli_commandInput
 {
   border: none;
@@ -32,8 +37,8 @@
   background-color: transparent;
   font-family: inherit;
   font-size: inherit;
-  width: 86vw;
   color: inherit;
+  flex-grow: 1;
 }
 
 #cli_history

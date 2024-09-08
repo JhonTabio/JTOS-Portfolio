@@ -3,6 +3,7 @@ import BootSequence from "../components/BootSequence.tsx";
 import CommandCWD from "../components/CommandCWD.tsx";
 import CommandInput from "../components/CommandInput.tsx";
 import "./CLI.css"
+import { currentDirectory } from "../utils/utils.ts";
 
 function CLI()
 {
@@ -10,7 +11,8 @@ function CLI()
 
   const [cmdHistory, setHistory] = useState<JSX.Element[]>([]);
 
-  const onSubmit = useCallback(():void => {
+  function onSubmit():void
+  {
     if(!cmdRef.current) return;
 
     const cmd = cmdRef.current.value;
@@ -22,7 +24,8 @@ function CLI()
       </li>]
     );
 
-  }, [setHistory]);
+    currentDirectory.name = cmd;
+  }
 
   return(
     <>
