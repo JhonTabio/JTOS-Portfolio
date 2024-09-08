@@ -1,32 +1,13 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useState, useRef } from "react";
 import BootSequence from "../components/BootSequence.tsx";
-import CommandCWD from "../components/CommandCWD.tsx";
 import CommandInput from "../components/CommandInput.tsx";
 import "./CLI.css"
-import { currentDirectory } from "../utils/utils.ts";
 
 function CLI()
 {
   const cmdRef = useRef<HTMLInputElement>(null);
 
-  const [cmdHistory, setHistory] = useState<JSX.Element[]>([]);
-
-  function onSubmit():void
-  {
-    if(!cmdRef.current) return;
-
-    const cmd = cmdRef.current.value;
-    const oldCWD = currentDirectory.name;
-
-    setHistory((oldHistory) => [...oldHistory,
-      <li key={oldHistory.length} className="cli_commandItem">
-        <CommandCWD cwd={oldCWD}/>
-        &nbsp;{cmd}<br/>
-      </li>]
-    );
-
-    currentDirectory.name = cmd;
-  }
+  const [cmdHistory, setHistory] = useState<React.ReactNode[]>([]);
 
   return(
     <>
@@ -38,7 +19,7 @@ function CLI()
           <ul id="cli_history">
             {cmdHistory.map((cmd) => cmd)}
           </ul>
-          <CommandInput cmdRef={cmdRef} onSubmit={onSubmit}/>
+          <CommandInput cmdRef={cmdRef} setHistory={setHistory}/>
         </div>
       </div>
     </>
