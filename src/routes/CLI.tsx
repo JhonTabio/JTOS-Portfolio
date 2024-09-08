@@ -16,10 +16,11 @@ function CLI()
     if(!cmdRef.current) return;
 
     const cmd = cmdRef.current.value;
+    const oldCWD = currentDirectory.name;
 
     setHistory((oldHistory) => [...oldHistory,
       <li key={oldHistory.length} className="cli_commandItem">
-        <CommandCWD/>
+        <CommandCWD cwd={oldCWD}/>
         &nbsp;{cmd}<br/>
       </li>]
     );

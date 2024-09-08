@@ -1,6 +1,4 @@
-import { currentDirectory } from "../utils/utils";
-
-function CommandCWD()
+function CommandCWD({cwd}: {cwd: string})
 {
 
   return(
@@ -15,7 +13,7 @@ function CommandCWD()
         portfolio
       </span>
       <span id="cli_directory">
-        &nbsp;{currentDirectory.name}
+        &nbsp;{cwd}
       </span>]$
     </span>
   );
