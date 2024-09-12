@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, ReactNode} from "react";
 import BootSequence from "../components/BootSequence.tsx";
 import CommandInput from "../components/CommandInput.tsx";
 import "./CLI.css"
@@ -7,7 +7,8 @@ function CLI()
 {
   const cmdRef = useRef<HTMLInputElement>(null);
 
-  const [cmdHistory, setHistory] = useState<React.ReactNode[]>([]);
+  const [cmdHistory, setHistory] = useState<ReactNode[]>([]);
+  const [historyIndex, setIndex] = useState<number>(0);
 
   return(
     <>
@@ -17,9 +18,9 @@ function CLI()
         <BootSequence/>
         <div id="cli_terminal">
           <ul id="cli_history">
-            {cmdHistory.map((cmd) => cmd)}
+            {cmdHistory.slice(historyIndex).map((cmd) => cmd)}
           </ul>
-          <CommandInput cmdRef={cmdRef} setHistory={setHistory} cmdHistory={cmdHistory}/>
+          <CommandInput cmdRef={cmdRef} setHistory={setHistory} cmdHistory={cmdHistory} setIndex={setIndex}/>
         </div>
       </div>
     </>

@@ -1,6 +1,5 @@
 function CommandCWD({cwd}: {cwd: string})
 {
-
   return(
     <span id="cli_commandInputInfo">
       [<span id="cli_client">
