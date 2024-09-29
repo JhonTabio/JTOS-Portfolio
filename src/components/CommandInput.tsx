@@ -1,4 +1,4 @@
-import { currentDirectory } from "../utils/utils";
+import { commandProcess, currentDirectory } from "../utils/utils";
 import { useState } from "react";
 import CommandCWD from "./CommandCWD";
 
@@ -24,15 +24,19 @@ function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React
       return;
     }
 
-    var newIndex = 0;
+    var newIndex = currIndex;
 
     if(cmdRef.current.placeholder === "" && currIndex === cmdHistory.length)
       cmdRef.current.placeholder = cmdRef.current.value;
 
     if (e.key === "ArrowUp")
-      newIndex = currIndex === 0 ? 0 : currIndex - 1;
+      do
+        newIndex = newIndex === 0 ? 0 : newIndex - 1;
+      while((cmdHistory[newIndex] as React.ReactElement)["props"]["children"][2]["props"]["children"] === "");
     else if (e.key === "ArrowDown")
-      newIndex = currIndex === cmdHistory.length ? cmdHistory.length : currIndex + 1;
+      do
+        newIndex = newIndex === cmdHistory.length ? cmdHistory.length : newIndex + 1;
+      while(newIndex < cmdHistory.length && (cmdHistory[newIndex] as React.ReactElement)["props"]["children"][2]["props"]["children"] === "");
 
     if(newIndex === cmdHistory.length)
     {
@@ -58,11 +62,12 @@ function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React
       <li key={oldHistory.length} className="cli_commandItem" data-cmd={cmd}>
         <CommandCWD cwd={cwd}/>
         &nbsp;<span id="cli_command">{cmd}</span><br/>
+        {commandProcess(cmd)}
       </li>]
     );
 
-    if(cmd === "clear") setIndex(cmdHistory.length + 1);
-    
+    if(cmd.trim() === "clear") setIndex(cmdHistory.length + 1);
+
     cmdRef.current.value = "";
     cmdRef.current.placeholder = "";
     setCurrIndex(cmdHistory.length + 1);
