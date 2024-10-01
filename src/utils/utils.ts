@@ -24,7 +24,22 @@ export const fileSystem: FileSystemItem =
 export let currentDirectory: FileSystemItem = fileSystem;
 export let directoryStack: FileSystemItem[] = [fileSystem];
 
-export function changeDirectory(directoryName: string) : boolean {
+export function changeDirectory(directoryName: string) : boolean
+{
+  if(directoryName === '.' || directoryName === '') return true;
+
+  if(directoryName === '~')
+  {
+    currentDirectory = fileSystem
+    directoryStack = [fileSystem]
+    return true;
+  }
+
+  if(directoryName === "..")
+  {
+    changeParent();
+    return true;
+  }
   const found = currentDirectory.children?.find(
     (child) => child.name === directoryName && child.type === "directory"
   );
@@ -57,14 +72,14 @@ export function changeParent() : boolean
   }
 }
 
-export const treeDir = (fs: FileSystemItem): string[] => 
+export function listDir(fs: FileSystemItem, tree: boolean): string[] 
 {
   let res: string[] = [];
 
   fs.children?.forEach(e => {
-    res.push(e.name);
+    res.push(e.name + " ");
 
-    if(e.type === "directory") res = [...res, ...treeDir(e)];
+    if(tree && e.type === "directory") res = [...res, ...listDir(e, true)];
   });
 
   return res;
@@ -195,7 +210,7 @@ export function commandProcess(cmd: string): React.ReactNode
           { className: "command" },
           "help - If unsure, try help help",
           React.createElement("br"),
-          "*ls - Lists all files and directories within the given directory [Default is root directory]",
+          "*ls - Lists all files and directories within the given directory",
           React.createElement("br"),
           "*cat - Prints the contents of a given file",
           React.createElement("br"),
@@ -231,15 +246,77 @@ export function commandProcess(cmd: string): React.ReactNode
           default:
             ret = React.createElement(
               "div",
-              null,
-              React.createElement("em", { style: { color: "red" } }, "bash: help: no help topics match \"${evaluatedParts[1]}\"")
+              { className: "command" },
+              React.createElement("em", { style: { color: "red" } }, `bash: help: no help topics match \"${evaluatedParts[1]}\"`)
             );
             break;
         }
       break;
-  }
 
-  //ret = React.createElement("div", { className: "command" }, evaluatedParts);
+    case "LS":
+      if(evaluatedParts.length == 1)
+        ret = React.createElement("div", { className: "command" }, listDir(currentDirectory, false).map((item, index) => {
+          if(item.indexOf('.') === -1) return React.createElement("span", {key: index, style: {color: "lightblue"}}, item);
+          else return React.createElement("span", {key: index}, item);
+        }));
+      else 
+        ret = React.createElement(
+          "div",
+          { className: "command" },
+          React.createElement("em", { style: { color: "red" } }, "bash: ls: this feature is currently being implemented")
+        );
+      break;
+
+    case "CD":
+      ret = React.createElement("div", { className: "command" });
+
+      if(evaluatedParts.length > 2)
+      {
+        ret = React.createElement(
+          "div",
+          { className: "command" },
+          React.createElement("em", { style: { color: "red" } }, "bash: cd: too many arguments")
+        );
+
+        break;
+      }
+
+      if(evaluatedParts[1][0] === '/')
+      {
+        ret = React.createElement(
+          "div",
+          { className: "command" },
+          React.createElement("em", { style: { color: "red" } }, "error: you cannot perform this operation unless you are root")
+        );
+
+        break;
+      }
+
+      const oldStack = directoryStack;
+      let success = true;
+
+      const dirs = evaluatedParts[1].split("/");
+
+      for(let dir of dirs)
+      {
+        success = changeDirectory(dir);
+
+        if(!success)
+        {
+          directoryStack = oldStack;
+          currentDirectory = directoryStack[0];
+
+          ret = React.createElement(
+            "div",
+            { className: "command" },
+            React.createElement("em", { style: { color: "red" } }, `bash: cd: ${dir}: no such file or directory`)
+          );
+
+          break;
+        }
+      }
+      break;
+  }
 
   return ret;
 }
@@ -271,8 +348,6 @@ export function CommandProcess(cmd: string)
         else path = process[1].trim().split("/");
 
         if (path[path.length - 1] === "") path.pop();
-
-        if (process.length == 2) setDir(path[path.length - 1]);
         else if (process.length > 2)
           ret = React.createElement(
             'div',
