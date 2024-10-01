@@ -270,6 +270,8 @@ export function commandProcess(cmd: string): React.ReactNode
     case "CD":
       ret = React.createElement("div", { className: "command" });
 
+      if(evaluatedParts.length == 1) break;
+
       if(evaluatedParts.length > 2)
       {
         ret = React.createElement(
@@ -315,6 +317,23 @@ export function commandProcess(cmd: string): React.ReactNode
           break;
         }
       }
+      break;
+
+    case "ECHO":
+      ret = React.createElement(
+        "div",
+        { className: "command" },
+        evaluatedParts.slice(1).map((cmd, i) => React.createElement("span", { key: i }, cmd, '\u00A0')),
+        React.createElement("br")
+      );
+      break;
+
+    default:
+      ret = React.createElement(
+        "div",
+        { className: "command" },
+        React.createElement("em", { style: { color: "red" } }, `bash: ${evaluatedParts[0]}: command not found. Try help`)
+      );
       break;
   }
 
