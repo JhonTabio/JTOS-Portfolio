@@ -12,11 +12,31 @@ export const fileSystem: FileSystemItem =
   name: "~",
   type: "directory",
   children: [
-    {name: "File 1.txt", type: "file"},
+    {name: "welcome.txt", type: "file"},
     {
-      name: "Subdirectory",
+      name: "Documents",
       type: "directory",
-      children: [{name:"File 2.txt", type: "file"}],
+      children: [{name:"Info.txt", type: "file"}],
+    },
+    {
+      name: "Downloads",
+      type: "directory",
+      children: [{name:"Info.txt", type: "file"}],
+    },
+    {
+      name: "Music",
+      type: "directory",
+      children: [{name:"Info.txt", type: "file"}],
+    },
+    {
+      name: "Pictures",
+      type: "directory",
+      children: [{name:"Info.txt", type: "file"}],
+    },
+    {
+      name: "Videos",
+      type: "directory",
+      children: [{name:"Info.txt", type: "file"}],
     },
   ],
 };
@@ -196,13 +216,34 @@ export function commandProcess(cmd: string): React.ReactNode
     if (subCmd.startsWith('`') && subCmd.endsWith('`'))
     {
       const part = subCmd.slice(1, -1);
-      return (commandProcess(part) as React.ReactElement).props.children;
+      const comps = (commandProcess(part) as React.ReactElement);
+
+      const retrieveString = (component: React.ReactElement) => {
+        let res = "";
+
+        React.Children.forEach(component.props.children, (child: string | React.ReactElement) => {
+          if(typeof(child) === "string") res = res + " " + child;
+          else 
+          {
+            let recursive = retrieveString(child);
+
+            if(recursive !== "") res = res + " " + recursive;
+          }
+        })
+
+        return res;
+      }
+
+      return retrieveString(comps).trim();
     }
     return subCmd;
   });
 
   switch(evaluatedParts[0].toUpperCase())
   {
+    case "":
+      ret = React.createElement("div", { className: "command" });
+      break;
     case "HELP":
       if (evaluatedParts.length == 1)
         ret = React.createElement(
