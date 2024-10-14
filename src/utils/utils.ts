@@ -1,5 +1,30 @@
 import React, { ReactNode } from "react";
 
+const REPO_CACHE = "repo_cache";
+const REPO_ETAG = "repo_etag";
+
+interface repoData
+{
+  id: number;
+  node_id: string;
+  name: string;
+  html_url: string;
+  description: string | null;
+  fork: boolean;
+  url: string;
+  created_at: string;
+  updated_at: string;
+  pushed_at: string;
+  homepage: string | null;
+  size: number;
+  stargazers_count: number;
+  watchers_count: number;
+  language: string | null;
+  open_issues_count: number;
+  open_issues: number;
+  default_branch: string;
+}
+
 interface FileSystemItem
 {
   name: string;
