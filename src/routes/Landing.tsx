@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react"
 import { useLocation } from "wouter";
-import { banner, sliderChar } from "../utils/utils";
+import { banner, sliderChar, initialize } from "../utils/utils";
 import "./Landing.css"
 
 function Landing() {
+  useEffect(() => {
+    initialize();
+  }, []);
 
   const [_, setLocation] = useLocation();
   const [selectedIndex, setSelectedIndex] = useState(0);

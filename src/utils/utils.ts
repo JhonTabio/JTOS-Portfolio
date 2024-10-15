@@ -2,6 +2,7 @@ import React, { ReactNode } from "react";
 
 const REPO_CACHE = "repo_cache";
 const REPO_ETAG = "repo_etag";
+let repoMemoryData: repoData[] = [];
 
 interface repoData
 {
@@ -23,6 +24,70 @@ interface repoData
   open_issues_count: number;
   open_issues: number;
   default_branch: string;
+}
+
+async function fetchRepos(): Promise<repoData[]>
+{
+  const cachedRepo = localStorage.getItem(REPO_CACHE);
+  const eTag = localStorage.getItem(REPO_ETAG);
+
+  const headers: HeadersInit = {};
+
+  if(eTag) headers["If-None-Match"] = eTag;
+
+  try
+  {
+    const response = await fetch("https://api.github.com/users/JhonTabio/repos", { headers });
+
+    if (response.status === 304 && cachedRepo) return JSON.parse(cachedRepo);
+    if (!response.ok) throw new Error("Error fetching repos");
+    
+    const data = await response.json();
+
+    const ret: repoData[] = data.map((repo: any) => ({
+      id: repo.id,
+      node_id: repo.node_id,
+      name: repo.name,
+      html_url: repo.html_url,
+      description: repo.description,
+      fork: repo.fork,
+      url: repo.url,
+      created_at: repo.created_at,
+      updated_at: repo.updated_at,
+      pushed_at: repo.pushed_at,
+      homepage: repo.homepage,
+      size: repo.size,
+      stargazers_count: repo.stargazers_count,
+      watchers_count: repo.watchers_count,
+      language: repo.language,
+      open_issues_count: repo.open_issues_count,
+      open_issues: repo.open_issues,
+      default_branch: repo.default_branch,
+    }));
+
+    localStorage.setItem(REPO_CACHE, JSON.stringify(ret));
+
+    const etag = response.headers.get("ETag");
+    if (etag) localStorage.setItem(REPO_ETAG, etag);
+
+    return ret;
+  }
+  catch(error)
+  {
+    console.log(error);
+    throw error;
+  }
+}
+
+export function initialize(): void
+{
+  fetchRepos().then(data => {
+    repoMemoryData = data;
+
+    repoMemoryData.forEach((repo) =>{
+      fileSystem.children![1].children!.push({name: repo.name + ".proj", type: "file"});
+    })
+  });
 }
 
 interface FileSystemItem
@@ -85,6 +150,7 @@ export function changeDirectory(directoryName: string) : boolean
     changeParent();
     return true;
   }
+
   const found = currentDirectory.children?.find(
     (child) => child.name === directoryName && child.type === "directory"
   );
@@ -103,7 +169,31 @@ export function changeDirectory(directoryName: string) : boolean
   }
 }
 
-export function changeParent() : boolean
+export function changeDirectories(path: string): boolean
+{
+
+  const oldStack = directoryStack;
+  let success = true;
+
+  const dirs = path.split("/");
+
+  for(let dir of dirs)
+  {
+    success = changeDirectory(dir);
+
+    if(!success)
+    {
+      directoryStack = oldStack;
+      currentDirectory = directoryStack[0];
+
+      break;
+    }
+  }
+
+  return success;
+}
+
+export function changeParent(): boolean
 {
   if (directoryStack.length > 1)
   {
@@ -126,6 +216,20 @@ export function listDir(fs: FileSystemItem, tree: boolean): string[]
 
     if(tree && e.type === "directory") res = [...res, ...listDir(e, true)];
   });
+
+  return res;
+}
+
+function listOtherDir(dir: string): string[] | null
+{
+  let ogDir = currentDirectory;
+  let ogStack = directoryStack;
+
+  if(!changeDirectories(dir)) return null;
+
+  let res = listDir(currentDirectory, false);
+  currentDirectory = ogDir;
+  directoryStack = ogStack;
 
   return res;
 }
@@ -326,11 +430,30 @@ export function commandProcess(cmd: string): React.ReactNode
           else return React.createElement("span", {key: index}, item);
         }));
       else 
-        ret = React.createElement(
-          "div",
-          { className: "command" },
-          React.createElement("em", { style: { color: "red" } }, "bash: ls: this feature is currently being implemented")
-        );
+      {
+
+        ret = React.createElement("div", { className: "command" }, []);
+
+        for(let i = 1; i <= evaluatedParts.length - 1; i++)
+        {
+          const strings: string[] | null = listOtherDir(evaluatedParts[i]);
+
+          if(strings == null)
+          {
+            const dirs = evaluatedParts[i].split("/");
+
+            ret.props.children.push(React.createElement(
+              "div",
+              { className: "command" },
+              React.createElement("em", { style: { color: "red" } }, `bash: ls: cannot access '${dirs[dirs.length - 1]}'`)
+            ));
+          }
+          else
+            ret.props.children.push(React.createElement("div", { className: "command" }, strings.map((item, index) => {
+              if(item.indexOf('.') === -1) return React.createElement("span", {key: index, style: {color: "lightblue"}}, item);
+              else return React.createElement("span", {key: index}, item)})));
+        }
+      }
       break;
 
     case "CD":
@@ -360,28 +483,15 @@ export function commandProcess(cmd: string): React.ReactNode
         break;
       }
 
-      const oldStack = directoryStack;
-      let success = true;
-
-      const dirs = evaluatedParts[1].split("/");
-
-      for(let dir of dirs)
+      if(!changeDirectories(evaluatedParts[1]))
       {
-        success = changeDirectory(dir);
+        const dirs = evaluatedParts[1].split("/");
 
-        if(!success)
-        {
-          directoryStack = oldStack;
-          currentDirectory = directoryStack[0];
-
-          ret = React.createElement(
-            "div",
-            { className: "command" },
-            React.createElement("em", { style: { color: "red" } }, `bash: cd: ${dir}: no such file or directory`)
-          );
-
-          break;
-        }
+        ret = React.createElement(
+          "div",
+          { className: "command" },
+          React.createElement("em", { style: { color: "red" } }, `bash: cd: ${dirs[dirs.length - 1]}: no such file or directory`)
+        );
       }
       break;
 
