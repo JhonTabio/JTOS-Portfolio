@@ -1,4 +1,5 @@
-import { commandProcess, currentDirectory } from "../utils/utils";
+import { currentDirectory } from "../utils/utils";
+import { commandProcess } from "../utils/commandProcessUtils";
 import { useState } from "react";
 import CommandCWD from "./CommandCWD";
 
