@@ -219,38 +219,46 @@ export function commandProcess(cmd: string): React.ReactNode
       break;
 
     case "CAT":
-      if (evaluatedParts[1][0] === '/')
+      if (evaluatedParts.length == 1)
+        ret = <div className="command"></div>;
+      else
       {
         ret = (
           <div className="command">
-            <em style={{ color: "red" }}>error: you cannot perform this operation unless you are root</em>
+            {evaluatedParts.slice(1).map((dir, i) => {
+
+              if (dir[0] === '/')
+                return(
+                  <div key={i} className="command">
+                    <em style={{ color: "red" }}>error: you cannot perform this operation unless you are root</em>
+                  </div>
+                );
+
+              let info = concatenateFile(dir);
+
+              if(info)
+                if(typeof(info) === "string")
+                  return(
+                    <div key={i} className="command">
+                      {info}
+                    </div>
+                  );
+                else
+                  return(
+                    <div key={i} className="command">
+                      {info.name} {info.url}
+                    </div>
+                  );
+              else
+                return(
+                  <div key={i} className="command">
+                    <em style={{ color: "red" }}>{`cat: ${dir}: No such file`}</em>
+                  </div>
+                );
+            })}
           </div>
         );
-        break;
       }
-
-      let info = concatenateFile(evaluatedParts[1]);
-      console.log(`${info}: ${evaluatedParts[1]}`);
-
-      if(info)
-        if(typeof(info) === "string")
-          ret = (
-            <div className="command">
-              {info}
-            </div>
-          );
-        else
-          ret = (
-            <div className="command">
-              {info.name} {info.url}
-            </div>
-          );
-      else
-        ret = (
-          <div className="command">
-            <em style={{ color: "red" }}>{`cat: ${evaluatedParts[1]}: No such file`}</em>
-          </div>
-        );
 
       break;
 
