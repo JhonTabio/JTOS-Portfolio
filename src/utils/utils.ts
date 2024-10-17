@@ -169,6 +169,35 @@ export function changeDirectory(directoryName: string) : boolean
   }
 }
 
+export function concatenateFile(dir: string): repoData | string | undefined
+{
+  let ogDir = currentDirectory;
+  let ogStack = directoryStack;
+  let file = dir;
+
+  if(dir.includes('/'))
+  {
+    file = dir.substring(dir.lastIndexOf('/') + 1)
+    if(!changeDirectories(dir.substring(0, dir.lastIndexOf('/')))) return undefined;
+  }
+
+  let res: repoData | string | undefined;
+
+  if(file.includes("proj"))
+  {
+    file = file.substring(0, file.indexOf(".proj"));
+    res = currentDirectory.children?.find((item) => item.name === file + ".proj") ? repoMemoryData.find((repo) => repo.name === file) : undefined;
+  }
+  else
+    res = currentDirectory.children?.find((item) => item.name === file) ? "Another extension ig" : undefined;
+
+  currentDirectory = ogDir;
+  directoryStack = ogStack;
+
+  return res;
+
+}
+
 export function changeDirectories(path: string): boolean
 {
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { changeDirectories, currentDirectory, listDir, listOtherDir } from "./utils";
+import { changeDirectories, concatenateFile, currentDirectory, listDir, listOtherDir } from "./utils";
 
 function commandSplit(input: string): string[]
 {
@@ -216,6 +216,42 @@ export function commandProcess(cmd: string): React.ReactNode
           </div>
         );
       }
+      break;
+
+    case "CAT":
+      if (evaluatedParts[1][0] === '/')
+      {
+        ret = (
+          <div className="command">
+            <em style={{ color: "red" }}>error: you cannot perform this operation unless you are root</em>
+          </div>
+        );
+        break;
+      }
+
+      let info = concatenateFile(evaluatedParts[1]);
+      console.log(`${info}: ${evaluatedParts[1]}`);
+
+      if(info)
+        if(typeof(info) === "string")
+          ret = (
+            <div className="command">
+              {info}
+            </div>
+          );
+        else
+          ret = (
+            <div className="command">
+              {info.name} {info.url}
+            </div>
+          );
+      else
+        ret = (
+          <div className="command">
+            <em style={{ color: "red" }}>{`cat: ${evaluatedParts[1]}: No such file`}</em>
+          </div>
+        );
+
       break;
 
     case "ECHO":
