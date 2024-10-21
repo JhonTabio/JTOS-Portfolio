@@ -238,21 +238,47 @@ export function commandProcess(cmd: string): React.ReactNode
 
               if(info)
                 if(typeof(info) === "string")
-                  return(
-                    <div key={i} className="command">
-                      {info}
-                    </div>
-                  );
+                  if(info === "dir")
+                    return(
+                      <div key={i} className="command">
+                        <em style={{ color: "red" }}>{`cat: ${dir}: Is a directory`}</em>
+                      </div>
+                    );
+                  else return(<div key={i} className="command">{info}</div>);
                 else
                   return(
                     <div key={i} className="command">
-                      {info.name} {info.url}
+                      <pre>
+                        +---------------------------------------------------------+<br/>
+                        |                  {info.name.toUpperCase()}<br/>
+                        +---------------------------------------------------------+<br/>
+                        | <strong>Description</strong>       : {info.description ?? "No description"}<br/>
+                        | <strong>URL</strong>               : <a href={info.html_url} target="_blank" rel="noopener noreferrer">{info.html_url}</a><br/>
+                        | <strong>Language</strong>          : {info.language ?? "None"}<br/>
+                        | <strong>Topics</strong>            : {info.topics?.join(" ") ?? "None"}<br/>
+                        | <strong>Homepage</strong>          : {info.homepage ?? "None"}<br/>
+                        | <strong>Fork</strong>              : {info.fork ? "Yes" : "No"}<br/>
+                        | <strong>License</strong>           : {(info.license as {name: string})?.name ?? "None"}<br/>
+                        | <strong>Creation Date</strong>     : {info.created_at}<br/>
+                        | <strong>Last Updated</strong>      : {info.updated_at}<br/>
+                        | <strong>Last Pushed</strong>       : {info.pushed_at}<br/>
+                        | <strong>Default Branch</strong>    : {info.default_branch}<br/>
+                        +---------------------------------------------------------+<br/>
+                        |                  STATS<br/>
+                        +---------------------------------------------------------+<br/>
+                        | <strong>Size</strong>              : {info.size} KB<br/>
+                        | <strong>Stargazers Count</strong>  : {info.stargazers_count}<br/>
+                        | <strong>Watchers Count</strong>    : {info.watchers_count}<br/>
+                        | <strong>Open Issues Count</strong> : {info.open_issues_count}<br/>
+                        | <strong>Open Issues</strong>       : {info.open_issues}<br/>
+                        +---------------------------------------------------------+<br/>
+                      </pre>
                     </div>
                   );
               else
                 return(
                   <div key={i} className="command">
-                    <em style={{ color: "red" }}>{`cat: ${dir}: No such file`}</em>
+                    <em style={{ color: "red" }}>{`cat: ${dir}: No such file or directory`}</em>
                   </div>
                 );
             })}

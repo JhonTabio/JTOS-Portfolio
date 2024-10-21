@@ -1,13 +1,9 @@
-import React, { ReactNode } from "react";
-
 const REPO_CACHE = "repo_cache";
 const REPO_ETAG = "repo_etag";
 let repoMemoryData: repoData[] = [];
 
 interface repoData
 {
-  id: number;
-  node_id: string;
   name: string;
   html_url: string;
   description: string | null;
@@ -24,6 +20,8 @@ interface repoData
   open_issues_count: number;
   open_issues: number;
   default_branch: string;
+  topics: string[];
+  license: object;
 }
 
 async function fetchRepos(): Promise<repoData[]>
@@ -44,9 +42,8 @@ async function fetchRepos(): Promise<repoData[]>
     
     const data = await response.json();
 
-    const ret: repoData[] = data.map((repo: any) => ({
-      id: repo.id,
-      node_id: repo.node_id,
+    const ret: repoData[] = data.filter((repo: any) => 
+      repo.topics && repo.topics.includes("showcase")).map((repo: any) => ({
       name: repo.name,
       html_url: repo.html_url,
       description: repo.description,
@@ -63,6 +60,12 @@ async function fetchRepos(): Promise<repoData[]>
       open_issues_count: repo.open_issues_count,
       open_issues: repo.open_issues,
       default_branch: repo.default_branch,
+      topics: repo.topics,
+      license: repo.license ? {
+        key: repo.license.key,
+        name: repo.license.name,
+        url: repo.license.url
+      } : null
     }));
 
     localStorage.setItem(REPO_CACHE, JSON.stringify(ret));
@@ -189,7 +192,11 @@ export function concatenateFile(dir: string): repoData | string | undefined
     res = currentDirectory.children?.find((item) => item.name === file + ".proj") ? repoMemoryData.find((repo) => repo.name === file) : undefined;
   }
   else
+  {
     res = currentDirectory.children?.find((item) => item.name === file) ? "Another extension ig" : undefined;
+
+    if(res && !file.includes('.')) res = "dir";
+  }
 
   currentDirectory = ogDir;
   directoryStack = ogStack;
