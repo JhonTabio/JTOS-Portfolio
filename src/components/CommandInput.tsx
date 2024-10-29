@@ -1,11 +1,15 @@
 import { currentDirectory } from "../utils/utils";
 import { commandProcess } from "../utils/commandProcessUtils";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CommandCWD from "./CommandCWD";
 
 function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React.RefObject<HTMLInputElement>, setHistory: React.Dispatch<React.SetStateAction<React.ReactNode[]>>, cmdHistory: React.ReactNode[], setIndex: React.Dispatch<React.SetStateAction<number>>})
 {
   const [currIndex, setCurrIndex] = useState<number>(0);
+
+  useEffect(() => {
+    cmdRef.current?.scrollIntoView();
+  }, [cmdHistory.length])
 
   function onKeyDown(e: React.KeyboardEvent<HTMLInputElement>):void
   {
@@ -42,7 +46,7 @@ function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React
     if(newIndex === cmdHistory.length)
     {
       cmdRef.current.value = cmdRef.current.placeholder;
-      cmdRef .current.placeholder = "";
+      cmdRef.current.placeholder = "";
     }
     else
       cmdRef.current.value = (cmdHistory[newIndex] as React.ReactElement)["props"]["children"][2]["props"]["children"];

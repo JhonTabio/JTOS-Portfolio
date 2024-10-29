@@ -1,6 +1,10 @@
 import React from "react";
 import { changeDirectories, concatenateFile, currentDirectory, listDir, listOtherDir } from "./utils";
 
+const CMDS = ["help", "ls", "cat", "welcome", "banner", "echo", "cd",
+              "whoami", "whatami", "whereami", "whyami", "howami", 
+              "color", "clear", "exit"]
+
 function commandSplit(input: string): string[]
 {
   const regex = /`[^`]*`|\S+/g;
@@ -72,13 +76,13 @@ export function commandProcess(cmd: string): React.ReactNode
     return subCmd;
   });
 
-  switch (evaluatedParts[0].toUpperCase())
+  switch (evaluatedParts[0])
   {
     case "":
       ret = <div className="command"></div>;
       break;
 
-    case "HELP":
+    case "help":
       if (evaluatedParts.length == 1)
       {
         ret = (
@@ -113,7 +117,7 @@ export function commandProcess(cmd: string): React.ReactNode
       {
         switch (evaluatedParts[1].toUpperCase())
         {
-          case "HELP":
+          case "help":
             ret = (
               <div className="command">
                 help: help [command]
@@ -133,7 +137,7 @@ export function commandProcess(cmd: string): React.ReactNode
       }
       break;
 
-    case "LS":
+    case "ls":
       if (evaluatedParts.length == 1)
       {
         ret = (
@@ -179,7 +183,7 @@ export function commandProcess(cmd: string): React.ReactNode
       }
       break;
 
-    case "CD":
+    case "cd":
       if (evaluatedParts.length == 1)
       {
         ret = <div className="command"></div>;
@@ -218,7 +222,7 @@ export function commandProcess(cmd: string): React.ReactNode
       }
       break;
 
-    case "CAT":
+    case "cat":
       if (evaluatedParts.length == 1)
         ret = <div className="command"></div>;
       else
@@ -248,7 +252,7 @@ export function commandProcess(cmd: string): React.ReactNode
                 else
                   return(
                     <div key={i} className="command">
-                      <pre>
+                      <pre style={{ fontFamily: "VT323", fontSize: "1.28vw" }}>
                         +---------------------------------------------------------+<br/>
                         |                  {info.name.toUpperCase()}<br/>
                         +---------------------------------------------------------+<br/>
@@ -259,9 +263,9 @@ export function commandProcess(cmd: string): React.ReactNode
                         | <strong>Homepage</strong>          : {info.homepage ?? "None"}<br/>
                         | <strong>Fork</strong>              : {info.fork ? "Yes" : "No"}<br/>
                         | <strong>License</strong>           : {(info.license as {name: string})?.name ?? "None"}<br/>
-                        | <strong>Creation Date</strong>     : {info.created_at}<br/>
-                        | <strong>Last Updated</strong>      : {info.updated_at}<br/>
-                        | <strong>Last Pushed</strong>       : {info.pushed_at}<br/>
+                        | <strong>Creation Date</strong>     : {new Date(info.created_at).toLocaleString("en-US", { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric", hour12: true, timeZoneName: "short" })}<br/>
+                        | <strong>Last Updated</strong>      : {new Date(info.updated_at).toLocaleString("en-US", { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric", hour12: true, timeZoneName: "short" })}<br/>
+                        | <strong>Last Pushed</strong>       : {new Date(info.pushed_at).toLocaleString("en-US", { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric", hour12: true, timeZoneName: "short" })}<br/>
                         | <strong>Default Branch</strong>    : {info.default_branch}<br/>
                         +---------------------------------------------------------+<br/>
                         |                  STATS<br/>
@@ -288,7 +292,7 @@ export function commandProcess(cmd: string): React.ReactNode
 
       break;
 
-    case "ECHO":
+    case "echo":
       ret = (
         <div className="command">
           {evaluatedParts.slice(1).map((cmd, i) => (
