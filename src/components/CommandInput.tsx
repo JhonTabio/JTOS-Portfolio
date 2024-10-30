@@ -19,8 +19,8 @@ function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React
     if(e.key === "Tab")
     {
       e.preventDefault();
+
       const options = onAutoComplete(cmdRef.current.value);
-      console.log(options);
 
       if(options.length === 1)
       {
@@ -40,9 +40,9 @@ function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React
         
         if(process.includes('/')) res += process.substring(0, process.lastIndexOf('/') + 1);
 
-        console.log(`${split} r ${res} p ${process}`);
+        const char = split[0] === "help" ? '' : '/';
         cmdRef.current.value = option.includes('.') ? 
-          res + option : res + option + "/";
+          res + option : res + option + char;
       }
       else if(options.length >= 2)
       {
