@@ -18,6 +18,7 @@ function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React
 
     if(e.key === "Tab")
     {
+      e.preventDefault();
       const options = onAutoComplete(cmdRef.current.value);
       console.log(options);
 
@@ -26,6 +27,13 @@ function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React
         const option = options[0].trim();
 
         let split = cmdRef.current.value.split(" ");
+
+        if(split.length === 1)
+        {
+          cmdRef.current.value = option;
+          return;
+        }
+
         let res = split[0] + " ";
 
         let process = split[1];
@@ -38,16 +46,16 @@ function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React
       }
       else if(options.length >= 2)
       {
-        /*
+        const cmd = cmdRef.current.value;
+        const cwd = currentDirectory.name;
+
         setHistory((oldHistory) => [...oldHistory,
-          <li key={oldHistory.length} className="cli_commandItem" data-cmd={cmd}>
+          <li key={oldHistory.length} className="cli_autoComplete" data-cmd={cmd}>
             <CommandCWD cwd={cwd}/>
             &nbsp;<span id="cli_command">{cmd}</span><br/>
-            {commandProcess(cmd)}
+            {options.join(" ")}
           </li>]
         );
-        */
-        // MAKE HISTORY NOT CLI COMMAND ITEM MAYBE SO SKIP IN ARROW KEY FUNCTIONS
       }
       return;
     }
@@ -81,7 +89,8 @@ function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React
 
         newIndex = newIndex === 0 ? 0 : newIndex - 1;
       }
-      while((cmdHistory[newIndex] as React.ReactElement)["props"]["children"][2]["props"]["children"] === "");
+      while((cmdHistory[newIndex] as React.ReactElement)["props"]["children"][2]["props"]["children"] === ""
+        || (cmdHistory[newIndex] as React.ReactElement)["props"]["className"] !== "cli_commandItem");
     else if (e.key === "ArrowDown")
       do
       {
@@ -93,7 +102,8 @@ function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React
       
         newIndex = newIndex === cmdHistory.length ? cmdHistory.length : newIndex + 1;
       }
-      while(newIndex < cmdHistory.length && (cmdHistory[newIndex] as React.ReactElement)["props"]["children"][2]["props"]["children"] === "");
+      while(newIndex < cmdHistory.length && ((cmdHistory[newIndex] as React.ReactElement)["props"]["children"][2]["props"]["children"] === ""
+        || (cmdHistory[newIndex] as React.ReactElement)["props"]["className"] !== "cli_commandItem"));
 
     if(newIndex === cmdHistory.length)
     {
@@ -132,6 +142,8 @@ function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React
 
   function onAutoComplete(cmd: string): string[]
   {
+    if(cmd.trim() === "") return [];
+
     const parts = cmd.split(" ");
 
     // First arg should be a command
