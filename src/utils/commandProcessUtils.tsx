@@ -1,7 +1,7 @@
 import React from "react";
 import { changeDirectories, concatenateFile, currentDirectory, listDir, listOtherDir } from "./utils";
 
-const CMDS = ["help", "ls", "cat", "welcome", "banner", "echo", "cd",
+export const CMDS = ["help", "ls", "cat", "welcome", "banner", "echo", "cd",
               "whoami", "whatami", "whereami", "whyami", "howami", 
               "color", "clear", "exit"]
 

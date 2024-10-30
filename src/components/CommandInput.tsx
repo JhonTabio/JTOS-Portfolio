@@ -1,5 +1,5 @@
-import { currentDirectory } from "../utils/utils";
-import { commandProcess } from "../utils/commandProcessUtils";
+import { currentDirectory, listOtherDir } from "../utils/utils";
+import { CMDS, commandProcess } from "../utils/commandProcessUtils";
 import { useState, useEffect } from "react";
 import CommandCWD from "./CommandCWD";
 
@@ -15,6 +15,42 @@ function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React
   {
 
     if(!cmdRef.current) return;
+
+    if(e.key === "Tab")
+    {
+      const options = onAutoComplete(cmdRef.current.value);
+      console.log(options);
+
+      if(options.length === 1)
+      {
+        const option = options[0].trim();
+
+        let split = cmdRef.current.value.split(" ");
+        let res = split[0] + " ";
+
+        let process = split[1];
+        
+        if(process.includes('/')) res += process.substring(0, process.lastIndexOf('/') + 1);
+
+        console.log(`${split} r ${res} p ${process}`);
+        cmdRef.current.value = option.includes('.') ? 
+          res + option : res + option + "/";
+      }
+      else if(options.length >= 2)
+      {
+        /*
+        setHistory((oldHistory) => [...oldHistory,
+          <li key={oldHistory.length} className="cli_commandItem" data-cmd={cmd}>
+            <CommandCWD cwd={cwd}/>
+            &nbsp;<span id="cli_command">{cmd}</span><br/>
+            {commandProcess(cmd)}
+          </li>]
+        );
+        */
+        // MAKE HISTORY NOT CLI COMMAND ITEM MAYBE SO SKIP IN ARROW KEY FUNCTIONS
+      }
+      return;
+    }
 
     if(e.key !== "ArrowUp" && e.key !== "ArrowDown") 
     {
@@ -36,11 +72,27 @@ function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React
 
     if (e.key === "ArrowUp")
       do
+      {
+        if(newIndex === 0)
+        {
+          newIndex = currIndex;
+          break;
+        }
+
         newIndex = newIndex === 0 ? 0 : newIndex - 1;
+      }
       while((cmdHistory[newIndex] as React.ReactElement)["props"]["children"][2]["props"]["children"] === "");
     else if (e.key === "ArrowDown")
       do
+      {
+        if(newIndex === cmdHistory.length)
+        {
+          newIndex = currIndex;
+          break;
+        }
+      
         newIndex = newIndex === cmdHistory.length ? cmdHistory.length : newIndex + 1;
+      }
       while(newIndex < cmdHistory.length && (cmdHistory[newIndex] as React.ReactElement)["props"]["children"][2]["props"]["children"] === "");
 
     if(newIndex === cmdHistory.length)
@@ -76,6 +128,41 @@ function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React
     cmdRef.current.value = "";
     cmdRef.current.placeholder = "";
     setCurrIndex(cmdHistory.length + 1);
+  }
+
+  function onAutoComplete(cmd: string): string[]
+  {
+    const parts = cmd.split(" ");
+
+    // First arg should be a command
+    if(parts.length === 1) return CMDS.filter((c) => c.startsWith(cmd));
+    else if(parts.length === 2)
+    {
+      if(parts[0] === "help") return CMDS.filter((c) => c.startsWith(parts[1]));
+      else 
+      {
+        if(parts[1].startsWith('/')) return [];
+
+        let path: string;
+        let complete: string;
+
+        if(!parts[1].includes('/'))
+        {
+          path = "";
+          complete = parts[1];
+        }
+        else 
+        {
+          path = parts[1].substring(0, parts[1].lastIndexOf('/'));
+          complete = parts[1].substring(parts[1].lastIndexOf('/') + 1, parts[1].length);
+        }
+
+        const options = listOtherDir("./" + path);
+
+        return options ? options.filter((c) => c.startsWith(complete)) : [];
+      }
+    }
+    return [];
   }
 
   return(
