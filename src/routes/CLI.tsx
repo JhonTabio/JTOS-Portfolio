@@ -2,12 +2,17 @@ import { useState, useRef, ReactNode} from "react";
 import BootSequence from "../components/BootSequence.tsx";
 import CommandInput from "../components/CommandInput.tsx";
 import "./CLI.css"
+import { commandProcess } from "../utils/commandProcessUtils.tsx";
 
 function CLI()
 {
   const cmdRef = useRef<HTMLInputElement>(null);
 
-  const [cmdHistory, setHistory] = useState<ReactNode[]>([]);
+  const [cmdHistory, setHistory] = useState<ReactNode[]>([
+    <li key={0} className="cli_welcome">
+      {commandProcess("welcome")}
+    </li>]
+  );
   const [historyIndex, setIndex] = useState<number>(0);
 
   return(

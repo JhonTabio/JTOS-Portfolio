@@ -79,6 +79,8 @@ function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React
       cmdRef.current.placeholder = cmdRef.current.value;
 
     if (e.key === "ArrowUp")
+    {
+      e.preventDefault();
       do
       {
         if(newIndex === 0)
@@ -91,6 +93,7 @@ function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React
       }
       while((cmdHistory[newIndex] as React.ReactElement)["props"]["children"][2]["props"]["children"] === ""
         || (cmdHistory[newIndex] as React.ReactElement)["props"]["className"] !== "cli_commandItem");
+    }
     else if (e.key === "ArrowDown")
       do
       {
