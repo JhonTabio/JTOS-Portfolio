@@ -89,43 +89,184 @@ export function commandProcess(cmd: string): React.ReactNode
           <div className="command">
             help - If unsure, try help help
             <br />
-            *ls - Lists all files and directories within the given directory
+            ls - Lists all files and directories within the given directory
             <br />
-            *cat - Prints the contents of a given file
+            cat - Prints the contents of a given file
             <br />
-            *whoami - Provides a brief description of the creator of JTOS
+            whoami - Provides a brief description of the creator of JTOS
             <br />
-            *whatami - Provides a brief description of JTOS
+            whatami - Provides a brief description of JTOS
             <br />
-            *whenami - Provides a brief description of where you are connected
+            whenami - Provides a brief description of where you are connected
             <br />
-            *whereami - Provides a brief description of where you are
+            whereami - Provides a brief description of where you are
             <br />
-            *whyami - Provides a brief description of why JTOS was created
+            whyami - Provides a brief description of why JTOS was created
             <br />
-            *howami - Provides a brief description of how JTOS was created
+            howami - Provides a brief description of how JTOS was created
             <br />
-            *color - Change the color of the terminal text
+            color - Change the color of the terminal text
             <br />
-            *clear - Clears the terminal
+            clear - Clears the terminal
             <br />
-            *exit - Exits the terminal
+            exit - Exits the terminal
+            <br />
+            echo - Print to the terminal
+            <br />
+            welcome - Displays the welcome screen
+            <br />
+            banner - Displays the banner ASCII art
           </div>
         );
       }
       else
       {
-        switch (evaluatedParts[1].toUpperCase())
+        switch (evaluatedParts[1])
         {
           case "help":
             ret = (
               <div className="command">
                 help: help [command]
                 <br />
-                Displays brief summaries of built-in commands
+                &nbsp;Displays brief summaries of built-in commands
               </div>
             );
             break;
+
+          case "ls":
+            ret = (
+              <div className="command">
+                help: ls FILE...
+                <br />
+                &nbsp;List about the FILEs (The current directory by default)
+              </div>
+            );
+            break;
+
+          case "cd":
+            ret = (
+              <div className="command">
+                help: cd DIR...
+                <br />
+                &nbsp;Change the current directory to DIR. The default DIR is the value of the
+                HOME (~) shell variable
+              </div>
+            );
+            break;
+
+          case "cat":
+            ret = (
+              <div className="command">
+                help: cat FILE...
+                <br />
+                &nbsp;Concatenate FILEs and print to screen
+              </div>
+            );
+            break;
+
+          case "clear":
+            ret = (
+              <div className="command">
+                help: clear
+                <br />
+                &nbsp;Clears the terminal screen
+              </div>
+            );
+            break;
+
+          case "whoami":
+            ret = (
+              <div className="command">
+                help: whoami
+                <br />
+                &nbsp;Insight on the developer of this Portfolio
+              </div>
+            );
+            break;
+
+          case "whatami":
+            ret = (
+              <div className="command">
+                help: whatami
+                <br />
+                &nbsp;Insight on the background of this Portfolio's idea
+              </div>
+            );
+            break;
+
+          case "whereami":
+            ret = (
+              <div className="command">
+                help: whereami
+                <br />
+                &nbsp;The given scenario is that the website simulates you SSHing into 'my machine'
+                which contains all of my 'local' projects to view
+              </div>
+            );
+            break;
+
+          case "howami":
+            ret = (
+              <div className="command">
+                help: howami
+                <br />
+                &nbsp;Insights on how this projects operates in a technical level
+              </div>
+            );
+            break;
+
+          case "color":
+            ret = (
+              <div className="command">
+                help: color LABEL COLOR
+                <br />
+                &nbsp;Set the color of any given LABEL (Optional, if ommitted then will do all labels)
+                to COLOR
+              </div>
+            );
+            break;
+
+          case "welcome":
+            ret = (
+              <div className="command">
+                help: welcome
+                <br />
+                &nbsp;Displays the intro text
+              </div>
+            );
+            break;
+
+          case "echo":
+            ret = (
+              <div className="command">
+                help: echo ARG...
+                <br />
+                &nbsp;Displays ARGs, seperated by a single space character followed by a newline,
+                on the standard output
+              </div>
+            );
+            break;
+
+          case "exit":
+            ret = (
+              <div className="command">
+                help: exit
+                <br />
+                &nbsp;Exit the shell
+              </div>
+            );
+            break;
+
+          case "banner":
+            ret = (
+              <div className="command">
+                help: banner
+                <br />
+                &nbsp;Displays the JTOS ASCII art
+              </div>
+            );
+            break;
+
           default:
             ret = (
               <div className="command">
@@ -387,7 +528,7 @@ export function commandProcess(cmd: string): React.ReactNode
             © {currentDate.getFullYear()} Jhon Tabio All rights reserved.<br/>
             {commandProcess("banner")} 
             Welcome to my portfolio!<br/>
-            Feel free to stick and look around. Not sure where to start? Try help!
+            Feel free to stick and look around. Not sure where to start? Try typing help
             <br/>
           </div>
         break;
