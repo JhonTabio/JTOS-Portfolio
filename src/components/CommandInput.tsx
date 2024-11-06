@@ -30,7 +30,7 @@ function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React
 
         if(split.length === 1)
         {
-          cmdRef.current.value = option;
+          cmdRef.current.value = option + ' ';
           return;
         }
 
@@ -42,7 +42,7 @@ function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React
 
         const char = split[0] === "help" ? '' : '/';
         cmdRef.current.value = option.includes('.') ? 
-          res + option : res + option + char;
+          res + option + ' ' : res + option + char;
       }
       else if(options.length >= 2)
       {
