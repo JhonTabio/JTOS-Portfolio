@@ -126,9 +126,10 @@ export function commandProcess(cmd: string): React.ReactNode
           case "help":
             ret = (
               <div className="command">
-                help: help [command]
+                help: help COMMAND
                 <br />
-                &nbsp;Displays brief summaries of built-in commands
+                &nbsp;Displays brief summary of given COMMAND, which is from
+                a list of built-in commands
               </div>
             );
             break;

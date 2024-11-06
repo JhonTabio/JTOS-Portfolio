@@ -1,10 +1,12 @@
 import { currentDirectory, listOtherDir } from "../utils/utils";
 import { CMDS, commandProcess } from "../utils/commandProcessUtils";
 import { useState, useEffect } from "react";
+import { useLocation } from "wouter";
 import CommandCWD from "./CommandCWD";
 
 function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React.RefObject<HTMLInputElement>, setHistory: React.Dispatch<React.SetStateAction<React.ReactNode[]>>, cmdHistory: React.ReactNode[], setIndex: React.Dispatch<React.SetStateAction<number>>})
 {
+  const [_, setLocation] = useLocation();
   const [currIndex, setCurrIndex] = useState<number>(0);
 
   useEffect(() => {
@@ -137,6 +139,7 @@ function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React
     );
 
     if(cmd.trim() === "clear") setIndex(cmdHistory.length + 1);
+    else if(cmd.trim() === "exit") setLocation('/')
 
     cmdRef.current.value = "";
     cmdRef.current.placeholder = "";
