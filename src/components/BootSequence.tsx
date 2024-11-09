@@ -9,7 +9,7 @@ function BootSequence()
 
   // Fetch boot text
   useEffect(() => {
-    fetch("/src/assets/boot.log")
+    fetch("/boot.log")
       .then(response => response.text())
       .then(text => {
         const logLines = text.split('\n');
