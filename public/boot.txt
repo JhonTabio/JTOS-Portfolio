@@ -1,0 +1,76 @@
+                Welcome to JTOS
+Starting udev:                                             [  OK  ]
+Setting hostname elwood:                                   [  OK  ]
+Setting up Logical Volume Management:   No volume groups found
+                                                           [  OK  ]
+Checking filesystems
+/dev/sda2: clean, 89739/30457856 files, 2561411/121822976 blocks
+/dev/sda1: clean, 39/76912 files, 43648/307200 blocks
+                                                           [  OK  ]
+Remounting root filesystem in read-write mode:             [  OK  ]
+Mounting local filesystems:                                [  OK  ]
+Enabling local filesystem quotas:                          [  OK  ]
+Enabling /etc/fstab swaps:                                 [  OK  ]
+Entering non-interactive startup
+ 
+ERROR: Wanpipe configuration file not found:
+               /etc/wanpipe/wanpipe1.conf
+ 
+Bringing up loopback interface:                            [  OK  ]
+Bringing up interface eth0:  
+Determining IP information for eth0... done.
+                                                           [  OK  ]
+D: auto '/sys/bus/dahdi_devices/devices/pci:0000:02:08.0'
+auto-assign /sys/bus/dahdi_devices/devices/pci:0000:02:08.0
+Running dahdi_cfg:                                         [  OK  ]
+Starting system message bus:                               [  OK  ]
+Starting Avahi daemon...                                   [  OK  ]
+Mounting filesystems:                                      [  OK  ]
+Starting acpi daemon:                                      [  OK  ]
+Starting HAL daemon:                                       [  OK  ]
+Retrigger failed udev events                               [  OK  ]
+Starting Queue callback daemon:                            [  OK  ]
+Starting REST applications daemon:                         [  OK  ]
+Starting dnsmasq:                                          [  OK  ]
+Starting sshd:                                             [  OK  ]
+Starting xinetd:                                           [  OK  ]
+Starting ntpd:                                             [  OK  ]
+Starting UPS monitoring:                                   [  OK  ]
+Starting mysqld:                                           [  OK  ]
+Starting postfix:                                          [FAILED]
+Starting httpd: REST Applications module is not licensed.
+Warning: DocumentRoot [/var/www/html/aastra/] does not exist
+[%date%] [warn] _default_ VirtualHost overlap on port 80, the first has precedence
+(98)Address already in use: make_sock: could not bind to address [::]:80
+(98)Address already in use: make_sock: could not bind to address 0.0.0.0:82
+no listening sockets available, shutting down
+Unable to open logs
+                                                           [FAILED]
+Starting crond:                                            [  OK  ]
+Starting prosody: Started
+                                                           [  OK  ]
+Starting fail2ban:                                         [  OK  ]
+Starting jexec servicesStarting Filesystem event daemon    [  OK  ]
+SETTING FILE PERMISSIONS...................Done
+Removing any dangling symlinks
+Dangling symlinks removed
+ 
+STARTING ASTERISK
+Asterisk Started
+Starting REST applications daemon:                         [  OK  ]
+Stopping fail2ban: REST Applications module is not licensed.
+                                                           [  OK  ]
+Starting fail2ban:                                         [  OK  ]
+ 
+> ucp-server@ start /var/www/html/admin/modules/ucpnode/node
+> node_modules/forever/bin/forever start -m 1 -a -l $ASTLOGDIR/ucp_forever.log -o $ASTLOGDIR/ucp_out.log -e $ASTLOGDIR/ucp_err.log --uid 'ucp' ind
+ex.js
+ 
+warn:    --minUptime not set. Defaulting to: 1000ms
+warn:    --spinSleepTime not set. Your script will exit if it does not stay up for at least 1000ms
+info:    Forever processing file: index.js
+Starting Queue callback daemon:                            [  OK  ]
+Starting prosody: Prosody is already running with PID 1748
+                                                           [FAILED]
+Starting XMPP Presence State daemon:                       [  OK  ]
+%date% elwood NET[2658]: /sbin/dhclient-script : updated /etc/resolv.conf
