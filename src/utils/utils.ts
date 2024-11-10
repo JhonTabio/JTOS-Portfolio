@@ -88,7 +88,8 @@ export function initialize(): void
     repoMemoryData = data;
 
     repoMemoryData.forEach((repo) =>{
-      fileSystem.children![1].children!.push({name: repo.name + ".proj", type: "file"});
+      if (!fileSystem.children![1].children!.some(child => child.name === repo.name + ".proj" && child.type === "file"))
+        fileSystem.children![1].children!.push({name: repo.name + ".proj", type: "file"});
     })
   });
 }

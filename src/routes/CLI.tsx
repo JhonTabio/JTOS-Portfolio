@@ -1,8 +1,9 @@
-import { useState, useRef, ReactNode} from "react";
+import { useState, useEffect, useRef, ReactNode} from "react";
 import BootSequence from "../components/BootSequence.tsx";
 import CommandInput from "../components/CommandInput.tsx";
 import "./CLI.css"
 import { commandProcess } from "../utils/commandProcessUtils.tsx";
+import { initialize } from "../utils/utils.ts";
 
 function CLI()
 {
@@ -14,6 +15,10 @@ function CLI()
     </li>]
   );
   const [historyIndex, setIndex] = useState<number>(0);
+
+  useEffect(() => {
+    initialize();
+  }, []);
 
   return(
     <>
