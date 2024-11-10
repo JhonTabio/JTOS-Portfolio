@@ -104,10 +104,8 @@ function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React
           newIndex = currIndex;
           break;
         }
-        console.log(newIndex);
+
         newIndex = newIndex === cmdHistory.length ? cmdHistory.length : newIndex + 1;
-        console.log(cmdHistory);
-        console.log(newIndex);
 
         if(!cmdHistory || !cmdHistory[newIndex]) break;
       }
