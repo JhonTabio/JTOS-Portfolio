@@ -402,7 +402,7 @@ export function commandProcess(cmd: string): React.ReactNode
                         | <strong>URL</strong>               : <a href={info.html_url} target="_blank" rel="noopener noreferrer">{info.html_url}</a><br/>
                         | <strong>Language</strong>          : {info.language ?? "None"}<br/>
                         | <strong>Topics</strong>            : {info.topics?.join(" ") ?? "None"}<br/>
-                        | <strong>Homepage</strong>          : {info.homepage ?? "None"}<br/>
+                        | <strong>Homepage</strong>          : {info.homepage === "https://N/A" ? "N/A" : <a href={info.homepage!} target="_blank" rel="noopener noreferrer">{info.homepage}</a>}<br/>
                         | <strong>Fork</strong>              : {info.fork ? "Yes" : "No"}<br/>
                         | <strong>License</strong>           : {(info.license as {name: string})?.name ?? "None"}<br/>
                         | <strong>Creation Date</strong>     : {new Date(info.created_at).toLocaleString("en-US", { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric", hour12: true, timeZoneName: "short" })}<br/>
