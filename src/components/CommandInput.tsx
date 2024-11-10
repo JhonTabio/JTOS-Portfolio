@@ -93,8 +93,8 @@ function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React
 
         newIndex = newIndex === 0 ? 0 : newIndex - 1;
       }
-      while((cmdHistory[newIndex] as React.ReactElement)["props"]["children"][2]["props"]["children"] === ""
-        || (cmdHistory[newIndex] as React.ReactElement)["props"]["className"] !== "cli_commandItem");
+      while((cmdHistory[newIndex] as React.ReactElement)["props"]["className"] !== "cli_commandItem" 
+        || (cmdHistory[newIndex] as React.ReactElement)["props"]["children"][2]["props"]["children"] === "");
     }
     else if (e.key === "ArrowDown")
       do
@@ -104,11 +104,15 @@ function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React
           newIndex = currIndex;
           break;
         }
-      
+        console.log(newIndex);
         newIndex = newIndex === cmdHistory.length ? cmdHistory.length : newIndex + 1;
+        console.log(cmdHistory);
+        console.log(newIndex);
+
+        if(!cmdHistory || !cmdHistory[newIndex]) break;
       }
-      while(newIndex < cmdHistory.length && ((cmdHistory[newIndex] as React.ReactElement)["props"]["children"][2]["props"]["children"] === ""
-        || (cmdHistory[newIndex] as React.ReactElement)["props"]["className"] !== "cli_commandItem"));
+      while(newIndex < cmdHistory.length && cmdHistory && cmdHistory[newIndex] && ((cmdHistory[newIndex] as React.ReactElement)["props"]["className"] !== "cli_commandItem")
+        || (cmdHistory[newIndex] as React.ReactElement)["props"]["children"][2]["props"]["children"] === "");
 
     if(newIndex === cmdHistory.length)
     {
@@ -116,7 +120,8 @@ function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React
       cmdRef.current.placeholder = "";
     }
     else
-      cmdRef.current.value = (cmdHistory[newIndex] as React.ReactElement)["props"]["children"][2]["props"]["children"];
+      if(cmdHistory && cmdHistory[newIndex] && (cmdHistory[newIndex] as React.ReactElement)["props"]["className"] === "cli_commandItem")
+        cmdRef.current.value = (cmdHistory[newIndex] as React.ReactElement)["props"]["children"][2]["props"]["children"];
     
     setCurrIndex(newIndex);
   }
