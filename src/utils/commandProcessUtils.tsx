@@ -394,7 +394,7 @@ export function commandProcess(cmd: string): React.ReactNode
                 else
                   return(
                     <div key={i} className="command">
-                      <pre style={{ fontFamily: "VT323", fontSize: "1.28vw" }}>
+                      <pre style={{ fontFamily: "VT323" }}>
                         +---------------------------------------------------------+<br/>
                         |                  {info.name.toUpperCase()}<br/>
                         +---------------------------------------------------------+<br/>
