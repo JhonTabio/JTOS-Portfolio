@@ -24,7 +24,7 @@ function CLI()
     <>
       <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet"/>
 
-      <div id="cli_container" onClick={() => cmdRef.current!.focus()}>
+      <div id="cli_container" onClick={() => cmdRef.current!.focus({preventScroll: true})}>
         <BootSequence/>
         <div id="cli_terminal">
           <ul id="cli_history">
