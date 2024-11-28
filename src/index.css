@@ -12,11 +12,16 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --client: gray;
-  --\@: gray;
-  --server: gray;
-  --directory: gray;
-  --command: gray;
+  --client: lightgray;
+  --\@: lightgray;
+  --server: lightgray;
+  --directory: lightgray;
+  --command: lightgray;
+  --error: red;
+  --dir: lightblue;
+  --file: lightgray;
+  --\$: lightgray;
+  --\[\]: lightgray;
 }
 
 a

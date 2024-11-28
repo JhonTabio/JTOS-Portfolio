@@ -1,5 +1,5 @@
 import React from "react";
-import { changeDirectories, concatenateFile, currentDirectory, listDir, listOtherDir } from "./utils";
+import { changeDirectories, concatenateFile, currentDirectory, changeColor, listDir, listOtherDir } from "./utils";
 
 export const CMDS = ["help", "ls", "cat", "welcome", "banner", "echo", "cd",
               "whoami", "whatami", "whereami", "whyami", "howami", 
@@ -42,7 +42,7 @@ const ProcessElements: React.FC<{ element: React.ReactNode }> = ({ element }) =>
 
 export function commandProcess(cmd: string): React.ReactNode
 {
-  if (cmd.length <= 0 || cmd.trim() === "") return <div className="command"></div>;
+  if (cmd.length <= 0 || cmd.trim() === "") return <div></div>;
 
   let ret: React.ReactNode;
 
@@ -52,7 +52,6 @@ export function commandProcess(cmd: string): React.ReactNode
     {
       const part = subCmd.slice(1, -1);
       const comps = commandProcess(part) as React.ReactElement;
-      console.log(comps);
 
       const retrieveString = (component: React.ReactElement): string => {
         if(!component) return "";
@@ -79,42 +78,42 @@ export function commandProcess(cmd: string): React.ReactNode
   switch (evaluatedParts[0])
   {
     case "":
-      ret = <div className="command"></div>;
+      ret = <br/>;
       break;
 
     case "help":
       if (evaluatedParts.length == 1)
       {
         ret = (
-          <div className="command">
+          <div>
             help - If unsure, try help help
-            <br />
+            <br/>
             ls - Lists all files and directories within the given directory
-            <br />
+            <br/>
             cat - Prints the contents of a given file
-            <br />
+            <br/>
             whoami - Provides a brief description of the creator of JTOS
-            <br />
+            <br/>
             whatami - Provides a brief description of JTOS
-            <br />
+            <br/>
             whenami - Provides a brief description of where you are connected
-            <br />
+            <br/>
             whereami - Provides a brief description of where you are
-            <br />
+            <br/>
             whyami - Provides a brief description of why JTOS was created
-            <br />
+            <br/>
             howami - Provides a brief description of how JTOS was created
-            <br />
+            <br/>
             color - Change the color of the terminal text
-            <br />
+            <br/>
             clear - Clears the terminal
-            <br />
+            <br/>
             exit - Exits the terminal
-            <br />
+            <br/>
             echo - Print to the terminal
-            <br />
+            <br/>
             welcome - Displays the welcome screen
-            <br />
+            <br/>
             banner - Displays the banner ASCII art
           </div>
         );
@@ -125,9 +124,9 @@ export function commandProcess(cmd: string): React.ReactNode
         {
           case "help":
             ret = (
-              <div className="command">
+              <div>
                 help: help COMMAND
-                <br />
+                <br/>
                 &nbsp;Displays brief summary of given COMMAND, which is from
                 a list of built-in commands
               </div>
@@ -136,9 +135,9 @@ export function commandProcess(cmd: string): React.ReactNode
 
           case "ls":
             ret = (
-              <div className="command">
+              <div>
                 help: ls FILE...
-                <br />
+                <br/>
                 &nbsp;List about the FILEs (The current directory by default)
               </div>
             );
@@ -146,9 +145,9 @@ export function commandProcess(cmd: string): React.ReactNode
 
           case "cd":
             ret = (
-              <div className="command">
+              <div>
                 help: cd DIR...
-                <br />
+                <br/>
                 &nbsp;Change the current directory to DIR. The default DIR is the value of the
                 HOME (~) shell variable
               </div>
@@ -157,9 +156,9 @@ export function commandProcess(cmd: string): React.ReactNode
 
           case "cat":
             ret = (
-              <div className="command">
+              <div>
                 help: cat FILE...
-                <br />
+                <br/>
                 &nbsp;Concatenate FILEs and print to screen
               </div>
             );
@@ -167,9 +166,9 @@ export function commandProcess(cmd: string): React.ReactNode
 
           case "clear":
             ret = (
-              <div className="command">
+              <div>
                 help: clear
-                <br />
+                <br/>
                 &nbsp;Clears the terminal screen
               </div>
             );
@@ -177,9 +176,9 @@ export function commandProcess(cmd: string): React.ReactNode
 
           case "whoami":
             ret = (
-              <div className="command">
+              <div>
                 help: whoami
-                <br />
+                <br/>
                 &nbsp;Insight on the developer of this Portfolio
               </div>
             );
@@ -187,9 +186,9 @@ export function commandProcess(cmd: string): React.ReactNode
 
           case "whatami":
             ret = (
-              <div className="command">
+              <div>
                 help: whatami
-                <br />
+                <br/>
                 &nbsp;Insight on the background of this Portfolio's idea
               </div>
             );
@@ -197,9 +196,9 @@ export function commandProcess(cmd: string): React.ReactNode
 
           case "whereami":
             ret = (
-              <div className="command">
+              <div>
                 help: whereami
-                <br />
+                <br/>
                 &nbsp;The given scenario is that the website simulates you SSHing into 'my machine'
                 which contains all of my 'local' projects to view
               </div>
@@ -208,9 +207,9 @@ export function commandProcess(cmd: string): React.ReactNode
 
           case "howami":
             ret = (
-              <div className="command">
+              <div>
                 help: howami
-                <br />
+                <br/>
                 &nbsp;Insights on how this projects operates in a technical level
               </div>
             );
@@ -218,20 +217,23 @@ export function commandProcess(cmd: string): React.ReactNode
 
           case "color":
             ret = (
-              <div className="command">
+              <div>
                 help: color LABEL COLOR
-                <br />
+                <br/>
                 &nbsp;Set the color of any given LABEL (Optional, if ommitted then will do all labels)
                 to COLOR
+                <br/>
+                &nbsp;Valid LABELs are the following:
+                  client, @, server, directory, command, error, dir, file, $, []
               </div>
             );
             break;
 
           case "welcome":
             ret = (
-              <div className="command">
+              <div>
                 help: welcome
-                <br />
+                <br/>
                 &nbsp;Displays the intro text
               </div>
             );
@@ -239,9 +241,9 @@ export function commandProcess(cmd: string): React.ReactNode
 
           case "echo":
             ret = (
-              <div className="command">
+              <div>
                 help: echo ARG...
-                <br />
+                <br/>
                 &nbsp;Displays ARGs, seperated by a single space character followed by a newline,
                 on the standard output
               </div>
@@ -250,9 +252,9 @@ export function commandProcess(cmd: string): React.ReactNode
 
           case "exit":
             ret = (
-              <div className="command">
+              <div>
                 help: exit
-                <br />
+                <br/>
                 &nbsp;Exit the shell
               </div>
             );
@@ -260,9 +262,9 @@ export function commandProcess(cmd: string): React.ReactNode
 
           case "banner":
             ret = (
-              <div className="command">
+              <div>
                 help: banner
-                <br />
+                <br/>
                 &nbsp;Displays the JTOS ASCII art
               </div>
             );
@@ -270,8 +272,8 @@ export function commandProcess(cmd: string): React.ReactNode
 
           default:
             ret = (
-              <div className="command">
-                <em style={{ color: "red" }}>{`bash: help: no help topics match \"${evaluatedParts[1]}\"`}</em>
+              <div id="cli_error">
+                {`bash: help: no help topics match \"${evaluatedParts[1]}\"`}
               </div>
             );
             break;
@@ -283,9 +285,9 @@ export function commandProcess(cmd: string): React.ReactNode
       if (evaluatedParts.length == 1)
       {
         ret = (
-          <div className="command">
+          <div>
             {listDir(currentDirectory, false).map((item, index) => (
-              <span key={index} style={item.indexOf('.') === -1 ? { color: "lightblue" } : undefined}>
+              <span key={index} id={item.indexOf('.') === -1 ? "cli_dir" : "cli_file"}>
                 {item}
               </span>
             ))}
@@ -295,7 +297,7 @@ export function commandProcess(cmd: string): React.ReactNode
       else
       {
         ret = (
-          <div className="command">
+          <div>
             {evaluatedParts.slice(1).map((dir, i) => {
               const strings: string[] | null = listOtherDir(dir);
 
@@ -304,16 +306,16 @@ export function commandProcess(cmd: string): React.ReactNode
                 const dirs = dir.split("/");
 
                 return (
-                  <div key={i} className="command">
-                    <em style={{ color: "red" }}>{`bash: ls: cannot access '${dirs[dirs.length - 1]}'`}</em>
+                  <div key={i} id="cli_error">
+                    {`bash: ls: cannot access '${dirs[dirs.length - 1]}'`}
                   </div>
                 );
               }
 
               return (
-                <div key={i} className="command">
+                <div key={i}>
                   {strings.map((item, index) => (
-                    <span key={index} style={item.indexOf('.') === -1 ? { color: "lightblue" } : undefined}>
+                    <span key={index} id={item.indexOf('.') === -1 ? "cli_dir" : "cli_file"}>
                       {item}
                     </span>
                   ))}
@@ -328,15 +330,15 @@ export function commandProcess(cmd: string): React.ReactNode
     case "cd":
       if (evaluatedParts.length == 1)
       {
-        ret = <div className="command"></div>;
+        ret = <br/>;
         break;
       }
 
       if (evaluatedParts.length > 2)
       {
         ret = (
-          <div className="command">
-            <em style={{ color: "red" }}>bash: cd: too many arguments</em>
+          <div id="cli_error">
+            bash: cd: too many arguments
           </div>
         );
         break;
@@ -345,8 +347,8 @@ export function commandProcess(cmd: string): React.ReactNode
       if (evaluatedParts[1][0] === '/')
       {
         ret = (
-          <div className="command">
-            <em style={{ color: "red" }}>error: you cannot perform this operation unless you are root</em>
+          <div id="cli_error">
+            error: you cannot perform this operation unless you are root
           </div>
         );
         break;
@@ -357,8 +359,8 @@ export function commandProcess(cmd: string): React.ReactNode
         const dirs = evaluatedParts[1].split("/");
 
         ret = (
-          <div className="command">
-            <em style={{ color: "red" }}>{`bash: cd: ${dirs[dirs.length - 1]}: no such file or directory`}</em>
+          <div id="cli_error">
+            {`bash: cd: ${dirs[dirs.length - 1]}: no such file or directory`}
           </div>
         );
       }
@@ -366,17 +368,17 @@ export function commandProcess(cmd: string): React.ReactNode
 
     case "cat":
       if (evaluatedParts.length == 1)
-        ret = <div className="command"></div>;
+        ret = <br/>;
       else
       {
         ret = (
-          <div className="command">
+          <div>
             {evaluatedParts.slice(1).map((dir, i) => {
 
               if (dir[0] === '/')
                 return(
-                  <div key={i} className="command">
-                    <em style={{ color: "red" }}>error: you cannot perform this operation unless you are root</em>
+                  <div key={i} id="cli_error">
+                    error: you cannot perform this operation unless you are root
                   </div>
                 );
 
@@ -386,14 +388,14 @@ export function commandProcess(cmd: string): React.ReactNode
                 if(typeof(info) === "string")
                   if(info === "dir")
                     return(
-                      <div key={i} className="command">
-                        <em style={{ color: "red" }}>{`cat: ${dir}: Is a directory`}</em>
+                      <div key={i} id="cli_error">
+                        {`cat: ${dir}: Is a directory`}
                       </div>
                     );
-                  else return(<div key={i} className="command">{info}</div>);
+                  else return(<div key={i}>{info}</div>);
                 else
                   return(
-                    <div key={i} className="command">
+                    <div key={i}>
                       <pre style={{ fontFamily: "VT323" }}>
                         +---------------------------------------------------------+<br/>
                         |                  {info.name.toUpperCase()}<br/>
@@ -423,8 +425,8 @@ export function commandProcess(cmd: string): React.ReactNode
                   );
               else
                 return(
-                  <div key={i} className="command">
-                    <em style={{ color: "red" }}>{`cat: ${dir}: No such file or directory`}</em>
+                  <div key={i} id="cli_error">
+                    {`cat: ${dir}: No such file or directory`}
                   </div>
                 );
             })}
@@ -436,7 +438,7 @@ export function commandProcess(cmd: string): React.ReactNode
 
     case "echo":
       ret = (
-        <div className="command">
+        <div>
           {evaluatedParts.slice(1).map((cmd, i) => (
             <span key={i}>{cmd}&nbsp;</span>
           ))}
@@ -447,7 +449,7 @@ export function commandProcess(cmd: string): React.ReactNode
 
     case "whoami"://TODO: Use API to fetch from github instead 
         ret =
-        <div className="command"> 
+        <div> 
           Hey! I am Jhon Tabio. I am the creator of JTOS, the operating system the server you are currently connected to is using.<br/>
           Currently an undergraduate student that is pursuing a Bachelors in Computer Science at the University of Central Florida. Throughout my educational and professional career, I have adopted various industry and social skills that allows me to easily integrate myself in any sort of team environment. Every day I work towards refining my skills in C / C++ / C#, Java, Javascript, Typescript, Python, and HTML / CSS using tools such as Visual Studio / Visual Studio Code, VIM / NeoVim, Git, and GitHub. One of my greatest achievements is having the chance to work alongside Microsoft and their TEALS division to bring more accessibility of computer science to High schools that did not have a strong CS program. I was able to gather the communication skills and patience to teach a group of high schoolers about the fundamentals of programming.
           <br/>
@@ -455,7 +457,7 @@ export function commandProcess(cmd: string): React.ReactNode
         break;
       case "whatami":
         ret =
-        <div className="command"> 
+        <div> 
           JTOS is a full fledge operating system with all kinds of capabilities!<br/><br/>
           Not. The reality is that the OS as a whole is more of an artistic simulation rather
           than an emulation. The idea is I wanted to challenge myself with my weaker side of
@@ -468,7 +470,7 @@ export function commandProcess(cmd: string): React.ReactNode
         break;
       case "whereami":
         ret =
-        <div className="command"> 
+        <div> 
           Currently, you are connected to a remote server via an ssh terminal. This server
           houses various information, documents, and overall a good example of the Full Stack
           Development capabilities of the creator of JTOS (Jhon Tabio).
@@ -477,14 +479,14 @@ export function commandProcess(cmd: string): React.ReactNode
         break;
       case "whenami":
         ret =
-        <div className="command"> 
+        <div> 
           Not sure what to do tbh... time spent on this? My local time? Most recent commit time?
           <br/>
         </div>
         break;
       case "whyami":
         ret =
-        <div className="command"> 
+        <div> 
           Why this? Why go through the effort of simulating a terminal? Well... because out of
           all my options / ideas for my portfolio, I thought this to be the best one that fits me.<br/>
           It was not too long ago where I had switched my working station from a Windows machine to a Linux machine.
@@ -495,7 +497,7 @@ export function commandProcess(cmd: string): React.ReactNode
         break;
       case "howami":
         ret =
-        <div className="command"> 
+        <div> 
           Doing very good! :)<br/><br/>
           Talk about tech stack maybe?
           <br/>
@@ -504,7 +506,7 @@ export function commandProcess(cmd: string): React.ReactNode
 
       case "banner":
         ret =
-          <pre className="command" style={{whiteSpace: "pre-wrap", wordWrap: "break-word"}}>
+          <pre style={{whiteSpace: "pre-wrap", wordWrap: "break-word"}}>
             |-------------------------------------------------|<br/>
             |        _____  _________    ___     ______       |<br/>
             |       |_   _||  _   _  | .'   `. .' ____ \      |<br/>
@@ -524,7 +526,7 @@ export function commandProcess(cmd: string): React.ReactNode
                           `.${currentDate.getFullYear()}`;
 
         ret = 
-          <div className="command"> 
+          <div> 
             JTOS Terminal (Version {formattedDate})<br/>
             © {currentDate.getFullYear()} Jhon Tabio All rights reserved.<br/>
             {commandProcess("banner")} 
@@ -534,14 +536,32 @@ export function commandProcess(cmd: string): React.ReactNode
           </div>
         break;
 
-      case "EXIT":
-        ret = <br/>
+      case "color":
+        if(evaluatedParts.length == 1)
+          ret =
+          <div id="cli_error"> 
+            Wrong usage, do `help color` for more information
+            <br/>
+          </div>
+        else
+        {
+          let res: boolean = changeColor(evaluatedParts.splice(1));
+
+          if(res)
+            ret = <br/>
+          else
+            ret = 
+              <div id="cli_error"> 
+                Wrong usage, do `help color` for more information
+                <br/>
+              </div>
+        }
         break;
 
     default:
       ret = (
-        <div className="command">
-          <em style={{ color: "red" }}>{`bash: ${evaluatedParts[0]}: command not found. Try help`}</em>
+        <div id="cli_error">
+          {`bash: ${evaluatedParts[0]}: command not found. Try help`}
         </div>
       );
       break;

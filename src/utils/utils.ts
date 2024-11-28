@@ -294,7 +294,6 @@ const isColor = (color: string) =>
 }
 
 export const changeColor = (cmd: string[]): boolean =>{
-  let ret: boolean = false;
   let part: string;
   let color: string;
 
@@ -331,12 +330,9 @@ export const changeColor = (cmd: string[]): boolean =>{
   }
   catch(e)
   {
-    return ret;
+    return false;
   }
-
-  ret = true;
-
-  return ret;
+  return true;
 }
 
 /*

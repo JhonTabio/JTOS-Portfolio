@@ -22,7 +22,7 @@
   font-weight: 400;
   font-style: normal;
   font-size: 3.1vmin;
-  color: inherit;
+  color: var(--command);
   display: none;
   padding: 2vw;
 }
@@ -48,4 +48,49 @@
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+#cli_client
+{
+  color: var(--client);
+}
+
+#cli_\@
+{
+  color: var(--\@);
+}
+
+#cli_server
+{
+  color: var(--server);
+}
+
+#cli_directory
+{
+  color: var(--directory);
+}
+
+#cli_error
+{
+  color: var(--error);
+}
+
+#cli_file
+{
+  color: var(--file);
+}
+
+#cli_dir
+{
+  color: var(--dir);
+}
+
+#cli_\$
+{
+  color: var(--\$);
+}
+
+#cli_\[\]
+{
+  color: var(--\[\]);
 }
