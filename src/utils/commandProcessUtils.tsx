@@ -530,7 +530,8 @@ export function commandProcess(cmd: string): React.ReactNode
             © {currentDate.getFullYear()} Jhon Tabio All rights reserved.<br/>
             {commandProcess("banner")} 
             Welcome to my portfolio!<br/>
-            Feel free to stick and look around. Not sure where to start? Try typing help
+            Feel free to stick and look around. Not sure where to start?
+            <br/> Try typing 'help' or 'cat welcome.txt' :)
             <br/>
           </div>
         break;
