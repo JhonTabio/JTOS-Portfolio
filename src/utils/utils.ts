@@ -1,3 +1,5 @@
+import { TEXTS } from "../assets/texts";
+
 const REPO_CACHE = "repo_cache";
 const REPO_ETAG = "repo_etag";
 let repoMemoryData: repoData[] = [];
@@ -110,27 +112,27 @@ export const fileSystem: FileSystemItem =
     {
       name: "Documents",
       type: "directory",
-      children: [{name:"Info.txt", type: "file"}],
+      children: [{name:"info.txt", type: "file"}],
     },
     {
       name: "Downloads",
       type: "directory",
-      children: [{name:"Info.txt", type: "file"}],
+      children: [{name:"info.txt", type: "file"}],
     },
     {
       name: "Music",
       type: "directory",
-      children: [{name:"Info.txt", type: "file"}],
+      children: [{name:"info.txt", type: "file"}],
     },
     {
       name: "Pictures",
       type: "directory",
-      children: [{name:"Info.txt", type: "file"}],
+      children: [{name:"info.txt", type: "file"}],
     },
     {
       name: "Videos",
       type: "directory",
-      children: [{name:"Info.txt", type: "file"}],
+      children: [{name:"info.txt", type: "file"}],
     },
   ],
 };
@@ -192,18 +194,20 @@ export function concatenateFile(dir: string): repoData | string | undefined
     file = file.substring(0, file.indexOf(".proj"));
     res = currentDirectory.children?.find((item) => item.name === file + ".proj") ? repoMemoryData.find((repo) => repo.name === file) : undefined;
   }
-  else
+  else if(file.includes("txt"))
   {
-    res = currentDirectory.children?.find((item) => item.name === file) ? "Another extension ig" : undefined;
-
-    if(res && !file.includes('.')) res = "dir";
+    file = file.substring(0, file.indexOf(".txt"));
+    
+    if(currentDirectory.children?.find((item) => item.name === file + ".txt"))
+      res = TEXTS[currentDirectory.name + "_" + file];
   }
+  else
+    if(res && !file.includes('.')) res = "dir";
 
   currentDirectory = ogDir;
   directoryStack = ogStack;
 
   return res;
-
 }
 
 export function changeDirectories(path: string): boolean

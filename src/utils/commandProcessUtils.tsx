@@ -383,6 +383,7 @@ export function commandProcess(cmd: string): React.ReactNode
                 );
 
               let info = concatenateFile(dir);
+              console.log(info);
 
               if(info)
                 if(typeof(info) === "string")
@@ -392,36 +393,34 @@ export function commandProcess(cmd: string): React.ReactNode
                         {`cat: ${dir}: Is a directory`}
                       </div>
                     );
-                  else return(<div key={i}>{info}</div>);
+                  else return(<pre key={i} style={{ margin: 0, textWrap: "balance", fontFamily: "VT323"}}>{info}</pre>);
                 else
                   return(
-                    <div key={i}>
-                      <pre style={{ fontFamily: "VT323" }}>
-                        +---------------------------------------------------------+<br/>
-                        |                  {info.name.toUpperCase()}<br/>
-                        +---------------------------------------------------------+<br/>
-                        | <strong>Description</strong>       : {info.description ?? "No description"}<br/>
-                        | <strong>URL</strong>               : <a href={info.html_url} target="_blank" rel="noopener noreferrer">{info.html_url}</a><br/>
-                        | <strong>Language</strong>          : {info.language ?? "None"}<br/>
-                        | <strong>Topics</strong>            : {info.topics?.join(" ") ?? "None"}<br/>
-                        | <strong>Homepage</strong>          : {info.homepage === "https://N/A" ? "N/A" : <a href={info.homepage!} target="_blank" rel="noopener noreferrer">{info.homepage}</a>}<br/>
-                        | <strong>Fork</strong>              : {info.fork ? "Yes" : "No"}<br/>
-                        | <strong>License</strong>           : {(info.license as {name: string})?.name ?? "None"}<br/>
-                        | <strong>Creation Date</strong>     : {new Date(info.created_at).toLocaleString("en-US", { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric", hour12: true, timeZoneName: "short" })}<br/>
-                        | <strong>Last Updated</strong>      : {new Date(info.updated_at).toLocaleString("en-US", { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric", hour12: true, timeZoneName: "short" })}<br/>
-                        | <strong>Last Pushed</strong>       : {new Date(info.pushed_at).toLocaleString("en-US", { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric", hour12: true, timeZoneName: "short" })}<br/>
-                        | <strong>Default Branch</strong>    : {info.default_branch}<br/>
-                        +---------------------------------------------------------+<br/>
-                        |                  STATS<br/>
-                        +---------------------------------------------------------+<br/>
-                        | <strong>Size</strong>              : {info.size} KB<br/>
-                        | <strong>Stargazers Count</strong>  : {info.stargazers_count}<br/>
-                        | <strong>Watchers Count</strong>    : {info.watchers_count}<br/>
-                        | <strong>Open Issues Count</strong> : {info.open_issues_count}<br/>
-                        | <strong>Open Issues</strong>       : {info.open_issues}<br/>
-                        +---------------------------------------------------------+<br/>
-                      </pre>
-                    </div>
+                    <pre key={i} style={{ margin: 0, fontFamily: "VT323" }}>
+                      +---------------------------------------------------------+<br/>
+                      |                  {info.name.toUpperCase()}<br/>
+                      +---------------------------------------------------------+<br/>
+                      | <strong>Description</strong>       : {info.description ?? "No description"}<br/>
+                      | <strong>URL</strong>               : <a href={info.html_url} target="_blank" rel="noopener noreferrer">{info.html_url}</a><br/>
+                      | <strong>Language</strong>          : {info.language ?? "None"}<br/>
+                      | <strong>Topics</strong>            : {info.topics?.join(" ") ?? "None"}<br/>
+                      | <strong>Homepage</strong>          : {info.homepage === "https://N/A" ? "N/A" : <a href={info.homepage!} target="_blank" rel="noopener noreferrer">{info.homepage}</a>}<br/>
+                      | <strong>Fork</strong>              : {info.fork ? "Yes" : "No"}<br/>
+                      | <strong>License</strong>           : {(info.license as {name: string})?.name ?? "None"}<br/>
+                      | <strong>Creation Date</strong>     : {new Date(info.created_at).toLocaleString("en-US", { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric", hour12: true, timeZoneName: "short" })}<br/>
+                      | <strong>Last Updated</strong>      : {new Date(info.updated_at).toLocaleString("en-US", { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric", hour12: true, timeZoneName: "short" })}<br/>
+                      | <strong>Last Pushed</strong>       : {new Date(info.pushed_at).toLocaleString("en-US", { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", second: "numeric", hour12: true, timeZoneName: "short" })}<br/>
+                      | <strong>Default Branch</strong>    : {info.default_branch}<br/>
+                      +---------------------------------------------------------+<br/>
+                      |                  STATS<br/>
+                      +---------------------------------------------------------+<br/>
+                      | <strong>Size</strong>              : {info.size} KB<br/>
+                      | <strong>Stargazers Count</strong>  : {info.stargazers_count}<br/>
+                      | <strong>Watchers Count</strong>    : {info.watchers_count}<br/>
+                      | <strong>Open Issues Count</strong> : {info.open_issues_count}<br/>
+                      | <strong>Open Issues</strong>       : {info.open_issues}<br/>
+                      +---------------------------------------------------------+<br/>
+                    </pre>
                   );
               else
                 return(
