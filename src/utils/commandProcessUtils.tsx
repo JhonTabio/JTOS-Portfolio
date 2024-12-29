@@ -383,7 +383,6 @@ export function commandProcess(cmd: string): React.ReactNode
                 );
 
               let info = concatenateFile(dir);
-              console.log(info);
 
               if(info)
                 if(typeof(info) === "string")

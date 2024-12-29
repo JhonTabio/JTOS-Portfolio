@@ -79,7 +79,6 @@ async function fetchRepos(): Promise<repoData[]>
   }
   catch(error)
   {
-    console.log(error);
     throw error;
   }
 }
@@ -148,6 +147,7 @@ export function changeDirectory(directoryName: string) : boolean
   {
     currentDirectory = fileSystem
     directoryStack = [fileSystem]
+
     return true;
   }
 
@@ -163,14 +163,13 @@ export function changeDirectory(directoryName: string) : boolean
 
   if(found)
   {
-    directoryStack.push(currentDirectory);
+    directoryStack.push(found);
     currentDirectory = found;
 
     return true;
   }
   else 
   {
-    console.log("Directory not found");
     return false;
   }
 }
@@ -178,7 +177,7 @@ export function changeDirectory(directoryName: string) : boolean
 export function concatenateFile(dir: string): repoData | string | undefined
 {
   let ogDir = currentDirectory;
-  let ogStack = directoryStack;
+  let ogStack = [...directoryStack];
   let file = dir;
 
   if(dir.includes('/'))
@@ -212,8 +211,7 @@ export function concatenateFile(dir: string): repoData | string | undefined
 
 export function changeDirectories(path: string): boolean
 {
-
-  const oldStack = directoryStack;
+  const oldStack = [...directoryStack];
   let success = true;
 
   const dirs = path.split("/");
@@ -225,7 +223,7 @@ export function changeDirectories(path: string): boolean
     if(!success)
     {
       directoryStack = oldStack;
-      currentDirectory = directoryStack[0];
+      currentDirectory = directoryStack[directoryStack.length - 1];
 
       break;
     }
@@ -238,12 +236,12 @@ export function changeParent(): boolean
 {
   if (directoryStack.length > 1)
   {
-    currentDirectory = directoryStack.pop()!;
+    directoryStack.pop()!;
+    currentDirectory = directoryStack[directoryStack.length - 1];
     return true;
   } 
   else 
   {
-    console.log("Already at the root directory");
     return false;
   }
 }
@@ -264,7 +262,7 @@ export function listDir(fs: FileSystemItem, tree: boolean): string[]
 export function listOtherDir(dir: string): string[] | null
 {
   let ogDir = currentDirectory;
-  let ogStack = directoryStack;
+  let ogStack = [...directoryStack];
 
   if(!changeDirectories(dir)) return null;
 
