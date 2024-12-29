@@ -447,6 +447,13 @@ export function commandProcess(cmd: string): React.ReactNode
       break;
 
     case "whoami"://TODO: Use API to fetch from github instead 
+      if (evaluatedParts.length != 1)
+        return(
+          <div id="cli_error">
+            bash: {evaluatedParts[0]}: too many arguments
+          </div>
+        );
+
         ret =
         <div> 
           Hey! I am Jhon Tabio. I am the creator of JTOS, the operating system the server you are currently connected to is using.<br/>
@@ -454,7 +461,15 @@ export function commandProcess(cmd: string): React.ReactNode
           <br/>
         </div>
         break;
-      case "whatami":
+
+    case "whatami":
+      if (evaluatedParts.length != 1)
+        return(
+          <div id="cli_error">
+            bash: {evaluatedParts[0]}: too many arguments
+          </div>
+        );
+
         ret =
         <div> 
           JTOS is a full fledge operating system with all kinds of capabilities!<br/><br/>
@@ -467,7 +482,15 @@ export function commandProcess(cmd: string): React.ReactNode
           <br/>
         </div>
         break;
-      case "whereami":
+
+    case "whereami":
+      if (evaluatedParts.length != 1)
+        return(
+          <div id="cli_error">
+            bash: {evaluatedParts[0]}: too many arguments
+          </div>
+        );
+
         ret =
         <div> 
           Currently, you are connected to a remote server via an ssh terminal. This server
@@ -476,14 +499,30 @@ export function commandProcess(cmd: string): React.ReactNode
           <br/>
         </div>
         break;
-      case "whenami":
+
+    case "whenami":
+      if (evaluatedParts.length != 1)
+        return(
+          <div id="cli_error">
+            bash: {evaluatedParts[0]}: too many arguments
+          </div>
+        );
+
         ret =
         <div> 
           Not sure what to do tbh... time spent on this? My local time? Most recent commit time?
           <br/>
         </div>
         break;
-      case "whyami":
+
+    case "whyami":
+      if (evaluatedParts.length != 1)
+        return(
+          <div id="cli_error">
+            bash: {evaluatedParts[0]}: too many arguments
+          </div>
+        );
+
         ret =
         <div> 
           Why this? Why go through the effort of simulating a terminal? Well... because out of
@@ -494,7 +533,15 @@ export function commandProcess(cmd: string): React.ReactNode
           <br/>
         </div>
         break;
-      case "howami":
+
+    case "howami":
+      if (evaluatedParts.length != 1)
+        return(
+          <div id="cli_error">
+            bash: {evaluatedParts[0]}: too many arguments
+          </div>
+        );
+
         ret =
         <div> 
           Doing very good! :)<br/><br/>
@@ -503,7 +550,14 @@ export function commandProcess(cmd: string): React.ReactNode
         </div>
         break;
 
-      case "banner":
+    case "banner":
+      if (evaluatedParts.length != 1)
+        return(
+          <div id="cli_error">
+            bash: {evaluatedParts[0]}: too many arguments
+          </div>
+        );
+
         ret =
           <pre style={{whiteSpace: "pre-wrap", wordWrap: "break-word"}}>
             |-------------------------------------------------|<br/>
@@ -518,7 +572,14 @@ export function commandProcess(cmd: string): React.ReactNode
           </pre>
         break;
 
-      case "welcome"://[SPECS?]<br/>
+    case "welcome"://[SPECS?]<br/>
+      if (evaluatedParts.length != 1)
+        return(
+          <div id="cli_error">
+            bash: {evaluatedParts[0]}: too many arguments
+          </div>
+        );
+
         const currentDate = new Date();
         const formattedDate = `${currentDate.getMonth() + 1}`.padStart(2, '0') +
                           `.${currentDate.getDate()}`.padStart(2, '0') +
@@ -536,27 +597,27 @@ export function commandProcess(cmd: string): React.ReactNode
           </div>
         break;
 
-      case "color":
-        if(evaluatedParts.length == 1)
-          ret =
-          <div id="cli_error"> 
-            Wrong usage, do `help color` for more information
-            <br/>
-          </div>
-        else
-        {
-          let res: boolean = changeColor(evaluatedParts.splice(1));
+    case "color":
+      if(evaluatedParts.length == 1)
+        ret =
+        <div id="cli_error"> 
+          Wrong usage, do `help color` for more information
+          <br/>
+        </div>
+      else
+      {
+        let res: boolean = changeColor(evaluatedParts.splice(1));
 
-          if(res)
-            ret = <br/>
-          else
-            ret = 
-              <div id="cli_error"> 
-                Wrong usage, do `help color` for more information
-                <br/>
-              </div>
-        }
-        break;
+        if(res)
+          ret = <br/>
+        else
+          ret = 
+            <div id="cli_error"> 
+              Wrong usage, do `help color` for more information
+              <br/>
+            </div>
+      }
+      break;
 
     default:
       ret = (

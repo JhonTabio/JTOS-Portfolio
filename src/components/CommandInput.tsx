@@ -142,7 +142,7 @@ function CommandInput({cmdRef, setHistory, cmdHistory, setIndex}: {cmdRef: React
     );
 
     if(cmd.trim() === "clear") setIndex(cmdHistory.length + 1);
-    else if(cmd.trim() === "exit") 
+    else if(cmd.includes("exit")) 
     {
       commandProcess("cd ~");
       setLocation('/');
