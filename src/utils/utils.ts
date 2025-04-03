@@ -95,7 +95,7 @@ export function initialize(): void
   });
 }
 
-interface FileSystemItem
+export interface FileSystemItem
 {
   name: string;
   type: "file" | "directory";

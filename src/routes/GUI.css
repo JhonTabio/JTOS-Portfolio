@@ -1,96 +1,63 @@
-#cli_intro
-{
-  width: 100vw;
-  height: 100vh;
-  text-align: center;
-  font-size: 2.5vw;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column-reverse;
-}
-
-#cli_container
+#gui_container
 {
   font-family: "VT323", monospace;
   width: 100vw;
-  min-height: 100vh;
-  overflow: hidden;
+  height: 100vh;
+  background-color: #6b21a8;
 }
 
-#cli_terminal
+.gui_header
 {
-  font-weight: 400;
-  font-style: normal;
-  font-size: 3.1vmin;
-  color: var(--command);
-  display: none;
-  padding: 2vw;
+  color: white;
+  margin: 0;
 }
 
-#cli_cl
+.gui_card
+{
+  background-color: #6b21a8;
+  color: white;
+  padding: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.gui_card:hover
+{
+  background-color: #7e22ce;
+}
+
+.gui_tabs-container
+{
+  width: 100%;
+}
+
+.gui_tabs-header
 {
   display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
 }
 
-#cli_commandInput
+.gui_tab-button
 {
+  background-color: #7e22ce;
+  color: white;
+  padding: 8px 12px;
   border: none;
-  outline: none;
-  background-color: transparent;
-  font-family: inherit;
-  font-size: inherit;
-  color: inherit;
-  flex-grow: 1;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
-#cli_history
+.gui_tab-button.active
 {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  background-color: #a855f7;
 }
 
-#cli_client
+.gui_tab-panel
 {
-  color: var(--client);
-}
-
-#cli_\@
-{
-  color: var(--\@);
-}
-
-#cli_server
-{
-  color: var(--server);
-}
-
-#cli_directory
-{
-  color: var(--directory);
-}
-
-#cli_error
-{
-  color: var(--error);
-}
-
-#cli_file
-{
-  color: var(--file);
-}
-
-#cli_dir
-{
-  color: var(--dir);
-}
-
-#cli_\$
-{
-  color: var(--\$);
-}
-
-#cli_\[\]
-{
-  color: var(--\[\]);
+  padding: 16px;
+  background-color: #4c1d95;
+  color: white;
+  border-radius: 8px;
 }
