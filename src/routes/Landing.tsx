@@ -19,8 +19,7 @@ function Landing() {
   const [sliderIndex, setSliderIndex] = useState(0);
 
   const options = [
-    //{ name: "Graphical User Interface experience", link: "/GUI" },
-    { name: "Graphical User Interface experience", action: () => alert("Currently being implemented...") },
+    { name: "Graphical User Interface experience", link: "/GUI" },
     { name: "Command Line Interface experience", link: "/CLI" },
     { name: "Help", action: () => alert("Very useful help will be here soon! Try the CLI experience") }
   ];

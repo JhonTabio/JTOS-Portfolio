@@ -1,0 +1,96 @@
+#cli_intro
+{
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  font-size: 2.5vw;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+#cli_container
+{
+  font-family: "VT323", monospace;
+  width: 100vw;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+#cli_terminal
+{
+  font-weight: 400;
+  font-style: normal;
+  font-size: 3.1vmin;
+  color: var(--command);
+  display: none;
+  padding: 2vw;
+}
+
+#cli_cl
+{
+  display: flex;
+}
+
+#cli_commandInput
+{
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  flex-grow: 1;
+}
+
+#cli_history
+{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#cli_client
+{
+  color: var(--client);
+}
+
+#cli_\@
+{
+  color: var(--\@);
+}
+
+#cli_server
+{
+  color: var(--server);
+}
+
+#cli_directory
+{
+  color: var(--directory);
+}
+
+#cli_error
+{
+  color: var(--error);
+}
+
+#cli_file
+{
+  color: var(--file);
+}
+
+#cli_dir
+{
+  color: var(--dir);
+}
+
+#cli_\$
+{
+  color: var(--\$);
+}
+
+#cli_\[\]
+{
+  color: var(--\[\]);
+}
