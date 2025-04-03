@@ -16,7 +16,7 @@ function GUI()
           style={{
             display: "grid",
             gap: "12px",
-            gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, 150px)"
           }}
         >
           {files.map((item: FileSystemItem, i: number) => (
@@ -37,7 +37,7 @@ function GUI()
             style={{
               display: "grid",
               gap: "12px",
-              gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, 150px)"
             }}
           >
             {folder.children?.map((item, i) => (
