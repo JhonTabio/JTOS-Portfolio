@@ -53,7 +53,6 @@ function GUI()
   return(
     <>
       <div id="gui_container">
-        <h1 className="gui_header">JTOS File Explorer</h1>
         <Tabs tabs={tabs}/>
       </div>
     </>

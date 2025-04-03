@@ -19,10 +19,11 @@ export function Tabs({ tabs }: TabsProps)
   return (
     <div className="gui_tabs-container">
       <div className="gui_tabs-header">
+      <h1 className="gui_header">JTOS File Explorer</h1>
         {tabs.map((tab) => (
           <button
             key={tab.value}
-            className={`gui_tab-button ${activeTab === tab.value ? 'active' : ''}`}
+            className={`gui_tab-button ${activeTab === tab.value ? "active" : ""}`}
             onClick={() => setActiveTab(tab.value)}
           >
             {tab.label}
