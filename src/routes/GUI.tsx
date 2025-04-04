@@ -44,7 +44,7 @@ function GUI()
             style={{
               display: "grid",
               gap: "12px",
-              gridTemplateColumns: "repeat(auto-fit, 150px)"
+              gridTemplateColumns: "repeat(auto-fit, 150px)",
             }}
           >
             {folder.children?.map((item, i) => (
