@@ -6,6 +6,12 @@
   background-color: #6b21a8;
 }
 
+.gui_icon
+{
+  width: 100%;
+  height: 65%;
+}
+
 .gui_header
 {
   color: white;
@@ -20,6 +26,10 @@
   border-radius: 12px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .gui_card:hover
@@ -58,6 +68,8 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  margin-left: 0.7em;
+  margin-right: 0.7em;
 }
 
 .gui_tab-button.active
