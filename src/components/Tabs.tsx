@@ -10,12 +10,12 @@ interface Tab
 interface TabsProps
 {
   tabs: Tab[];
+  activeTab: string;
+  setActiveTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export function Tabs({ tabs }: TabsProps)
+export function Tabs({ tabs, activeTab, setActiveTab }: TabsProps)
 {
-  const [activeTab, setActiveTab] = useState<string>(tabs[0]?.value);
-
   return (
     <div className="gui_tabs-container">
       <div className="gui_tabs-header">

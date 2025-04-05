@@ -11,6 +11,7 @@
 {
   position: absolute;
   width: 150px;
+  height: 200px;
   background-color: transparent;
   border: 2px solid #aa5;
 }
@@ -39,6 +40,12 @@
 .gui_window_close_btn:hover
 {
   background-color: red;
+}
+
+.gui_window_content
+{
+  width: inherit;
+  height: inherit;
 }
 
 .gui_icon
@@ -77,6 +84,8 @@
   display: flex;
   flex-direction: row;
   width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 .gui_tabs-header
@@ -84,14 +93,14 @@
   display: flex;
   flex-direction: column;
   background-color: #624a99;
-  height: 100vh;
+  height: 100%;
   gap: 8px;
 }
 
 .gui_tabs-content
 {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background-color: #8771be;
 }
 
@@ -123,4 +132,10 @@
   background-color: inherit;
   color: white;
   border-radius: 8px;
+}
+
+.gui_file_explorer_container
+{
+  width: inherit;
+  height: inherit;
 }
