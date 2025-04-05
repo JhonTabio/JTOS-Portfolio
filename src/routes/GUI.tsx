@@ -1,8 +1,9 @@
 import { fileSystem, currentDirectory, FileSystemItem } from "../utils/utils";
 import { Card } from "../components/Card";
 import { Tabs } from "../components/Tabs";
-import "./GUI.css"
 import { Window } from "../components/Window";
+import "./GUI.css"
+import { useState } from "react";
 
 
 function GUI()
@@ -58,12 +59,38 @@ function GUI()
       }))
   ];
 
+  const [windows, setWindows] = useState<{ id: number; title: string }[]>([]);
+
+  const createWindow = () => {
+    setWindows((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        title: `Window ${prev.length + 1}`
+      }
+    ]);
+  }
+  
+  const closeWindow = (id: number) => {
+    setWindows((prev) => prev.filter((w) => w.id !== id));
+  };
+
   return(
     <>
       <div id="gui_container">
-        <Window title="Test Window" initialPos={{ x: 100, y: 100 }}>
-          test tjhs put
-        </Window>
+        <button onClick={createWindow} style={{ margin: 10 }}>
+          Open Window
+        </button>
+        {windows.map((win) => (
+          <Window
+            key={win.id}
+            title={win.title}
+            initialPos={{ x: 100 + Math.random() * 200, y: 100 + Math.random() * 200 }}
+            onClose={() => closeWindow(win.id)}
+          >
+            Hello {win.title}!
+          </Window>
+        ))}
         <Tabs tabs={tabs}/>
       </div>
     </>

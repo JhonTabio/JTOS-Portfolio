@@ -11,16 +11,36 @@
 {
   position: absolute;
   width: 150px;
-  background: #fff;
+  background-color: transparent;
   border: 2px solid #aa5;
 }
 
 .gui_window_bar
 {
   background-color: #6e55a8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
   padding: 10;
   font-weight: bold;
 }
+
+.gui_window_close_btn
+{
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.gui_window_close_btn:hover
+{
+  background-color: red;
+}
+
 .gui_icon
 {
   width: 100%;
