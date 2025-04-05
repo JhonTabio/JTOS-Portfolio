@@ -2,6 +2,7 @@ import { fileSystem, currentDirectory, FileSystemItem } from "../utils/utils";
 import { Card } from "../components/Card";
 import { Tabs } from "../components/Tabs";
 import "./GUI.css"
+import { Window } from "../components/Window";
 
 
 function GUI()
@@ -60,6 +61,9 @@ function GUI()
   return(
     <>
       <div id="gui_container">
+        <Window title="Test Window" initialPos={{ x: 100, y: 100 }}>
+          test tjhs put
+        </Window>
         <Tabs tabs={tabs}/>
       </div>
     </>

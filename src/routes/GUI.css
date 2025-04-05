@@ -4,6 +4,7 @@
   width: 100vw;
   height: 100vh;
   background-color: #6b21a8;
+  overflow: hidden;
 }
 
 .gui_icon
