@@ -7,6 +7,20 @@
   overflow: hidden;
 }
 
+.gui_window
+{
+  position: absolute;
+  width: 150px;
+  background: #fff;
+  border: 2px solid #aa5;
+}
+
+.gui_window_bar
+{
+  background-color: #6e55a8;
+  padding: 10;
+  font-weight: bold;
+}
 .gui_icon
 {
   width: 100%;
