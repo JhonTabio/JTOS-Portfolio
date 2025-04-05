@@ -13,10 +13,28 @@ export function useDraggable(initialPos = { x: 0, y: 0 })
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      if (!dragging || !rel) return;
+      if (!dragging || !rel || !ref.current) return;
+
+      const parent = ref.current.parentElement;
+
+      if(!parent) return;
+
+      const parentRect = parent.getBoundingClientRect();
+      const elemRect = ref.current.getBoundingClientRect();
+
+      // Clamp x and y to stay within parent
+      const newX = Math.min(
+        Math.max(e.pageX - rel.x, parentRect.left),
+        parentRect.right - elemRect.width
+      );
+      const newY = Math.min(
+        Math.max(e.pageY - rel.y, parentRect.top),
+        parentRect.bottom - elemRect.height
+      );
+
       setPos({
-        x: e.pageX - rel.x,
-        y: e.pageY - rel.y,
+        x: newX - parentRect.left,
+        y: newY - parentRect.top
       });
     };
 
