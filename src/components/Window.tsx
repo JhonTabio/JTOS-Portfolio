@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { useDraggable } from "./Draggable";
 import { useResizable } from "./Resizable";
 
@@ -24,9 +24,12 @@ export function Window({
   onClose
 }: WindowProps)
 {
-  const { ref: dragRef, pos, onMouseDown } = useDraggable(initialPos);
 
-  const { ref: resizeRef, size, offset, startResize, sides } = useResizable(resizableSides);
+  const { ref: dragRef, pos, onMouseDown, setPosition } = useDraggable(initialPos);
+
+  const { ref: resizeRef, size, startResize, sides } = useResizable(resizableSides,
+  setPosition
+  );
 
 function mergeRefs<T = any>(...refs: React.Ref<T>[]) {
   return (node: T) => {
@@ -41,7 +44,7 @@ function mergeRefs<T = any>(...refs: React.Ref<T>[]) {
   return (
     <div
       ref={mergeRefs(dragRef, resizeRef)}
-      style={{ left: pos.x + offset.x, top: pos.y + offset.y, width: size.width, height: size.height }}
+      style={{ left: pos.x, top: pos.y, width: size.width, height: size.height }}
       className="gui_window"
     >
       <div

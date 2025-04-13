@@ -68,5 +68,6 @@ export function useDraggable(initialPos = { x: 0, y: 0 })
     ref,
     pos,
     onMouseDown,
+    setPosition: setPos
   };
 }

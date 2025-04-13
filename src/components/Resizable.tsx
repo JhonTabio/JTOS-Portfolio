@@ -7,16 +7,21 @@ type ResizeSides = {
   left?: boolean;
 };
 
-export function useResizable(sides: ResizeSides = {}) {
+export function useResizable(
+  sides: ResizeSides = {},
+  setPosition: React.Dispatch<React.SetStateAction<{ x: number, y: number }>>
+)
+{
   const ref = useRef<HTMLDivElement>(null);
 
+  // Component size
   const [size, setSize] = useState({ width: 300, height: 200 });
+  // Whether we are currently resizing
   const [resizing, setResizing] = useState<null | keyof ResizeSides>(null);
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
 
+  // Initial states
   const startPos = useRef({ x: 0, y: 0 });
   const startSize = useRef({ width: 0, height: 0 });
-  const startOffset = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const onMouseMove = (e: MouseEvent) => {
@@ -27,20 +32,18 @@ export function useResizable(sides: ResizeSides = {}) {
 
       let newWidth = startSize.current.width;
       let newHeight = startSize.current.height;
-      let newLeft = startOffset.current.x;
-      let newTop = startOffset.current.y;
 
       if (resizing === "left")
       {
         newWidth -= dx;
-        newLeft += dx;
+        setPosition((prev) => ({ x: startPos.current.x + (startSize.current.width - Math.max(150, newWidth)), y: prev.y }));
       }
       else if (resizing === "right")
         newWidth += dx;
       else if (resizing === "top")
       {
         newHeight -= dy;
-        newTop += dy;
+        setPosition((prev) => ({ x: prev.x, y: startPos.current.y + (startSize.current.height - Math.max(100, newHeight)) }));
       }
       else if (resizing === "bottom")
         newHeight += dy;
@@ -49,18 +52,14 @@ export function useResizable(sides: ResizeSides = {}) {
         width: Math.max(150, newWidth),
         height: Math.max(100, newHeight)
       });
-
-      setOffset({
-        x: newLeft,
-        y: newTop
-      });
     };
 
     const onMouseUp = () => {
       setResizing(null);
     };
 
-    if (resizing) {
+    if (resizing)
+    {
       document.addEventListener("mousemove", onMouseMove);
       document.addEventListener("mouseup", onMouseUp);
     }
@@ -80,7 +79,10 @@ export function useResizable(sides: ResizeSides = {}) {
       width: ref.current.offsetWidth,
       height: ref.current.offsetHeight,
     };
-    startOffset.current = { ...offset};
+    startSize.current = {
+      width: ref.current.offsetWidth,
+      height: ref.current.offsetHeight,
+    };
     e.preventDefault();
     e.stopPropagation();
   };
@@ -88,7 +90,6 @@ export function useResizable(sides: ResizeSides = {}) {
   return {
     ref,
     size,
-    offset,
     startResize,
     sides
   };
