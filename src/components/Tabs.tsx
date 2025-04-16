@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 interface Tab
 {
   value: string;
@@ -19,7 +17,7 @@ export function Tabs({ tabs, activeTab, setActiveTab }: TabsProps)
   return (
     <div className="gui_tabs-container">
       <div className="gui_tabs-header">
-      <h2 className="gui_header">JTOS File Explorer</h2>
+        <h2 className="gui_header">JTOS File Explorer</h2>
         {tabs.map((tab) => (
           <button
             key={tab.value}
