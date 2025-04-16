@@ -49,10 +49,20 @@
   height: inherit;
 }
 
+.gui_icon_container
+{
+  display: grid;
+  gap: clamp(8px, 2vw, 24px);
+  grid-template-columns: repeat(auto-fit, 150px);
+  user-select: none;
+}
+
 .gui_icon
 {
-  width: 100%;
-  height: 65%;
+  width: clamp(32px, 15vw, 100vw);
+  height: clamp(32px, 15vh, 100vh);
+  display: block;
+  object-fit: contain;
 }
 
 .gui_header

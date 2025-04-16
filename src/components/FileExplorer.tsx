@@ -18,14 +18,7 @@ export function FileExplorer()
       value: fileSystem.name,
       label: "Home",
       content: (
-        <div
-          style={{
-            display: "grid",
-            gap: "12px",
-            gridTemplateColumns: "repeat(auto-fit, 150px)",
-            userSelect: "none"
-          }}
-        >
+        <div className="gui_icon_container">
           {files.map((item: FileSystemItem, i: number) => (
             <Card key={i} onClick={() => {if(item.type === "directory")setActiveTab(item.name)}}>
               {item.type === "directory" ?  folder_icon : file_icon} {item.name}
@@ -40,14 +33,7 @@ export function FileExplorer()
         value: folder.name,
         label: folder.name,
         content: (
-          <div
-            style={{
-              display: "grid",
-              gap: "12px",
-              gridTemplateColumns: "repeat(auto-fit, 150px)",
-              userSelect: "none"
-            }}
-          >
+          <div className="gui_icon_container">
             {folder.children?.map((item, i) => (
               <Card key={i} onClick={() => {if(item.type === "directory")setActiveTab(item.name)}}>
                 {item.type === "directory" ?  folder_icon : file_icon} {item.name}
