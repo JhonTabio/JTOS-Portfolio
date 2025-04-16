@@ -15,7 +15,7 @@ export function useResizable(
   const ref = useRef<HTMLDivElement>(null);
 
   // Component size
-  const [size, setSize] = useState({ width: window.innerWidth * 0.3, height: window.innerHeight * 0.4 });
+  const [size, setSize] = useState({ width: window.innerWidth * 0.5, height: window.innerHeight * 0.6 });
   // Whether we are currently resizing
   const [resizing, setResizing] = useState<null | keyof ResizeSides>(null);
 

@@ -4,6 +4,7 @@ import { useWindowManager } from "./WindowContext";
 import { Card } from "../components/Card";
 import { Tabs } from "./Tabs";
 import { TEXTS } from "../assets/texts";
+import { Notepad } from "./Notepad";
 
 export function FileExplorer()
 {
@@ -60,7 +61,7 @@ export function FileExplorer()
 
     if(fileType === "txt")
     {
-      const content = <div>{TEXTS[activeTab + "_" + fileName]}</div>;
+      const content = <Notepad>{TEXTS[activeTab + "_" + fileName]}</Notepad>;
       createWindow(fileName, content);
     }
 

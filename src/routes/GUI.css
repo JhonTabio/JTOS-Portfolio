@@ -151,3 +151,11 @@
   width: inherit;
   height: inherit;
 }
+
+.gui_notepad_container
+{
+  background-color: white;
+  color: black;
+  width: inherit;
+  height: inherit;
+}

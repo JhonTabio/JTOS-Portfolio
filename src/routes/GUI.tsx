@@ -6,7 +6,7 @@ import "./GUI.css"
 
 function GUI()
 {
-  const { windows, createWindow, closeWindow } = useWindowManager();
+  const { windows, createWindow, closeWindow, focusWindow } = useWindowManager();
 
   return(
     <>
@@ -20,6 +20,8 @@ function GUI()
             title={win.title}
             initialPos={{ x: 100 + Math.random() * 200, y: 100 + Math.random() * 200 }}
             onClose={() => closeWindow(win.id)}
+            onFocus={() => focusWindow(win.id)}
+            zIndex={win.zIndex}
           >
             {win.content}
           </Window>

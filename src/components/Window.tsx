@@ -13,7 +13,9 @@ interface WindowProps
     bottom?: boolean;
     left?: boolean;
   };
-  onClose?: () => void;
+  zIndex: number;
+  onClose?: (id: number) => void;
+  onFocus?: (id: number) => void;
 }
 
 export function Window({
@@ -21,15 +23,15 @@ export function Window({
   children,
   initialPos,
   resizableSides = { left: true, right: true, top: true, bottom: true },
-  onClose
+  zIndex,
+  onClose,
+  onFocus
 }: WindowProps)
 {
 
   const { ref: dragRef, pos, onMouseDown, setPosition } = useDraggable(initialPos);
 
-  const { ref: resizeRef, size, startResize, sides } = useResizable(resizableSides,
-  setPosition
-  );
+  const { ref: resizeRef, size, startResize, sides } = useResizable(resizableSides, setPosition);
 
   function mergeRefs<T = any>(...refs: React.Ref<T>[]) {
     return (node: T) => {
@@ -44,11 +46,12 @@ export function Window({
   return (
     <div
       ref={mergeRefs(dragRef, resizeRef)}
-      style={{ left: pos.x, top: pos.y, width: size.width, height: size.height }}
+      onMouseDown={onFocus}
+      style={{ left: pos.x, top: pos.y, width: size.width, height: size.height, zIndex: zIndex }}
       className="gui_window"
     >
       <div
-        onMouseDown={onMouseDown}
+        onMouseDown={(e) => {onMouseDown(e); onFocus()}}
         className="gui_window_bar"
       >
         {title}
