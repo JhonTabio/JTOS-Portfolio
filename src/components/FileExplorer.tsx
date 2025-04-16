@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { fileSystem, currentDirectory, FileSystemItem } from "../utils/utils";
+import { useWindowManager } from "./WindowContext";
 import { Card } from "../components/Card";
 import { Tabs } from "./Tabs";
+import { TEXTS } from "../assets/texts";
 
 export function FileExplorer()
 {
@@ -20,7 +22,7 @@ export function FileExplorer()
       content: (
         <div className="gui_icon_container">
           {files.map((item: FileSystemItem, i: number) => (
-            <Card key={i} onClick={() => {if(item.type === "directory")setActiveTab(item.name)}}>
+            <Card key={i} onClick={() => {openFile(item)}}>
               {item.type === "directory" ?  folder_icon : file_icon} {item.name}
             </Card>
           ))}
@@ -35,7 +37,7 @@ export function FileExplorer()
         content: (
           <div className="gui_icon_container">
             {folder.children?.map((item, i) => (
-              <Card key={i} onClick={() => {if(item.type === "directory")setActiveTab(item.name)}}>
+              <Card key={i} onClick={() => {openFile(item)}}>
                 {item.type === "directory" ?  folder_icon : file_icon} {item.name}
               </Card>
             )) ?? <p>No content</p>}
@@ -45,6 +47,25 @@ export function FileExplorer()
   ];
 
   const [activeTab, setActiveTab] = useState<string>(tabs[0]?.value);
+  const { createWindow } = useWindowManager();
+
+  const openFile = (item: FileSystemItem) => {
+    if(item.type === "directory")
+    {
+      setActiveTab(item.name);
+      return;
+    }
+
+    const [fileName, fileType] = item.name.split('.');
+
+    if(fileType === "txt")
+    {
+      const content = <div>{TEXTS[activeTab + "_" + fileName]}</div>;
+      createWindow(fileName, content);
+    }
+
+    return;
+  }
 
   return (
     <div className="gui_file_explorer_container">

@@ -1,8 +1,9 @@
 import { Route, Switch } from "wouter";
-import "./App.css";
+import { WindowProvider } from "./components/WindowContext";
 import Landing from "./routes/Landing";
 import CLI from "./routes/CLI";
 import GUI from "./routes/GUI";
+import "./App.css";
 
 function App() {
   return (
@@ -10,7 +11,9 @@ function App() {
       <Switch>
         <Route path="/" component={Landing}/>
         <Route path="/cli" component={CLI}/>
-        <Route path="/gui" component={GUI}/>
+        <WindowProvider>
+          <Route path="/gui" component={GUI}/>
+        </WindowProvider>
       </Switch>
     </>
   );
