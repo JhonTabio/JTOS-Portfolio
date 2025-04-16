@@ -13,7 +13,8 @@
   width: 150px;
   height: 200px;
   background-color: transparent;
-  border: 2px solid #aa5;
+  border: 2px solid #6347a0;
+  overflow: hidden;
 }
 
 .gui_window_bar
@@ -58,11 +59,11 @@
 {
   color: white;
   margin: 0;
+  user-select: none;
 }
 
 .gui_card
 {
-  background-color: #6b21a8;
   color: white;
   border-radius: 12px;
   cursor: pointer;
@@ -85,7 +86,7 @@
   flex-direction: row;
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  font-size: clamp(0.5rem, 1vw + 0.5rem, 1.75rem);
 }
 
 .gui_tabs-header

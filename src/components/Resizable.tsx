@@ -15,7 +15,7 @@ export function useResizable(
   const ref = useRef<HTMLDivElement>(null);
 
   // Component size
-  const [size, setSize] = useState({ width: 300, height: 200 });
+  const [size, setSize] = useState({ width: window.innerWidth * 0.3, height: window.innerHeight * 0.4 });
   // Whether we are currently resizing
   const [resizing, setResizing] = useState<null | keyof ResizeSides>(null);
 
@@ -36,7 +36,7 @@ export function useResizable(
       if (resizing === "left")
       {
         newWidth -= dx;
-        setPosition((prev) => ({ x: startPos.current.x + (startSize.current.width - Math.max(150, newWidth)), y: prev.y }));
+        setPosition((prev) => ({ x: startPos.current.x + (startSize.current.width - Math.max(window.innerWidth * 0.25, newWidth)), y: prev.y }));
       }
       else if (resizing === "right")
         newWidth += dx;
@@ -49,7 +49,7 @@ export function useResizable(
         newHeight += dy;
 
       setSize({
-        width: Math.max(150, newWidth),
+        width: Math.max(window.innerWidth * 0.25, newWidth),
         height: Math.max(100, newHeight)
       });
     };

@@ -19,7 +19,7 @@ export function Tabs({ tabs, activeTab, setActiveTab }: TabsProps)
   return (
     <div className="gui_tabs-container">
       <div className="gui_tabs-header">
-      <h1 className="gui_header">JTOS File Explorer</h1>
+      <h2 className="gui_header">JTOS File Explorer</h2>
         {tabs.map((tab) => (
           <button
             key={tab.value}

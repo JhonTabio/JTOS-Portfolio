@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import { useDraggable } from "./Draggable";
 import { useResizable } from "./Resizable";
 
@@ -31,15 +31,15 @@ export function Window({
   setPosition
   );
 
-function mergeRefs<T = any>(...refs: React.Ref<T>[]) {
-  return (node: T) => {
-    refs.forEach((ref) => {
-      if (typeof ref === "function") ref(node);
-      else if (ref && typeof ref === "object" && "current" in ref)
-        (ref as React.MutableRefObject<T | null>).current = node;
-    });
-  };
-}
+  function mergeRefs<T = any>(...refs: React.Ref<T>[]) {
+    return (node: T) => {
+      refs.forEach((ref) => {
+        if (typeof ref === "function") ref(node);
+        else if (ref && typeof ref === "object" && "current" in ref)
+          (ref as React.MutableRefObject<T | null>).current = node;
+      });
+    };
+  }
 
   return (
     <div
