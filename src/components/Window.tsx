@@ -1,9 +1,11 @@
 import { ReactNode } from "react";
 import { useDraggable } from "./Draggable";
 import { useResizable } from "./Resizable";
+import { useWindowManager } from "../components/WindowContext";
 
 interface WindowProps
 {
+  id: number;
   title: string;
   children: ReactNode;
   initialPos?: { x: number, y: number };
@@ -19,15 +21,21 @@ interface WindowProps
 }
 
 export function Window({
-  title,
+  id,
+  title = "JTOS Window",
   children,
-  initialPos,
+  initialPos = { x: 100 + Math.random() * 200, y: 100 + Math.random() * 200 },
   resizableSides = { left: true, right: true, top: true, bottom: true },
   zIndex,
   onClose,
   onFocus
 }: WindowProps)
 {
+
+  const { closeWindow, focusWindow } = useWindowManager();
+
+  const handleClose = onClose ?? closeWindow;
+  const handleFocus = onFocus ?? focusWindow;
 
   const { ref: dragRef, pos, onMouseDown, setPosition } = useDraggable(initialPos);
 
@@ -46,23 +54,21 @@ export function Window({
   return (
     <div
       ref={mergeRefs(dragRef, resizeRef)}
-      onMouseDown={onFocus}
+      onMouseDown={() => {handleFocus(id)}}
       style={{ left: pos.x, top: pos.y, width: size.width, height: size.height, zIndex: zIndex }}
       className="gui_window"
     >
       <div
-        onMouseDown={(e) => {onMouseDown(e); onFocus()}}
+        onMouseDown={(e) => {onMouseDown(e); handleFocus(id)}}
         className="gui_window_bar"
       >
         {title}
-        {onClose && (
-          <button 
-            className="gui_window_close_btn" 
-            onClick={(e) => {e.stopPropagation; onClose();}}
-          >
-            x
-          </button>)
-        }
+        <button 
+          className="gui_window_close_btn" 
+          onClick={(e) => {e.stopPropagation; handleClose(id);}}
+        >
+          x
+        </button>
         {sides.left && (
           <div
             onMouseDown={startResize("left")}
