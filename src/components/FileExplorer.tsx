@@ -3,8 +3,8 @@ import { fileSystem, currentDirectory, FileSystemItem } from "../utils/utils";
 import { useWindowManager } from "./WindowContext";
 import { Card } from "../components/Card";
 import { Tabs } from "./Tabs";
-import { TEXTS } from "../assets/texts";
 import { Notepad } from "./Notepad";
+import { TEXTS } from "../assets/texts";
 
 export function FileExplorer()
 {
