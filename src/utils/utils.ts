@@ -174,6 +174,12 @@ export function changeDirectory(directoryName: string) : boolean
   }
 }
 
+export function openProject(name: string): repoData | undefined
+{
+  let file = name.substring(0, name.indexOf(".proj"));
+  return currentDirectory.children?.find((item) => item.name === file + ".proj") ? repoMemoryData.find((repo) => repo.name === file) : undefined;
+}
+
 export function concatenateFile(dir: string): repoData | string | undefined
 {
   let ogDir = currentDirectory;
@@ -189,10 +195,7 @@ export function concatenateFile(dir: string): repoData | string | undefined
   let res: repoData | string | undefined;
 
   if(file.includes("proj"))
-  {
-    file = file.substring(0, file.indexOf(".proj"));
-    res = currentDirectory.children?.find((item) => item.name === file + ".proj") ? repoMemoryData.find((repo) => repo.name === file) : undefined;
-  }
+    res = openProject(file);
   else if(file.includes("txt"))
   {
     file = file.substring(0, file.indexOf(".txt"));

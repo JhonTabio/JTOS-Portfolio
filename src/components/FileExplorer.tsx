@@ -5,6 +5,7 @@ import { Card } from "../components/Card";
 import { Tabs } from "./Tabs";
 import { Notepad } from "./Notepad";
 import { TEXTS } from "../assets/texts";
+import { Project } from "./Project";
 
 export function FileExplorer()
 {
@@ -64,6 +65,13 @@ export function FileExplorer()
       const content = <Notepad>{TEXTS[activeTab + "_" + fileName].gui}</Notepad>;
       createWindow(fileName, content);
     }
+
+    else if(fileType === "proj")
+    {
+      console.log(item.name);
+      createWindow(fileName, <Project project={item.name}/>);
+    }
+
 
     return;
   }
