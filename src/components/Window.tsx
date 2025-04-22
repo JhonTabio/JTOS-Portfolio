@@ -62,7 +62,7 @@ export function Window({
         onMouseDown={(e) => {onMouseDown(e); handleFocus(id)}}
         className="gui_window_bar"
       >
-        {title}
+        <div className="gui_window_title">{title}</div>
         <button 
           className="gui_window_close_btn" 
           onClick={(e) => {e.stopPropagation; handleClose(id);}}

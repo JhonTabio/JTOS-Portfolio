@@ -42,11 +42,15 @@
   background-color: red;
 }
 
+.gui_window_title
+{
+  padding: 0px 10px;
+}
+
 .gui_window_content
 {
   width: inherit;
   height: inherit;
-  box-sizing: border-box;
 }
 
 .gui_icon_container
@@ -70,6 +74,7 @@
   color: white;
   margin: 0;
   user-select: none;
+  padding: 10px;
 }
 
 .gui_card
