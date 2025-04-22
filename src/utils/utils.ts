@@ -198,7 +198,7 @@ export function concatenateFile(dir: string): repoData | string | undefined
     file = file.substring(0, file.indexOf(".txt"));
     
     if(currentDirectory.children?.find((item) => item.name === file + ".txt"))
-      res = TEXTS[currentDirectory.name + "_" + file];
+      res = TEXTS[currentDirectory.name + "_" + file].cli;
   }
   else
     if(res && !file.includes('.')) res = "dir";

@@ -61,7 +61,7 @@ export function FileExplorer()
 
     if(fileType === "txt")
     {
-      const content = <Notepad>{TEXTS[activeTab + "_" + fileName]}</Notepad>;
+      const content = <Notepad>{TEXTS[activeTab + "_" + fileName].gui}</Notepad>;
       createWindow(fileName, content);
     }
 
