@@ -1,4 +1,5 @@
 import { TEXTS } from "../assets/texts";
+import { commandProcess } from "./commandProcessUtils";
 
 const REPO_CACHE = "repo_cache";
 const REPO_ETAG = "repo_etag";
@@ -85,6 +86,8 @@ async function fetchRepos(): Promise<repoData[]>
 
 export function initialize(): void
 {
+  commandProcess("cd ~");
+
   fetchRepos().then(data => {
     repoMemoryData = data;
 
@@ -176,6 +179,7 @@ export function changeDirectory(directoryName: string) : boolean
 
 export function openProject(name: string): repoData | undefined
 {
+  console.log(currentDirectory);
   let file = name.substring(0, name.indexOf(".proj"));
   return currentDirectory.children?.find((item) => item.name === file + ".proj") ? repoMemoryData.find((repo) => repo.name === file) : undefined;
 }

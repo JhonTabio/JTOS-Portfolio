@@ -176,3 +176,14 @@
   box-sizing: border-box;
   white-space: pre-line;
 }
+
+.gui_project_container
+{
+  background-color: black;
+  width: inherit;
+  height: inherit;
+  overflow-y: auto;
+  padding: 15px;
+  box-sizing: border-box;
+  white-space: pre-line;
+}

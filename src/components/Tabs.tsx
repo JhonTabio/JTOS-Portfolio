@@ -1,3 +1,5 @@
+import { changeDirectories } from "../utils/utils";
+
 interface Tab
 {
   value: string;
@@ -22,7 +24,7 @@ export function Tabs({ tabs, activeTab, setActiveTab }: TabsProps)
           <button
             key={tab.value}
             className={`gui_tab-button ${activeTab === tab.value ? "active" : ""}`}
-            onClick={() => setActiveTab(tab.value)}
+            onClick={() => {setActiveTab(tab.value); changeDirectories(tab.value)}}
           >
             {tab.label}
           </button>
