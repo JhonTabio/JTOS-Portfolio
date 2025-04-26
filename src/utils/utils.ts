@@ -25,6 +25,7 @@ interface repoData
   default_branch: string;
   topics: string[];
   license: object;
+  readme: string;
 }
 
 async function fetchRepos(): Promise<repoData[]>
@@ -68,7 +69,8 @@ async function fetchRepos(): Promise<repoData[]>
         key: repo.license.key,
         name: repo.license.name,
         url: repo.license.url
-      } : null
+      } : null,
+      readme: null
     }));
 
     localStorage.setItem(REPO_CACHE, JSON.stringify(ret));
@@ -84,6 +86,35 @@ async function fetchRepos(): Promise<repoData[]>
   }
 }
 
+// Github safely sanitizes their READMEs
+export async function fetchReadme(repo: repoData): Promise<string>
+{
+  console.log("called readme");
+  console.log(repo.name);
+  console.log("exists");
+  if(repo.readme) return repo.readme;
+  console.log("does not have readme alr");
+
+  const headers: HeadersInit = {};
+  headers["Accept"] = "application/vnd.github.html+json";
+
+  try
+  {
+    const response = await fetch(`https://api.github.com/repos/JhonTabio/${repo.name}/readme`, { headers });
+
+    if (!response.ok) throw new Error("Error fetching repos");
+    
+    const data = await response.text();
+    //repo.readme = data;
+    console.log("set readme");
+    return data;
+  }
+  catch(error)
+  {
+    throw error;
+  }
+}
+
 export function initialize(): void
 {
   commandProcess("cd ~");
@@ -92,6 +123,10 @@ export function initialize(): void
     repoMemoryData = data;
 
     repoMemoryData.forEach((repo) =>{
+      fetchReadme(repo).then(readme => {
+        repo.readme = readme;
+      })
+
       if (!fileSystem.children![1].children!.some(child => child.name === repo.name + ".proj" && child.type === "file"))
         fileSystem.children![1].children!.push({name: repo.name + ".proj", type: "file"});
     })

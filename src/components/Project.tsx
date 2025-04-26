@@ -29,6 +29,7 @@ export function Project({ project }: ProjectProps)
         {projectData?.homepage !== "https://N/A" && <p>Homepage: <a href={projectData?.homepage!} target="_blank" rel="noopener noreferrer">{projectData?.homepage}</a></p>}
         {eye} {projectData!.watchers_count} {star} {projectData!.stargazers_count} {issue} {projectData!.open_issues_count}
       </div>
+      <div dangerouslySetInnerHTML={{__html: projectData!.readme}}/>
     </div>
   );
 }
