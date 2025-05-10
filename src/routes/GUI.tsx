@@ -1,5 +1,6 @@
 import { Window } from "../components/Window";
 import { FileExplorer } from "../components/FileExplorer";
+import { WindowBar } from "../components/WindowBar";
 import { useWindowManager } from "../components/WindowContext";
 import "./GUI.css"
 
@@ -24,6 +25,7 @@ function GUI()
             {win.content}
           </Window>
         ))}
+        <WindowBar/>
       </div>
     </>
   );
