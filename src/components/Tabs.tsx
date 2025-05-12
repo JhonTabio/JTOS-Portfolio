@@ -1,4 +1,5 @@
 import { changeDirectories } from "../utils/utils";
+import { useWindowManager } from "./WindowContext";
 
 interface Tab
 {
@@ -9,13 +10,16 @@ interface Tab
 
 interface TabsProps
 {
+  id: number;
   tabs: Tab[];
   activeTab: string;
   setActiveTab: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export function Tabs({ tabs, activeTab, setActiveTab }: TabsProps)
+export function Tabs({ id, tabs, activeTab, setActiveTab }: TabsProps)
 {
+  const { renameWindow } = useWindowManager();
+
   return (
     <div className="gui_tabs-container">
       <div className="gui_tabs-header">
@@ -24,7 +28,7 @@ export function Tabs({ tabs, activeTab, setActiveTab }: TabsProps)
           <button
             key={tab.value}
             className={`gui_tab-button ${activeTab === tab.value ? "active" : ""}`}
-            onClick={() => {setActiveTab(tab.value); changeDirectories(tab.value)}}
+            onClick={() => {setActiveTab(tab.value); changeDirectories(tab.value); renameWindow(id, tab.label)}}
           >
             {tab.label}
           </button>

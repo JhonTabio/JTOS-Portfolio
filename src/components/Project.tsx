@@ -2,6 +2,7 @@ import { openProject } from "../utils/utils";
 
 interface ProjectProps
 {
+  id: number;
   project: string;
 }
 

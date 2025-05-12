@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { fileSystem, currentDirectory, FileSystemItem, changeDirectory, changeDirectories } from "../utils/utils";
+import { fileSystem, FileSystemItem, changeDirectories } from "../utils/utils";
 import { useWindowManager } from "./WindowContext";
 import { Card } from "../components/Card";
 import { Tabs } from "./Tabs";
@@ -7,7 +7,7 @@ import { Notepad } from "./Notepad";
 import { Project } from "./Project";
 import { TEXTS } from "../assets/texts";
 
-export function FileExplorer()
+export function FileExplorer({id}: { id: number })
 {
   const folder_icon = <svg className="gui_icon" viewBox="0 0 512 512" fill="#6e54a6">
     <path d="M64 480H448c35.3 0 64-28.7 64-64V160c0-35.3-28.7-64-64-64H288c-10.1 0-19.6-4.7-25.6-12.8L243.2 57.6C231.1 41.5 212.1 32 192 32H64C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64z"/>
@@ -49,13 +49,14 @@ export function FileExplorer()
   ];
 
   const [activeTab, setActiveTab] = useState<string>(tabs[0]?.value);
-  const { createWindow } = useWindowManager();
+  const { createWindow, renameWindow } = useWindowManager();
 
   const openFile = (item: FileSystemItem) => {
     if(item.type === "directory")
     {
       setActiveTab(item.name);
       changeDirectories(item.name);
+      renameWindow(id, item.name);
       return;
     }
 
@@ -63,23 +64,17 @@ export function FileExplorer()
 
     if(fileType === "txt")
     {
-      const content = <Notepad>{TEXTS[activeTab + "_" + fileName].gui}</Notepad>;
+      const content = (id: number) => <Notepad id={id}>{TEXTS[activeTab + "_" + fileName].gui}</Notepad>;
       createWindow(fileName, content);
     }
 
     else if(fileType === "proj")
-    {
-      console.log(item.name);
-      createWindow(fileName, <Project project={item.name}/>);
-    }
-
-
-    return;
+      createWindow(fileName, (id: number) => <Project id={id} project={item.name}/>);
   }
 
   return (
     <div className="gui_file_explorer_container">
-      <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab}/>
+      <Tabs id={id} tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab}/>
     </div>
   );
 }

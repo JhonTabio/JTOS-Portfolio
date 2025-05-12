@@ -22,6 +22,11 @@
   flex-direction: column;
 }
 
+.gui_window.minimized
+{
+  display: none;
+}
+
 .gui_window_bar
 {
   background-color: #6e55a8;
@@ -221,7 +226,7 @@
   white-space: nowrap;
   user-select: none;
 }
-.gui_windowbar_element.active
+.gui_windowbar_element.focused
 {
   background-color: #007a;
 }

@@ -16,6 +16,7 @@ interface WindowProps
     left?: boolean;
   };
   zIndex: number;
+  minimized: boolean;
   onClose?: (id: number) => void;
   onFocus?: (id: number) => void;
 }
@@ -27,6 +28,7 @@ export function Window({
   initialPos = { x: 100 + Math.random() * 200, y: 100 + Math.random() * 200 },
   resizableSides = { left: true, right: true, top: true, bottom: true },
   zIndex,
+  minimized,
   onClose,
   onFocus
 }: WindowProps)
@@ -56,7 +58,7 @@ export function Window({
       ref={mergeRefs(dragRef, resizeRef)}
       onMouseDown={() => {handleFocus(id)}}
       style={{ left: pos.x, top: pos.y, width: size.width, height: size.height, zIndex: zIndex }}
-      className="gui_window"
+      className={`gui_window ${minimized ? "minimized" : ""}`}
     >
       <div
         onMouseDown={(e) => {onMouseDown(e); handleFocus(id)}}

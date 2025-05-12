@@ -5,13 +5,17 @@ type WindowEntry = {
   title: string;
   content: React.ReactNode;
   zIndex: number;
+  minimized: boolean;
+  focus: boolean;
 };
 
 type WindowManagerContext = {
   windows: WindowEntry[];
-  createWindow: (title: string, content: React.ReactNode) => void;
+  createWindow: (title: string, content: (id: number) => React.ReactNode) => void;
   closeWindow: (id: number) => void;
   focusWindow: (id: number) => void;
+  toggleWindow: (id: number) => void;
+  renameWindow: (id: number, name: string) => void;
 };
 
 export const WindowContext = createContext<WindowManagerContext | null>(null);
@@ -25,16 +29,21 @@ export const useWindowManager = () => {
 export const WindowProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [windows, setWindows] = useState<WindowEntry[]>([]);
 
-  const createWindow = (title: string, content: React.ReactNode) => {
+  const createWindow = (title: string, content: (id: number) => React.ReactNode) => {
+    const id = Date.now();
+
     setWindows((prev) => {
       const maxZ = Math.max(0, ...prev.map(w => w.zIndex));
+      const updated = prev.map(w => ({ ...w, focus: false }));
       return [
-        ...prev,
+        ...updated,
         {
-          id: Date.now(),
+          id: id,
           title,
-          content,
-          zIndex: maxZ + 1
+          content: content(id),
+          zIndex: maxZ + 1,
+          minimized: false,
+          focus: true
         }
       ];
     });
@@ -48,13 +57,35 @@ export const WindowProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     setWindows((prev) => {
       const maxZ = Math.max(...prev.map(w => w.zIndex));
       return prev.map(w => w.id === id ? 
-        { ...w, zIndex: maxZ + 1 } : w
+        { ...w, zIndex: maxZ + 1, minimized: false, focus: true } : {...w, focus: false}
       );
     });
   };
 
+  const toggleWindow = (id: number) => {
+    setWindows((prev) => {
+      return prev.map(w => {
+        if (w.id === id) {
+          const minimized = !w.minimized;
+          return {
+            ...w,
+            minimized: minimized,
+            focus: !minimized
+          };
+        }
+        return { ...w, focus: false };
+      });
+    });
+  };
+
+  const renameWindow = (id: number, name: string) => {
+    setWindows(prev =>
+      prev.map(w => w.id === id ? { ...w, title: name } : w)
+    );
+  }
+
   return (
-    <WindowContext.Provider value={{ windows, createWindow, closeWindow, focusWindow }}>
+    <WindowContext.Provider value={{ windows, createWindow, closeWindow, focusWindow, toggleWindow, renameWindow }}>
       {children}
     </WindowContext.Provider>
   );

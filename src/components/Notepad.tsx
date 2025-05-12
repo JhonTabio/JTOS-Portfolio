@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 
 interface NotepadProps
 {
+  id: number;
   children: ReactNode;
 }
 

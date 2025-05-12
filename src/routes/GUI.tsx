@@ -12,7 +12,7 @@ function GUI()
   return(
     <>
       <div id="gui_container">
-        <button onClick={() => createWindow("Test", <FileExplorer/>)} style={{ margin: 10 }}>
+        <button onClick={() => createWindow("Home", (id) => <FileExplorer id={id}/>)} style={{ margin: 10 }}>
           Open Window
         </button>
         {windows.map((win) => (
@@ -21,6 +21,7 @@ function GUI()
             id={win.id}
             title={win.title}
             zIndex={win.zIndex}
+            minimized={win.minimized}
           >
             {win.content}
           </Window>
