@@ -247,7 +247,7 @@
   color: white;
 }
 
-.gui_windowbar_dropdown
+.gui_windowbar_panel
 {
   top: 100%;
   left: 0;
@@ -258,20 +258,20 @@
   user-select: none;
 }
 
-.gui_dropdown_item
+.gui_panel_item
 {
   padding: 6px 10px;
   color: white;
   white-space: nowrap;
 }
 
-.gui_dropdown_item.opened
+.gui_panel_item.opened
 {
   background-color: #444;
 }
 
-.gui_dropdown_item:hover,
-.gui_dropdown_item.focused
+.gui_panel_item:hover,
+.gui_panel_item.focused
 {
   background-color: #555;
 }
