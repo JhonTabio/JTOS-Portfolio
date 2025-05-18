@@ -58,11 +58,11 @@ export function FileExplorer({id}: { id: number })
     if(fileType === "txt")
     {
       const content = (id: number) => <Notepad id={id}>{TEXTS[activeTab + "_" + fileName].gui}</Notepad>;
-      createWindow(fileName, content);
+      createWindow(fileName, content, "Notepad", fileIcon);
     }
 
     else if(fileType === "proj")
-      createWindow(fileName, (id: number) => <Project id={id} project={item.name}/>);
+      createWindow(fileName, (id: number) => <Project id={id} project={item.name}/>, "Project", fileIcon);
   }
 
   return (

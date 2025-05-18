@@ -4,6 +4,8 @@ type WindowEntry = {
   id: number;
   title: string;
   content: React.ReactNode;
+  app: string;
+  icon: JSX.Element;
   zIndex: number;
   minimized: boolean;
   focus: boolean;
@@ -11,7 +13,7 @@ type WindowEntry = {
 
 type WindowManagerContext = {
   windows: WindowEntry[];
-  createWindow: (title: string, content: (id: number) => React.ReactNode) => void;
+  createWindow: (title: string, content: (id: number) => React.ReactNode, app: string, icon: JSX.Element) => void;
   closeWindow: (id: number) => void;
   focusWindow: (id: number) => void;
   toggleWindow: (id: number) => void;
@@ -29,7 +31,7 @@ export const useWindowManager = () => {
 export const WindowProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [windows, setWindows] = useState<WindowEntry[]>([]);
 
-  const createWindow = (title: string, content: (id: number) => React.ReactNode) => {
+  const createWindow = (title: string, content: (id: number) => React.ReactNode, app: string, icon: JSX.Element) => {
     const id = Date.now();
 
     setWindows((prev) => {
@@ -41,6 +43,8 @@ export const WindowProvider: React.FC<{ children: React.ReactNode }> = ({ childr
           id: id,
           title,
           content: content(id),
+          app: app,
+          icon: icon,
           zIndex: maxZ + 1,
           minimized: false,
           focus: true
@@ -67,6 +71,7 @@ export const WindowProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       return prev.map(w => {
         if (w.id === id) {
           const minimized = !w.minimized;
+          if(!minimized) focusWindow(id);
           return {
             ...w,
             minimized: minimized,

@@ -226,7 +226,52 @@
   white-space: nowrap;
   user-select: none;
 }
+
 .gui_windowbar_element.focused
 {
   background-color: #007a;
+}
+.gui_windowbar
+{
+  display: flex;
+  align-items: flex-end;
+  background-color: #1e1e1e;
+  padding: 4px;
+}
+
+.gui_windowbar_icon
+{
+  position: relative;
+  margin: 0 6px;
+  cursor: pointer;
+  color: white;
+}
+
+.gui_windowbar_dropdown
+{
+  top: 100%;
+  left: 0;
+  background: #333;
+  border: 1px solid #444;
+  z-index: 10;
+  min-width: 150px;
+  user-select: none;
+}
+
+.gui_dropdown_item
+{
+  padding: 6px 10px;
+  color: white;
+  white-space: nowrap;
+}
+
+.gui_dropdown_item.opened
+{
+  background-color: #444;
+}
+
+.gui_dropdown_item:hover,
+.gui_dropdown_item.focused
+{
+  background-color: #555;
 }

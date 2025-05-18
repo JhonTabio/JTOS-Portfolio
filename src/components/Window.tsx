@@ -8,6 +8,8 @@ interface WindowProps
   id: number;
   title: string;
   children: ReactNode;
+  app: string;
+  icon: JSX.Element;
   initialPos?: { x: number, y: number };
   resizableSides?: {
     top?: boolean;
