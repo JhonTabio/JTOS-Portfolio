@@ -22,6 +22,7 @@ function GUI()
             title={win.title}
             zIndex={win.zIndex}
             minimized={win.minimized}
+            focused={win.focus}
           >
             {win.content}
           </Window>

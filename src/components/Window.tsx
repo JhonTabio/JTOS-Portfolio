@@ -17,6 +17,7 @@ interface WindowProps
   };
   zIndex: number;
   minimized: boolean;
+  focused: boolean;
   onClose?: (id: number) => void;
   onFocus?: (id: number) => void;
 }
@@ -29,6 +30,7 @@ export function Window({
   resizableSides = { left: true, right: true, top: true, bottom: true },
   zIndex,
   minimized,
+  focused,
   onClose,
   onFocus
 }: WindowProps)
@@ -62,7 +64,7 @@ export function Window({
     >
       <div
         onMouseDown={(e) => {onMouseDown(e); handleFocus(id)}}
-        className="gui_window_bar"
+        className={`gui_window_bar ${focused ? "focused" : ""}`}
       >
         <div className="gui_window_title">{title}</div>
         <button 
