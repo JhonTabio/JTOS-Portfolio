@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useLocation } from "wouter";
-import { banner, sliderChar, initialize } from "../utils/utils";
+import { bannerChars, sliderChar, initialize } from "../utils/utils";
 import "./Landing.css"
 
 function Landing() {
@@ -12,14 +12,19 @@ function Landing() {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const [animate, setAnimation] = useState("init");
-  const [slider, setSlider] = useState(true);
-  const sliderKeyFrames = [102, 96.3, 88.6, 77.2,
-        69.6, 62, 54.4, 46.8, 39.1, 36.2, 28.7, 19,
-        11.5, 3.8, 0]
-  const [sliderIndex, setSliderIndex] = useState(0);
+  const animateIntervalRef = useRef<number | null>(null);
+  const [typeIndex, setTypeIndex] = useState(0);
+  const typeDelay = 2000;
+  const typeSpeed = 250;
+
+  const blinkIntervalRef = useRef<number | null>(null);
+  const [blink, setBlink] = useState(true);
+
+  const typeTimeoutRef = useRef<number | null>(null);
+  const transitionTimeoutRef = useRef<number | null>(null);
 
   const options = [
-    { name: "Graphical User Interface experience", link: "/GUI" },
+    { name: "Graphical User Interface experience [Experimental]", link: "/GUI" },
     { name: "Command Line Interface experience", link: "/CLI" },
     { name: "Help", action: () => alert("Very useful help will be here soon! Try the CLI experience") }
   ];
@@ -31,7 +36,7 @@ function Landing() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if(animate === "init")
       {
-        setAnimation("post");
+        setAnimation("transition");
         return;
       }
 
@@ -55,59 +60,97 @@ function Landing() {
     };
   }, [selectedIndex, options, setLocation]);
     
-    // Arrow animation
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setArrow(currentChar => currentChar === '>' ? '—' : '>');
-        }, 500);
+  // Arrow animation
+  useEffect(() => {
+      const interval = setInterval(() => {
+          setArrow(currentChar => currentChar === '>' ? '—' : '>');
+      }, 500);
 
-        return () => clearInterval(interval);
-    }, []);
+      return () => clearInterval(interval);
+  }, []);
 
-    // Blinking animation
-    useEffect(() => {
-        let i = 0;
-        const interval = setInterval(() => {
-            setSlider(currentSlider => (i == 0 || i == sliderKeyFrames.length - 1)
-                                        ? !currentSlider : true);
-        }, 500);
+  // Blinking animation
+  useEffect(() => {
+    const blink = () => {
+      if(blinkIntervalRef.current)
+      {
+        clearInterval(blinkIntervalRef.current);
+        blinkIntervalRef.current = null;
+      }
 
-        // Initial delay before starting the typing effect
-        const delay = 2000;
+      blinkIntervalRef.current = setInterval(() => {
+          setBlink(currentBlink => !currentBlink);
+      }, 500);
+    }
 
-        const typingTimeout = setTimeout(() => {
-            const typingInterval = setInterval(() => {
-              setSliderIndex((prev) => prev + 1);
-              i++;
-              
-              if(i === sliderKeyFrames.length - 1)
-              {
-                clearInterval(typingInterval);
-                
-                setTimeout(() => {
-                  setAnimation("transition");
-                }, 2000);
-              }
-            }, 250);
-        }, delay);
+    blink();
 
-        return () => {
-          clearInterval(interval);
-          clearTimeout(typingTimeout);
-        }
-    }, []);
+    typeTimeoutRef.current = setTimeout(() => {
+      animateIntervalRef.current = setInterval(() => {
+        setTypeIndex((prev) => {
+          const next: number = prev + 1;
+          if(next >= bannerChars.length)
+          {
+            if(animateIntervalRef.current)
+            {
+              clearInterval(animateIntervalRef.current);
+              animateIntervalRef.current = null;
+            }
+
+            blink();
+
+            transitionTimeoutRef.current = setTimeout(() => {setAnimation("transition");}, 1900);
+            return bannerChars.length;
+          }
+          return next;
+        });
+      },typeSpeed);
+    }, typeDelay);
+
+    return () => {
+      handleAnimationCleanUp();
+    };
+  }, []);
+
+  const handleAnimationCleanUp = () => {
+      if(blinkIntervalRef.current)
+      {
+        clearInterval(blinkIntervalRef.current);
+        blinkIntervalRef.current = null;
+      }
+
+      if(typeTimeoutRef.current)
+      {
+        clearInterval(typeTimeoutRef.current);
+        typeTimeoutRef.current = null;
+      }
+
+      if(transitionTimeoutRef.current)
+      {
+        clearInterval(transitionTimeoutRef.current);
+        transitionTimeoutRef.current = null;
+      }
+
+      if(animateIntervalRef.current)
+      {
+        clearInterval(animateIntervalRef.current);
+        animateIntervalRef.current = null;
+      }
+  };
 
   return (
     <>
       <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet"/>
 
-      <div id="landing_container" className={`${animate}`} onClick={() => {setAnimation("post")}}>
-        <pre id="landing_banner" style={{color: "purple"}}>
-          {banner}
-          <pre id="landing_slider" style={{color: "purple", width: `${sliderKeyFrames[sliderIndex]}%`}}>
-            {slider && sliderChar}
-          </pre>
-        </pre>
+      <div id="landing_container" className={`${animate}`} onClick={() => {if(animate === "init"){
+        handleAnimationCleanUp();
+        setTypeIndex(bannerChars.length);
+        setAnimation("transition");
+      }}}>
+        <div id="landing_banner" style={{color: "purple", display: "flex"}}>
+          {bannerChars.slice(0, typeIndex).map((char, i) => (<pre key={i}>{char}</pre>))}
+          {animate === "init" && <pre style={{visibility: `${blink ? "visible" : "hidden"}`}}>{sliderChar}</pre>}
+        </div>
 
         <p id="landing_contact">
           <strong id="landing_contact-arrow" style={arrow === '—' ? 

@@ -32,6 +32,7 @@
 {
   transition: transform 1.5s ease-in-out;
   transform: translateY(0);
+  font-size: clamp(6px, 3vw, 16px);
 }
 
 #landing_container.init #landing_banner
