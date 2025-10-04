@@ -6,6 +6,10 @@ import "./Landing.css"
 function Landing() {
   useEffect(() => {
     initialize();
+    document.title = "Jhon Tabio | Welcome"
+
+    const favicon = document.querySelector("link[rel~='icon']") as HTMLLinkElement
+      if (favicon) favicon.href = "https://cdn-icons-png.freepik.com/512/6467/6467131.png?ga=GA1.1.1776313894.1759613306";
   }, []);
 
   const [_, setLocation] = useLocation();

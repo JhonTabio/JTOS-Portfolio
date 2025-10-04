@@ -1,12 +1,19 @@
 import { useState, useEffect, useRef, ReactNode} from "react";
+import { commandProcess } from "../utils/commandProcessUtils.tsx";
+import { initialize } from "../utils/utils.ts";
 import BootSequence from "../components/BootSequence.tsx";
 import CommandInput from "../components/CommandInput.tsx";
 import "./CLI.css"
-import { commandProcess } from "../utils/commandProcessUtils.tsx";
-import { initialize } from "../utils/utils.ts";
 
 function CLI()
 {
+  useEffect(() => {
+    initialize();
+    document.title = "Jhon Tabio | Terminal"
+    const favicon = document.querySelector("link[rel~='icon']") as HTMLLinkElement
+      if (favicon) favicon.href = "https://cdn-icons-png.freepik.com/512/14627/14627773.png?ga=GA1.1.1776313894.1759613306"
+  }, []);
+
   const cmdRef = useRef<HTMLInputElement>(null);
 
   const [cmdHistory, setHistory] = useState<ReactNode[]>([
@@ -15,10 +22,6 @@ function CLI()
     </li>]
   );
   const [historyIndex, setIndex] = useState<number>(0);
-
-  useEffect(() => {
-    initialize();
-  }, []);
 
   return(
     <>
