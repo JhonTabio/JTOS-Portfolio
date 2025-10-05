@@ -90,6 +90,12 @@ function Landing() {
     blink();
 
     typeTimeoutRef.current = setTimeout(() => {
+      if(blinkIntervalRef.current)
+      {
+        clearInterval(blinkIntervalRef.current);
+        blinkIntervalRef.current = null;
+      }
+
       animateIntervalRef.current = setInterval(() => {
         setTypeIndex((prev) => {
           const next: number = prev + 1;
