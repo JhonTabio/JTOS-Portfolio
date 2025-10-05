@@ -198,6 +198,7 @@
 .gui_project_container
 {
   background-color: #1e1e1e;
+  flex-grow: inherit;
   overflow-y: auto;
   padding: 15px;
   box-sizing: border-box;
@@ -207,7 +208,6 @@
 .gui_project_desc
 {
   border-bottom: 2px solid gray;
-  flex-grow: inherit;
 }
 
 .gui_windowbar
