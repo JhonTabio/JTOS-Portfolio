@@ -27,6 +27,14 @@ export function useResizable(
     const onMouseMove = (e: MouseEvent) => {
       if (!resizing || !ref.current) return;
 
+      const parent = ref.current.parentElement;
+
+      if(!parent) return;
+
+      const parentRect = parent.getBoundingClientRect();
+      const elemRect = ref.current.getBoundingClientRect();
+
+
       const dx = e.clientX - startPos.current.x;
       const dy = e.clientY - startPos.current.y;
 
@@ -36,21 +44,29 @@ export function useResizable(
       if (resizing === "left")
       {
         newWidth -= dx;
-        setPosition((prev) => ({ x: startPos.current.x + (startSize.current.width - Math.max(window.innerWidth * 0.25, newWidth)), y: prev.y }));
+        newWidth = Math.min(Math.max(newWidth, window.innerWidth * 0.25), elemRect.x + elemRect.width - parentRect.left);
+        setPosition((prev) => ({x: startPos.current.x + (startSize.current.width - newWidth), y: prev.y}));
       }
       else if (resizing === "right")
+      {
         newWidth += dx;
+        newWidth = Math.min(Math.max(newWidth, window.innerWidth * 0.25), parentRect.right - elemRect.x);
+      }
       else if (resizing === "top")
       {
         newHeight -= dy;
-        setPosition((prev) => ({ x: prev.x, y: startPos.current.y + (startSize.current.height - Math.max(100, newHeight)) }));
+        newHeight = Math.min(Math.max(newHeight, window.innerHeight * 0.25), startPos.current.y + startSize.current.height - parentRect.top);
+        setPosition((prev) => ({ x: prev.x, y: startPos.current.y + (startSize.current.height - newHeight)}));
       }
       else if (resizing === "bottom")
+      {
         newHeight += dy;
+        newHeight = Math.min(Math.max(newHeight, window.innerHeight * 0.25), parentRect.bottom - elemRect.y);
+      }
 
       setSize({
-        width: Math.max(window.innerWidth * 0.25, newWidth),
-        height: Math.max(100, newHeight)
+        width: newWidth,
+        height: newHeight
       });
     };
 
