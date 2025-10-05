@@ -207,6 +207,7 @@
 .gui_project_desc
 {
   border-bottom: 2px solid gray;
+  flex-grow: inherit;
 }
 
 .gui_windowbar
