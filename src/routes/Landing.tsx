@@ -30,7 +30,7 @@ function Landing() {
   const options = [
     { name: "Graphical User Interface experience [Experimental]", link: "/GUI" },
     { name: "Command Line Interface experience", link: "/CLI" },
-    { name: "Help", action: () => alert("Very useful help will be here soon! Try the CLI experience") }
+    { name: "Help", action: () => alert("Help is under maintenance...\n> Graphical experience is incomplete <\nTry out the Command Line experience!") }
   ];
 
   const [arrow, setArrow] = useState<string>('-');
