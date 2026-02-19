@@ -1,30 +1,53 @@
-# React + TypeScript + Vite
+# Jhon Tabio - Portfolio Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal portfolio website showcasing projects, technical skills, and professional experience in a unique and customized way.
 
-Currently, two official plugins are available:
+The theme of the website is "accessing my development server," where you either:
+- Access a terminal on my server via the `CLI Experience`
+- Access Remote Desktop Protocol (RDP) via the `GUI Experience`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Live site: [https://jhontabio.com](https://jhontabio.com)
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Responsive Design
+- Autocomplete feature
+- Command history feature
+- Draggable / resizable windows
+- Live fetching / caching of my GitHub data
 
-- Configure the top-level `parserOptions` property like this:
+## Tech Stack
+- **Frontend**: [React](https://reactjs.org), [TypeScript](https://typescriptlang.org)
+- **Deployment**: [Vercel](https://vercel.com)
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+## Running Locally
+
+Clone the project
+
+```
+git clone https://github.com/jhontabio/JTOS-Portfolio.git
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Go to the project directory
+
+```
+cd JTOS-Portfolio
+```
+
+Install dependencies
+
+```
+npm install
+```
+
+Start the server
+
+```
+npm run dev
+```
+
+## Inspiration
+
+The inspiration for the theme comes from my transition in operating systems for development from Windows to Linux.
+
+The entire project was built from scratch on my own.
